@@ -1,6 +1,5 @@
 package de.bergwerklabs.framework.commons.algorithm.generation.fubar;
 
-import de.bergwerklabs.dungeonfighters.game.core.arena.fubar.pathfinding.Node;
 import de.bergwerklabs.framework.commons.algorithm.pathfinding.astar.Node;
 
 import java.util.HashSet;

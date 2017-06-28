@@ -1,11 +1,13 @@
 package de.bergwerklabs.framework.schematicservice;
 
 import com.boydti.fawe.FaweAPI;
-import com.boydti.fawe.object.schematic.Schematic;
+import com.boydti.fawe.util.EditSessionBuilder;
 import com.boydti.fawe.util.TaskManager;
-import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
-import com.sun.istack.internal.NotNull;
-import org.bukkit.Bukkit;
+import com.flowpowered.nbt.CompoundTag;
+import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.MaxChangedBlocksException;
+import com.sk89q.worldedit.data.DataException;
+import com.sk89q.worldedit.schematic.SchematicFormat;
 import org.bukkit.util.Vector;
 
 import java.io.File;
@@ -26,30 +28,49 @@ public class LabsSchematic {
     }
 
     /**
-     * Gets the schematic object.
+     * Gets the origin of this schematic.
      */
-    public Schematic getSchematic() { return schematic; }
+    public Vector getOrigin() { return this.origin; }
 
     private File schematicFile;
-    private Schematic schematic;
+    private Vector origin;
 
     /**
      * @param schematicFile File representing the schematic (File extension: .schematic)
      */
-    public LabsSchematic(@NotNull File schematicFile) throws IOException {
+    public LabsSchematic(File schematicFile) {
         this.schematicFile = schematicFile;
-        this.schematic =  ClipboardFormat.SCHEMATIC.load(schematicFile);
+
+        CompoundTag tag = NbtUtil.readCompoundTag(schematicFile);
+
+        this.origin = new Vector(Float.valueOf(NbtUtil.readTag("WEOriginX", tag).getValue().toString()),
+                                 Float.valueOf(NbtUtil.readTag("WEOriginY", tag).getValue().toString()),
+                                 Float.valueOf(NbtUtil.readTag("WEOriginZ", tag).getValue().toString()));
     }
 
     /**
      * Pastes a WorldEdit schematic asynchronously in the specified world.
+     *
      * @param world World where to paste the schematic in.
      * @param to Vector which conains x, y and z coordinates representing the paste location.
      */
-    public void pasteAsync(@NotNull String world, @NotNull Vector to) {
-        Bukkit.getLogger().info("Pasting Schematic " + this.getSchematicFile().getName() + "in World " + world +"to" + to);
-        TaskManager.IMP.async(() -> this.schematic.paste(FaweAPI.getWorld(world), new com.sk89q.worldedit.Vector(to.getX(),
-                                                                                                                 to.getY(),
-                                                                                                                 to.getZ())));
+    public void pasteAsync(String world, Vector to) {
+
+        TaskManager.IMP.async(() -> {
+            EditSession session = new EditSessionBuilder(FaweAPI.getWorld(world)).fastmode(true).checkMemory(true).build();
+            try {
+                SchematicFormat.getFormat(schematicFile).load(schematicFile).paste(session, new com.sk89q.worldedit.Vector(to.getX(), to.getY(), to.getZ()), true, true);
+                session.flushQueue();
+            }
+            catch (MaxChangedBlocksException e) {
+                e.printStackTrace();
+            }
+            catch (DataException e) {
+                e.printStackTrace();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

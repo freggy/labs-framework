@@ -1,0 +1,4 @@
+name: LabsSchematicService
+author: Freggy
+version: 1.0
+main: de.bergwerklabs.framework.schematicservice.SchematicMain

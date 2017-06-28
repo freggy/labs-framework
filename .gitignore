@@ -13,7 +13,7 @@ nbactions.xml
 build.xml
 
 # maven
-../labs_framework_spigot_commons/target/
+target/
 dependency-reduced-pom.xml
 
 # vim
