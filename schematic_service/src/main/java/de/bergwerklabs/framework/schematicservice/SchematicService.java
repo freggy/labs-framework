@@ -3,6 +3,8 @@ package de.bergwerklabs.framework.schematicservice;
 import com.flowpowered.nbt.CompoundTag;
 import de.bergwerklabs.framework.schematicservice.metadata.MetadataDeserializer;
 import de.bergwerklabs.framework.schematicservice.metadata.MetadataSerializer;
+import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +31,18 @@ public class SchematicService<T> {
 
     private MetadataDeserializer<T> deserializer;
     private MetadataSerializer<T> serializer;
+
+    /**
+     * Gets the {@link Location} defined by the given Vector.
+     * This Vector contains the distance between the start point and the other point.
+     *
+     * @param start {@link Location} where the schematic has been pasted to.
+     * @param relative Contains the distance between the start point and the other point.
+     * @return the {@link Location} defined by the given Vector.
+     */
+    public static Location getRelativeLocation(Location start, Vector relative) {
+        return start.clone().subtract(relative);
+    }
 
     /**
      *
