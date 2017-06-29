@@ -7,7 +7,7 @@ import org.bukkit.event.HandlerList;
 
 /**
  * Created by Yannic Rieger on 28.06.2017.
- * <p>  </p>
+ * <p> Event that will be called when a Schematic has been pasted.
  *
  * @author Yannic Rieger
  */

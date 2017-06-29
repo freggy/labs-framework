@@ -14,14 +14,14 @@ import java.io.IOException;
 
 /**
  * Created by Yannic Rieger on 28.06.2017.
- * <p>  </p>
+ * <p> Contains useful utilities for reading and writing NBT data.
  *
  * @author Yannic Rieger
  */
 public class NbtUtil {
 
     /**
-     * Reads a compound tag from a .schematic file
+     * Reads a {@link CompoundTag} from a .schematic file
      *
      * @return Compound tag
      */
@@ -40,7 +40,7 @@ public class NbtUtil {
     }
 
     /**
-     * Writes the distance to the provided compound tag.
+     * Writes the distance to the provided {@link CompoundTag}.
      *
      * @param distance Vector representing a distance between two points.
      * @param tagToWrite Compound tag to write to.
@@ -61,6 +61,13 @@ public class NbtUtil {
         out.close();
     }
 
+    /**
+     * Reads a {@link Tag} from a {@link CompoundTag}.
+     *
+     * @param tagName Name of the {@link Tag} that should be read.
+     * @param tag {@link CompoundTag} that contains the desired {@link Tag}.
+     * @return a NBT tag with the given name, null if not found.
+     */
     public static Tag<?> readTag(String tagName, CompoundTag tag) {
         return tag.getValue().get(tagName);
     }
@@ -68,11 +75,11 @@ public class NbtUtil {
 
 
     /**
-     * Writes a tag to a compound tag.
+     * Writes a {@link Tag} to a {@link CompoundTag}
      *
      * @param tag NBT tag
-     * @param tagToWrite Compound tag to write to.
-     * @param file File which contains the NBT data.
+     * @param tagToWrite {@link CompoundTag} to write to.
+     * @param file {@link File} which contains the NBT data.
      */
     public static void writeTag(Tag<?> tag, CompoundTag tagToWrite, File file) throws IOException {
         NBTOutputStream out = new NBTOutputStream(new FileOutputStream(file));

@@ -4,7 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Created by Yannic Rieger on 27.06.2017.
- * <p>  </p>
+ * <p> Does literally nothing.
  *
  * @author Yannic Rieger
  */

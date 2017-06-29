@@ -15,8 +15,9 @@ import java.io.IOException;
 
 /**
  * Created by Yannic Rieger on 05.05.2017.
- * <p> This class is used for pasting schematics asynchronously </p>
- * @author Yannic Rieger
+ * <p> This class is used for pasting schematics asynchronously.
+ *
+ *  @author Yannic Rieger
  */
 public class LabsSchematic {
 
@@ -32,8 +33,21 @@ public class LabsSchematic {
      */
     public Vector getOrigin() { return this.origin; }
 
+    /**
+     * Gets the metadata contained in this schematic.
+     */
+    public Object getMetadata() { return this.metadata; }
+
+    /**
+     * Sets the metadata.
+     *
+     * @param metadata Metadata object that will be written into the schematic file.
+     */
+    void setMetadata(Object metadata) { this.metadata = metadata; }
+
     private File schematicFile;
     private Vector origin;
+    private Object metadata;
 
     /**
      * @param schematicFile File representing the schematic (File extension: .schematic)
