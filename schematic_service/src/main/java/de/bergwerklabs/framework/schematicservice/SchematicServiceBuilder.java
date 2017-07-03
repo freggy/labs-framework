@@ -11,7 +11,7 @@ import de.bergwerklabs.framework.schematicservice.metadata.MetadataSerializer;
  */
 public class SchematicServiceBuilder<T> {
 
-    private SchematicService<T> service;
+    private SchematicService<T> service = new SchematicService<>();
 
 
     public SchematicServiceBuilder setSerializer(MetadataSerializer<T> serializer) {
