@@ -11,21 +11,23 @@ import java.io.IOException;
 
 /**
  * Created by Yannic Rieger on 29.06.2017.
- * <p>  </p>
+ * <p> Class reading and writing metadata to schematic files.
  *
  * @author Yannic Rieger
  */
 public class SchematicService<T> {
 
     /**
+     * Sets the {@link MetadataDeserializer<T>}.
      *
-     * @param deserializer
+     * @param deserializer Class implementing {@link MetadataDeserializer<T>}.
      */
     void setDeserializer(MetadataDeserializer<T> deserializer) { this.deserializer = deserializer; }
 
     /**
+     * Sets the {@link MetadataSerializer<T>}.
      *
-     * @param serializer
+     * @param serializer Class implementing {@link MetadataSerializer<T>}.
      */
     void setSerializer(MetadataSerializer<T> serializer) { this.serializer = serializer; }
 
@@ -45,12 +47,13 @@ public class SchematicService<T> {
     }
 
     /**
+     * Creates a {@link LabsSchematic<T>} while deserializing metadata.
      *
-     * @param file
-     * @return
+     * @param file File representing a schematic.
+     * @return a {@link LabsSchematic} with metadata.
      */
-    public LabsSchematic createSchematic(File file) {
-        LabsSchematic schematic = new LabsSchematic(file);
+    public LabsSchematic<T> createSchematic(File file) {
+        LabsSchematic<T> schematic = new LabsSchematic<>(file);
         CompoundTag tag = NbtUtil.readCompoundTag(file);
         this.deserializer.deserialize((CompoundTag) tag.getValue().get("Metadata"));
         T metadata = this.deserializer.deserialize((CompoundTag) tag.getValue().get("Metadata")); // TODO: in line
@@ -59,9 +62,10 @@ public class SchematicService<T> {
     }
 
     /**
+     * Writes metadata to the given schematic file.
      *
-     * @param file
-     * @param metadata
+     * @param file File write the metadata to.
+     * @param metadata Metadata to write.
      */
     public void saveSchematic(File file, T metadata) {
         CompoundTag metadataTag = this.serializer.serialize(metadata);

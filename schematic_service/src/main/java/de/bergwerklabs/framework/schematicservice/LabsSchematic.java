@@ -19,7 +19,7 @@ import java.io.IOException;
  *
  *  @author Yannic Rieger
  */
-public class LabsSchematic {
+public class LabsSchematic<T> {
 
     /**
      * Gets the schematic as a file object.
@@ -36,18 +36,18 @@ public class LabsSchematic {
     /**
      * Gets the metadata contained in this schematic.
      */
-    public Object getMetadata() { return this.metadata; }
+    public T getMetadata() { return this.metadata; }
 
     /**
      * Sets the metadata.
      *
      * @param metadata Metadata object that will be written into the schematic file.
      */
-    void setMetadata(Object metadata) { this.metadata = metadata; }
+    void setMetadata(T metadata) { this.metadata = metadata; }
 
     private File schematicFile;
     private Vector origin;
-    private Object metadata;
+    private T metadata;
 
     /**
      * @param schematicFile File representing the schematic (File extension: .schematic)
