@@ -1,16 +1,16 @@
 package de.bergwerklabs.framework.schematicservice;
 
-import com.flowpowered.nbt.CompoundTag;
-import com.flowpowered.nbt.IntTag;
-import com.flowpowered.nbt.Tag;
+import com.flowpowered.nbt.*;
 import com.flowpowered.nbt.stream.NBTInputStream;
 import com.flowpowered.nbt.stream.NBTOutputStream;
+import com.sun.org.apache.regexp.internal.RE;
 import org.bukkit.util.Vector;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Created by Yannic Rieger on 28.06.2017.
@@ -26,12 +26,10 @@ public class NbtUtil {
      * @return Compound tag
      */
     public static CompoundTag readCompoundTag(File schematicFile) {
-        NBTInputStream in = null;
         try {
-            in = new NBTInputStream(new FileInputStream(schematicFile));
-            CompoundTag d = (CompoundTag) in.readTag();
-            in.close();
-            return d;
+            try (NBTInputStream in = new NBTInputStream(new FileInputStream(schematicFile))) {
+                return (CompoundTag) in.readTag();
+            }
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -52,13 +50,13 @@ public class NbtUtil {
         String y = tagName + "Y";
         String z = tagName + "Z";
 
-        NBTOutputStream out = new NBTOutputStream(new FileOutputStream(file));
-        tagToWrite.getValue().put(x, new IntTag(x, distance.getBlockX()));
-        tagToWrite.getValue().put(y, new IntTag(y, distance.getBlockY()));
-        tagToWrite.getValue().put(z, new IntTag(z, distance.getBlockZ()));
-        out.writeTag(tagToWrite);
-        out.flush();
-        out.close();
+       try (NBTOutputStream out = new NBTOutputStream(new FileOutputStream(file))) {
+           tagToWrite.getValue().put(x, new IntTag(x, distance.getBlockX()));
+           tagToWrite.getValue().put(y, new IntTag(y, distance.getBlockY()));
+           tagToWrite.getValue().put(z, new IntTag(z, distance.getBlockZ()));
+           out.writeTag(tagToWrite);
+           out.flush();
+       }
     }
 
     /**
@@ -72,8 +70,6 @@ public class NbtUtil {
         return tag.getValue().get(tagName);
     }
 
-
-
     /**
      * Writes a {@link Tag} to a {@link CompoundTag}
      *
@@ -82,10 +78,45 @@ public class NbtUtil {
      * @param file {@link File} which contains the NBT data.
      */
     public static void writeTag(Tag<?> tag, CompoundTag tagToWrite, File file) throws IOException {
-        NBTOutputStream out = new NBTOutputStream(new FileOutputStream(file));
-        tagToWrite.getValue().put(tag.getName(), tag);
-        out.writeTag(tagToWrite);
-        out.flush();
-        out.close();
+        try (NBTOutputStream out = new NBTOutputStream(new FileOutputStream(file))) {
+            tagToWrite.getValue().put(tag.getName(), tag);
+            out.writeTag(tagToWrite);
+            out.flush();
+        }
     }
+
+    /**
+     * Creates a new {@link CompoundTag} with the given {@link Tag}s.
+     *
+     * @param name Name of the {@link CompoundTag}.
+     * @param tags Array of Tags that should be contained.
+     * @return a new {@link CompoundTag}.
+     */
+    public static CompoundTag newCompoundTag(String name, Tag<?>... tags) {
+        return new CompoundTag(name, new CompoundMap(Arrays.asList(tags)));
+    }
+
+    /**
+     * Converts a {@link com.sk89q.worldedit.Vector} to NBT.
+     * The {@link CompoundTag} is structured as follows:
+     * <pre>
+     *     <code>
+     *        TAG_Compound("name"): 3 entries {
+     *           TAG_Double("x"): -9
+     *           TAG_Double("y"): -3
+     *           TAG_Double("z"): -15
+     *        }
+     *     </code>
+     * </pre>
+     *
+     * @param name Name of the {@link CompoundTag}.
+     * @param vector {@link com.sk89q.worldedit.Vector} to be converted.
+     * @return a {@link CompoundTag} that represents a {@link com.sk89q.worldedit.Vector}.
+     */
+    public static CompoundTag vectorToNbt(String name, com.sk89q.worldedit.Vector vector) {
+        return newCompoundTag(name, new DoubleTag("x", vector.getX()),
+                                    new DoubleTag("y", vector.getY()),
+                                    new DoubleTag("z", vector.getZ()));
+    }
+
 }
