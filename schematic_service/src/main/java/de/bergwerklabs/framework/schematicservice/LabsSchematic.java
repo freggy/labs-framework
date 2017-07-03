@@ -8,6 +8,9 @@ import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.MaxChangedBlocksException;
 import com.sk89q.worldedit.data.DataException;
 import com.sk89q.worldedit.schematic.SchematicFormat;
+import de.bergwerklabs.framework.schematicservice.event.SchematicPlacedEvent;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.io.File;
@@ -75,14 +78,9 @@ public class LabsSchematic<T> {
             try {
                 SchematicFormat.getFormat(schematicFile).load(schematicFile).paste(session, new com.sk89q.worldedit.Vector(to.getX(), to.getY(), to.getZ()), true, true);
                 session.flushQueue();
+                Bukkit.getPluginManager().callEvent(new SchematicPlacedEvent(this, new Location(Bukkit.getWorld(world), to.getX(), to.getY(), to.getZ())));
             }
-            catch (MaxChangedBlocksException e) {
-                e.printStackTrace();
-            }
-            catch (DataException e) {
-                e.printStackTrace();
-            }
-            catch (IOException e) {
+            catch (Exception e) {
                 e.printStackTrace();
             }
         });
