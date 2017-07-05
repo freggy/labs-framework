@@ -32,11 +32,6 @@ public class LabsSchematic<T> {
     }
 
     /**
-     * Gets the origin of this schematic.
-     */
-    public Vector getOrigin() { return this.origin; }
-
-    /**
      * Gets the metadata contained in this schematic.
      */
     public T getMetadata() { return this.metadata; }
@@ -49,7 +44,6 @@ public class LabsSchematic<T> {
     void setMetadata(T metadata) { this.metadata = metadata; }
 
     private File schematicFile;
-    private Vector origin;
     private T metadata;
 
     /**
@@ -57,12 +51,6 @@ public class LabsSchematic<T> {
      */
     public LabsSchematic(File schematicFile) {
         this.schematicFile = schematicFile;
-
-        CompoundTag tag = NbtUtil.readCompoundTag(schematicFile);
-
-        this.origin = new Vector(Float.valueOf(NbtUtil.readTag("WEOriginX", tag).getValue().toString()),
-                                 Float.valueOf(NbtUtil.readTag("WEOriginY", tag).getValue().toString()),
-                                 Float.valueOf(NbtUtil.readTag("WEOriginZ", tag).getValue().toString()));
     }
 
     /**

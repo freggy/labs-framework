@@ -3,7 +3,6 @@ package de.bergwerklabs.framework.schematicservice;
 import com.flowpowered.nbt.*;
 import com.flowpowered.nbt.stream.NBTInputStream;
 import com.flowpowered.nbt.stream.NBTOutputStream;
-import com.sun.org.apache.regexp.internal.RE;
 import org.bukkit.util.Vector;
 
 import java.io.File;
@@ -117,6 +116,28 @@ public class NbtUtil {
         return newCompoundTag(name, new DoubleTag("x", vector.getX()),
                                     new DoubleTag("y", vector.getY()),
                                     new DoubleTag("z", vector.getZ()));
+    }
+
+    /**
+     * Converts a {@link CompoundTag} to a {@link Vector}.
+     * Structure of the {@link CompoundTag}:
+     * <pre>
+     *     <code>
+     *        TAG_Compound("name"): 3 entries {
+     *           TAG_Double("x"): -9
+     *           TAG_Double("y"): -3
+     *           TAG_Double("z"): -15
+     *        }
+     *     </code>
+     * </pre>
+     *
+     * @param tag {@link CompoundTag} that represents a {@link Vector}.
+     * @return a {@link Vector}
+     */
+    public static Vector vectorFromNbt(CompoundTag tag) {
+        return new Vector((Double)tag.getValue().get("x").getValue(),
+                          (Double)tag.getValue().get("y").getValue(),
+                          (Double)tag.getValue().get("z").getValue());
     }
 
 }
