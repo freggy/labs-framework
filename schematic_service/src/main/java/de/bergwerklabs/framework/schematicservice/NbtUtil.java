@@ -112,10 +112,10 @@ public class NbtUtil {
      * @param vector {@link com.sk89q.worldedit.Vector} to be converted.
      * @return a {@link CompoundTag} that represents a {@link com.sk89q.worldedit.Vector}.
      */
-    public static CompoundTag vectorToNbt(String name, com.sk89q.worldedit.Vector vector) {
-        return newCompoundTag(name, new DoubleTag("x", vector.getX()),
-                                    new DoubleTag("y", vector.getY()),
-                                    new DoubleTag("z", vector.getZ()));
+    public static CompoundTag intVectorToNbt(String name, com.sk89q.worldedit.Vector vector) {
+        return newCompoundTag(name, new IntTag("x", vector.getBlockX()),
+                                    new IntTag("y", vector.getBlockY()),
+                                    new IntTag("z", vector.getBlockZ()));
     }
 
     /**
@@ -134,10 +134,10 @@ public class NbtUtil {
      * @param tag {@link CompoundTag} that represents a {@link Vector}.
      * @return a {@link Vector}
      */
-    public static Vector vectorFromNbt(CompoundTag tag) {
-        return new Vector((Double)tag.getValue().get("x").getValue(),
-                          (Double)tag.getValue().get("y").getValue(),
-                          (Double)tag.getValue().get("z").getValue());
+    public static Vector intVectorFromNbt(CompoundTag tag) {
+        return new Vector((Integer) tag.getValue().get("x").getValue(),
+                          (Integer) tag.getValue().get("y").getValue(),
+                          (Integer) tag.getValue().get("z").getValue());
     }
 
 }
