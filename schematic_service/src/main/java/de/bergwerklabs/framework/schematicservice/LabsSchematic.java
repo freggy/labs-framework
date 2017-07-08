@@ -62,15 +62,15 @@ public class LabsSchematic<T> {
     public void pasteAsync(String world, Vector to) {
 
         TaskManager.IMP.async(() -> {
-            EditSession session = new EditSessionBuilder(FaweAPI.getWorld(world)).fastmode(true).checkMemory(true).build();
+            EditSession session = new EditSessionBuilder(FaweAPI.getWorld(world)).fastmode(true).checkMemory(true).build(); // Maybe turn fast mode off?
             try {
                 SchematicFormat.getFormat(schematicFile).load(schematicFile).paste(session, new com.sk89q.worldedit.Vector(to.getX(), to.getY(), to.getZ()), true, true);
                 session.flushQueue();
-                Bukkit.getPluginManager().callEvent(new SchematicPlacedEvent(this, new Location(Bukkit.getWorld(world), to.getX(), to.getY(), to.getZ())));
             }
             catch (Exception e) {
                 e.printStackTrace();
             }
+            Bukkit.getPluginManager().callEvent(new SchematicPlacedEvent(this, new Location(Bukkit.getWorld(world), to.getX(), to.getY(), to.getZ())));
         });
     }
 }

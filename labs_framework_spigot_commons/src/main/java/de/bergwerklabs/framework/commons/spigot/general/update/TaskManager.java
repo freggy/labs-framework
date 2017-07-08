@@ -1,6 +1,6 @@
 package de.bergwerklabs.framework.commons.spigot.general.update;
 
-import de.bergwerklabs.framework.commons.spigot.LabsFrameworkSpigotCommons;
+import de.bergwerklabs.framework.commons.spigot.SpigotCommons;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
@@ -40,7 +40,7 @@ public class TaskManager {
      * @param interval interval in which the update mehtod gets called.
      */
     private static BukkitTask createUpdateScheduler(Integer interval) {
-        return Bukkit.getScheduler().runTaskTimerAsynchronously(LabsFrameworkSpigotCommons.getInstance(), () -> {
+        return Bukkit.getScheduler().runTaskTimerAsynchronously(SpigotCommons.getInstance(), () -> {
                 items.get(interval).forEach(item -> item.update());
         }, (interval / 1000) * 20, (interval / 1000) * 20);
     }

@@ -1,6 +1,6 @@
 package de.bergwerklabs.framework.commons.spigot.inventorymenu;
 
-import de.bergwerklabs.framework.commons.spigot.LabsFrameworkSpigotCommons;
+import de.bergwerklabs.framework.commons.spigot.SpigotCommons;
 import de.bergwerklabs.framework.commons.spigot.inventorymenu.inventoryelements.span.InventoryItemColumnSpan;
 import de.bergwerklabs.framework.commons.spigot.item.ItemStackUtil;
 import de.bergwerklabs.framework.commons.spigot.json.version.Versionable;
@@ -94,7 +94,7 @@ public class InventoryMenu implements Listener, Versionable, Identifiable {
         this.id  = id;
 
         InventoryMenuManager.menus.put(this.id, this);
-        Bukkit.getServer().getPluginManager().registerEvents(this, LabsFrameworkSpigotCommons.getInstance());
+        Bukkit.getServer().getPluginManager().registerEvents(this, SpigotCommons.getInstance());
 
         // Render order has to be respected.
         if (rects != null && !rects.isEmpty()) {

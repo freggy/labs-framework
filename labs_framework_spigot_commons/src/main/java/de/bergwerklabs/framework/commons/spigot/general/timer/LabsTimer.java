@@ -1,6 +1,6 @@
 package de.bergwerklabs.framework.commons.spigot.general.timer;
 
-import de.bergwerklabs.framework.commons.spigot.LabsFrameworkSpigotCommons;
+import de.bergwerklabs.framework.commons.spigot.SpigotCommons;
 import de.bergwerklabs.framework.commons.spigot.general.timer.event.LabsTimerStartEvent;
 import de.bergwerklabs.framework.commons.spigot.general.timer.event.LabsTimerStopEvent;
 import org.bukkit.Bukkit;
@@ -41,7 +41,7 @@ public class LabsTimer {
      * Starts the timer that will run every second.
      */
     public void start() {
-        task = Bukkit.getScheduler().runTaskTimerAsynchronously(LabsFrameworkSpigotCommons.getInstance(), () -> {
+        task = Bukkit.getScheduler().runTaskTimerAsynchronously(SpigotCommons.getInstance(), () -> {
             runnable.run(timeLeft);
             if (timeLeft <= 0) this.stop();
             timeLeft--;

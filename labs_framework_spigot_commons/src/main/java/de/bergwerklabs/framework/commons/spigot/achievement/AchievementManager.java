@@ -1,6 +1,6 @@
 package de.bergwerklabs.framework.commons.spigot.achievement;
 
-import de.bergwerklabs.framework.commons.spigot.LabsFrameworkSpigotCommons;
+import de.bergwerklabs.framework.commons.spigot.SpigotCommons;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,7 +28,7 @@ public class AchievementManager implements Listener {
     private static AchievementManager instance;
 
     public AchievementManager() {
-        if (instance != null) Bukkit.getLogger().info(LabsFrameworkSpigotCommons.getInstance().CONSOLE_PREFIX + "AchievementManager can only be instantiated once.");
+        if (instance != null) Bukkit.getLogger().info(SpigotCommons.getInstance().CONSOLE_PREFIX + "AchievementManager can only be instantiated once.");
             instance = this;
     }
 

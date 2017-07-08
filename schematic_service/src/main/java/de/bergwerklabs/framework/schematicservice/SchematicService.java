@@ -55,9 +55,16 @@ public class SchematicService<T> {
     public LabsSchematic<T> createSchematic(File file) {
         LabsSchematic<T> schematic = new LabsSchematic<>(file);
         CompoundTag tag = NbtUtil.readCompoundTag(file);
-        this.deserializer.deserialize((CompoundTag) tag.getValue().get("Metadata"));
-        T metadata = this.deserializer.deserialize((CompoundTag) tag.getValue().get("Metadata")); // TODO: in line
-        schematic.setMetadata(metadata);
+
+        if (!tag.getValue().containsKey("Metadata")) {
+            System.out.println(SchematicMain.CONSOLE_PREFIX + "File" + file.getName() + "does not contain metadata");
+        }
+        else {
+            this.deserializer.deserialize((CompoundTag) tag.getValue().get("Metadata"));
+            T metadata = this.deserializer.deserialize((CompoundTag) tag.getValue().get("Metadata")); // TODO: in line
+            schematic.setMetadata(metadata);
+        }
+
         return schematic;
     }
 

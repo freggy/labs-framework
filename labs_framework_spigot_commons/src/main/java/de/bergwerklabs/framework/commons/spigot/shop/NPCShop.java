@@ -1,6 +1,6 @@
 package de.bergwerklabs.framework.commons.spigot.shop;
 
-import de.bergwerklabs.framework.commons.spigot.LabsFrameworkSpigotCommons;
+import de.bergwerklabs.framework.commons.spigot.SpigotCommons;
 import de.bergwerklabs.framework.commons.spigot.inventorymenu.InventoryMenu;
 import de.bergwerklabs.util.entity.NPC;
 import de.bergwerklabs.util.entity.NPCInteractEvent;
@@ -31,7 +31,7 @@ public class NPCShop extends AbstractShop implements Listener {
         super(inventoryMenu, version, id);
         this.inventoryMenu = inventoryMenu;
         this.npc           = npc;
-        Bukkit.getServer().getPluginManager().registerEvents(this, LabsFrameworkSpigotCommons.getInstance());
+        Bukkit.getServer().getPluginManager().registerEvents(this, SpigotCommons.getInstance());
     }
 
     /**

@@ -10,22 +10,21 @@ import org.bukkit.plugin.java.JavaPlugin;
  * <p> Main class </p>
  * @author Yannic Rieger
  */
-public class LabsFrameworkSpigotCommons extends JavaPlugin implements Listener, LabsController {
+public class SpigotCommons extends JavaPlugin implements Listener, LabsController {
 
     /**
      * Gets the instance of the Framework Plugin.
      */
-    public static LabsFrameworkSpigotCommons getInstance() { return instance; }
+    public static SpigotCommons getInstance() { return instance; }
 
-    public final String CONSOLE_PREFIX = "[LabsFrameworkSpigotCommons] ";
+    public final String CONSOLE_PREFIX = "[SpigotCommons] ";
 
-    private static LabsFrameworkSpigotCommons instance;
+    private static SpigotCommons instance;
 
     @Override
     public void onEnable() {
         // Just for test purposes
         FileUtil.createFolderIfNotExistent(this.getDataFolder());
-        this.getServer().getPluginManager().registerEvents(this, this);
         instance = this;
     }
 

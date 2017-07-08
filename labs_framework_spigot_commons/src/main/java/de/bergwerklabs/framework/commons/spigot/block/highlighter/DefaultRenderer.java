@@ -1,6 +1,6 @@
 package de.bergwerklabs.framework.commons.spigot.block.highlighter;
 
-import de.bergwerklabs.framework.commons.spigot.LabsFrameworkSpigotCommons;
+import de.bergwerklabs.framework.commons.spigot.SpigotCommons;
 import de.bergwerklabs.util.effect.Particle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -29,7 +29,7 @@ public class DefaultRenderer extends BlockHighlightRenderer {
      * Highlights the given block completely.
      */
     private void highlightComplete() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(LabsFrameworkSpigotCommons.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(SpigotCommons.getInstance(), () -> {
             for (Double x = minPoint.getX(); x < maxPoint.getX(); x += .1) {
                 for (Double z = minPoint.getZ(); z < maxPoint.getZ(); z += .1) {
                     for (Double y = minPoint.getY(); y < maxPoint.getY(); y += .1) {
