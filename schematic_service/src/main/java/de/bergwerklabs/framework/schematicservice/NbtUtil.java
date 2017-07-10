@@ -5,10 +5,7 @@ import com.flowpowered.nbt.stream.NBTInputStream;
 import com.flowpowered.nbt.stream.NBTOutputStream;
 import org.bukkit.util.Vector;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 
 /**
@@ -109,13 +106,15 @@ public class NbtUtil {
      * </pre>
      *
      * @param name Name of the {@link CompoundTag}.
-     * @param vector {@link com.sk89q.worldedit.Vector} to be converted.
-     * @return a {@link CompoundTag} that represents a {@link com.sk89q.worldedit.Vector}.
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param z z coordinate
+     * @return a {@link CompoundTag} that represents a vector.
      */
-    public static CompoundTag intVectorToNbt(String name, com.sk89q.worldedit.Vector vector) {
-        return newCompoundTag(name, new IntTag("x", vector.getBlockX()),
-                                    new IntTag("y", vector.getBlockY()),
-                                    new IntTag("z", vector.getBlockZ()));
+    public static CompoundTag vectorToNbt(String name, Double x, Double y, Double z) {
+        return newCompoundTag(name, new DoubleTag("x", x),
+                                    new DoubleTag("y", y),
+                                    new DoubleTag("z", z));
     }
 
     /**
@@ -134,10 +133,13 @@ public class NbtUtil {
      * @param tag {@link CompoundTag} that represents a {@link Vector}.
      * @return a {@link Vector}
      */
-    public static Vector intVectorFromNbt(CompoundTag tag) {
-        return new Vector((Integer) tag.getValue().get("x").getValue(),
-                          (Integer) tag.getValue().get("y").getValue(),
-                          (Integer) tag.getValue().get("z").getValue());
+    public static Vector vectorFromNbt(CompoundTag tag) {
+        Vector v = new Vector(new Double(tag.getValue().get("x").getValue().toString()),
+                          new Double(tag.getValue().get("y").getValue().toString()),
+                          new Double(tag.getValue().get("z").getValue().toString()));
+
+        System.out.println("NBT: " + v);
+        return v;
     }
 
 }

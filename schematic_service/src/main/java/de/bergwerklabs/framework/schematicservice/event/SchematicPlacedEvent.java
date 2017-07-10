@@ -27,10 +27,14 @@ public class SchematicPlacedEvent extends Event {
         return placed;
     }
 
-    @Override
-    public HandlerList getHandlers() { return this.handlers; }
+    public static HandlerList getHandlerList() { return handlers; }
 
-    private HandlerList handlers = new HandlerList();
+    private static HandlerList handlers = new HandlerList();
+
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 
     private LabsSchematic schematic;
     private Location placed;

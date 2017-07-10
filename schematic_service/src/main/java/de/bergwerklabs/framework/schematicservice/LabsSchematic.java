@@ -37,6 +37,12 @@ public class LabsSchematic<T> {
     public T getMetadata() { return this.metadata; }
 
     /**
+     * Gets a value indicating whether or not the {@code LabsSchematic} has metadata.
+     */
+    public boolean hasMetadata() { return this.metadata != null; }
+
+
+    /**
      * Sets the metadata.
      *
      * @param metadata Metadata object that will be written into the schematic file.
@@ -65,11 +71,13 @@ public class LabsSchematic<T> {
             EditSession session = new EditSessionBuilder(FaweAPI.getWorld(world)).fastmode(true).checkMemory(true).build(); // Maybe turn fast mode off?
             try {
                 SchematicFormat.getFormat(schematicFile).load(schematicFile).paste(session, new com.sk89q.worldedit.Vector(to.getX(), to.getY(), to.getZ()), true, true);
-                session.flushQueue();
             }
             catch (Exception e) {
                 e.printStackTrace();
             }
+            session.flushQueue();
+
+            // TODO: execute sync
             Bukkit.getPluginManager().callEvent(new SchematicPlacedEvent(this, new Location(Bukkit.getWorld(world), to.getX(), to.getY(), to.getZ())));
         });
     }
