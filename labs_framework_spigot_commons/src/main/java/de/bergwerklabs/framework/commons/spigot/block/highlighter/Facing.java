@@ -7,5 +7,5 @@ package de.bergwerklabs.framework.commons.spigot.block.highlighter;
  * @author Yannic Rieger
  */
 public enum Facing {
-    UP, DOWN, NORTH, SOUTH, EAST, WEST, COMPLETE
+    UP, DOWN, NORTH, SOUTH, EAST, WEST, COMPLETE;
 }

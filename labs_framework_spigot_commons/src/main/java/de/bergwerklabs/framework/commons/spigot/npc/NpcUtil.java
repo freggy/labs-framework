@@ -12,7 +12,7 @@ import org.bukkit.Location;
  * <p> Util class providing useful methods for working with NPCs </p>
  * @author Yannic Rieger
  */
-public class NPCUtil {
+public class NpcUtil {
 
     // Maybe use version mechanism here as well?
 
@@ -21,11 +21,11 @@ public class NPCUtil {
      * @param json JsonObject representing the npc.
      * @return NPC frm JSON.
      */
-    public static NPC getNPCFromJson(JsonObject json) {
+    public static NPC getNpcFromJson(JsonObject json) {
 
         String tile = "", subtitle = "";
         boolean displayTitle = false, displaySubtitle = false;
-        NPCBuilder builder = null;
+        NpcBuilder builder = null;
 
         if (json.has("title")) {
             tile = json.get("title").getAsString();
@@ -46,7 +46,7 @@ public class NPCUtil {
         Location location = LocationUtil.locationFromJson(json.get("location").getAsJsonObject());
 
         try {
-            builder = new NPCBuilder(tile, subtitle, displayTitle, displaySubtitle, location);
+            builder = new NpcBuilder(tile, subtitle, displayTitle, displaySubtitle, location);
 
             if (json.has("armor"))
                 builder.setArmor(ItemStackUtil.createItemStackFromJson(json.get("armor").getAsJsonObject()));

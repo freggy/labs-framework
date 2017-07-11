@@ -62,6 +62,7 @@ public class BlockHighlighter {
     /**
      * Highlights the block using the render implementation of the {@link BlockHighlightRenderer},
      * if no custom renderer is given, the default one will be used instead.
+     * If {@link Facing} is {@code null} the complete block will be highlighted.
      *
      * @param facing Defining which side should be highlighted.
      */
