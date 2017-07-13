@@ -15,7 +15,7 @@ import java.util.UUID;
 
 /**
  * Created by Yannic Rieger on 12.07.2017.
- * <p>  </p>
+ * <p> Class for creating NPCs.
  *
  * @author Yannic Rieger
  */

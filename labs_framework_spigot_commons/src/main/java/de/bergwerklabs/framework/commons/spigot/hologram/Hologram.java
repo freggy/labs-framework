@@ -6,7 +6,8 @@ import java.util.Queue;
 
 /**
  * Created by Yannic Rieger on 13.07.2017.
- * <p>  </p>
+ * <p> This class implements floating text and {@link org.bukkit.inventory.ItemStack}s in Minecraft.
+ *     internally this is implemented by using invisible armor stands.
  *
  * @author Yannic Rieger
  */
