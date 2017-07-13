@@ -77,8 +77,9 @@ public class LabsSchematic<T> {
             }
             session.flushQueue();
 
-            // TODO: execute sync
-            Bukkit.getPluginManager().callEvent(new SchematicPlacedEvent(this, new Location(Bukkit.getWorld(world), to.getX(), to.getY(), to.getZ())));
+            synchronized (this) {
+                Bukkit.getPluginManager().callEvent(new SchematicPlacedEvent(this, new Location(Bukkit.getWorld(world), to.getX(), to.getY(), to.getZ())));
+            }
         });
     }
 }

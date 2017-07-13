@@ -7,13 +7,15 @@ import java.io.IOException;
 
 /**
  * Created by Yannic Rieger on 25.04.2017.
- * <p> Class containing useful methods for working with files. </p>
+ * <p> Class containing useful methods for working with files.
+ *
  * @author Yannic Rieger
  */
 public class FileUtil {
 
     /**
      * Creates a folder if it doesn't already exists.
+     *
      * @param file File object representing a folder.
      */
     public static void createFolderIfNotExistent(File file) {
@@ -25,13 +27,12 @@ public class FileUtil {
 
     /**
      * Creates a file if it doesn't already exists
+     *
      * @param file File object representing a file.
-     * @throws IOException
+     * @return value indicating whether or not the file could be created.
      */
-    public static void createFileIfNotExistent(File file) throws IOException {
+    public static boolean createFileIfNotExistent(File file) throws IOException {
         Validate.notNull(file, "Parameter 'file' cannot be null");
-        if (!file.exists()) {
-            file.createNewFile();
-        }
+            return !file.exists() && file.createNewFile();
     }
 }

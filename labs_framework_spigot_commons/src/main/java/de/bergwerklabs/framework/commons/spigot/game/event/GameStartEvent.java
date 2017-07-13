@@ -11,23 +11,31 @@ import org.bukkit.event.HandlerList;
  *
  * @author Yannic Rieger
  */
-public class GameStartEvent extends Event {
+public class GameStartEvent<T extends LabsPlayer> extends Event {
 
     /**
-     * Gets the {@link LabsGame} that has been started.
+     * Gets the {@link LabsGame<T>} that has been started.
      */
-    public <T extends LabsPlayer> LabsGame<T> getGame() { return this.game; }
+    public LabsGame<T> getGame() { return this.game; }
+
+    /**
+     * Gets the list of all handlers.
+     */
+    public static HandlerList getHandlerList() { return handlers; }
 
     @Override
-    public HandlerList getHandlers() { return handlerList; }
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 
+    private static HandlerList handlers = new HandlerList();
     private HandlerList handlerList = new HandlerList();
-    private LabsGame game;
+    private LabsGame<T> game;
 
     /**
      * @param game Instance of a {@link LabsGame}.
      */
-    public <T extends LabsPlayer> GameStartEvent(LabsGame<T> game) {
+    public GameStartEvent(LabsGame<T> game) {
         this.game = game;
     }
 }

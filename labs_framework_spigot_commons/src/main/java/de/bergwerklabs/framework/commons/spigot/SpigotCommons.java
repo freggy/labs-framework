@@ -2,7 +2,9 @@ package de.bergwerklabs.framework.commons.spigot;
 
 import de.bergwerklabs.framework.commons.spigot.file.FileUtil;
 import de.bergwerklabs.framework.commons.spigot.general.LabsController;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -26,10 +28,17 @@ public class SpigotCommons extends JavaPlugin implements Listener, LabsControlle
         // Just for test purposes
         FileUtil.createFolderIfNotExistent(this.getDataFolder());
         instance = this;
+
+        this.getServer().getPluginManager().registerEvents(this, this);
     }
 
     @Override
     public void onDisable() {
         this.getServer().getScheduler().cancelTasks(this);
+    }
+
+    @EventHandler
+    private void respwan(PlayerRespawnEvent e) {
+
     }
 }

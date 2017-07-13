@@ -36,10 +36,12 @@ public class WrapperPlayServerNamedEntitySpawn extends AbstractPacket {
     public WrapperPlayServerNamedEntitySpawn() {
         super(new PacketContainer(TYPE), TYPE);
         handle.getModifier().writeDefaults();
+        handle.getIntegers().write(0, 0);
     }
 
     public WrapperPlayServerNamedEntitySpawn(PacketContainer packet) {
         super(packet, TYPE);
+        handle.getIntegers().write(0, 0);
     }
 
     /**
@@ -122,28 +124,25 @@ public class WrapperPlayServerNamedEntitySpawn extends AbstractPacket {
         setZ(position.getZ());
     }
 
+    /**
+     *
+     */
     public double getX() {
-        return handle.getDoubles().read(0);
+        return handle.getIntegers().read(1);
     }
 
-    public void setX(double value) {
-        handle.getDoubles().write(0, value);
-    }
-
+    /**
+     *
+     */
     public double getY() {
-        return handle.getDoubles().read(1);
+        return handle.getIntegers().read(2);
     }
 
-    public void setY(double value) {
-        handle.getDoubles().write(1, value);
-    }
-
+    /**
+     *
+     */
     public double getZ() {
-        return handle.getDoubles().read(2);
-    }
-
-    public void setZ(double value) {
-        handle.getDoubles().write(2, value);
+        return handle.getIntegers().read(3);
     }
 
     /**
@@ -156,21 +155,45 @@ public class WrapperPlayServerNamedEntitySpawn extends AbstractPacket {
     }
 
     /**
-     * Set the yaw of the spawned entity.
-     *
-     * @param value - new yaw.
-     */
-    public void setYaw(float value) {
-        handle.getBytes().write(0, (byte) (value * 256.0F / 360.0F));
-    }
-
-    /**
      * Retrieve the pitch of the spawned entity.
      *
      * @return The current pitch
      */
     public float getPitch() {
         return (handle.getBytes().read(1) * 360.F) / 256.0F;
+    }
+
+    /**
+     *
+     * @param value
+     */
+    public void setX(double value) {
+        handle.getIntegers().write(1, (int) Math.floor(value * 32.0D));
+    }
+
+    /**
+     *
+     * @param value
+     */
+    public void setY(double value) {
+        handle.getIntegers().write(2, (int) Math.floor(value * 32.0D));
+    }
+
+    /**
+     *
+     * @param value
+     */
+    public void setZ(double value) {
+        handle.getIntegers().write(3, (int) Math.floor(value * 32.0D));
+    }
+
+    /**
+     * Set the yaw of the spawned entity.
+     *
+     * @param value - new yaw.
+     */
+    public void setYaw(float value) {
+        handle.getBytes().write(0, (byte) (value * 256.0F / 360.0F));
     }
 
     /**

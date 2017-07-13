@@ -27,15 +27,17 @@ public class SchematicPlacedEvent extends Event {
         return placed;
     }
 
+    /**
+     * Gets the list of all handlers.
+     */
     public static HandlerList getHandlerList() { return handlers; }
-
-    private static HandlerList handlers = new HandlerList();
 
     @Override
     public HandlerList getHandlers() {
         return handlers;
     }
 
+    private static HandlerList handlers = new HandlerList();
     private LabsSchematic schematic;
     private Location placed;
 
