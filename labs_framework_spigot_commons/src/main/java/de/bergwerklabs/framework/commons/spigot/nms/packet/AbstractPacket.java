@@ -27,7 +27,7 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketContainer;
 import com.google.common.base.Objects;
 
-public abstract class AbstractPacket {
+public abstract class AbstractPacket implements Packet {
     // The packet we will be modifying
     protected PacketContainer handle;
 

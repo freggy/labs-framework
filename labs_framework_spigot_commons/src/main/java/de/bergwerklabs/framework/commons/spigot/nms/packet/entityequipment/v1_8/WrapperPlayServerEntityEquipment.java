@@ -18,7 +18,9 @@
  */
 package de.bergwerklabs.framework.commons.spigot.nms.packet.entityequipment.v1_8;
 
+import com.sun.jna.platform.win32.WinNT;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.AbstractPacket;
+import jdk.nashorn.internal.runtime.options.OptionTemplate;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
@@ -52,15 +54,6 @@ public class WrapperPlayServerEntityEquipment extends AbstractPacket {
     }
 
     /**
-     * Set Entity ID.
-     *
-     * @param value - new value.
-     */
-    public void setEntityID(int value) {
-        handle.getIntegers().write(0, value);
-    }
-
-    /**
      * Retrieve the entity of the painting that will be spawned.
      *
      * @param world - the current world of the entity.
@@ -81,11 +74,7 @@ public class WrapperPlayServerEntityEquipment extends AbstractPacket {
     }
 
     public ItemSlot getSlot() {
-        return handle.getItemSlots().read(0);
-    }
-
-    public void setSlot(ItemSlot value) {
-        handle.getItemSlots().write(0, value);
+        return this.itemSlotFromNum(this.handle.getIntegers().read(1));
     }
 
     /**
@@ -100,6 +89,19 @@ public class WrapperPlayServerEntityEquipment extends AbstractPacket {
     }
 
     /**
+     * Set Entity ID.
+     *
+     * @param value - new value.
+     */
+    public void setEntityID(int value) {
+        handle.getIntegers().write(0, value);
+    }
+
+    public void setSlot(ItemSlot value) {
+        handle.getIntegers().write(1, this.getSlot(value));
+    }
+
+    /**
      * Set Item.
      *
      * @param value - new value.
@@ -107,4 +109,29 @@ public class WrapperPlayServerEntityEquipment extends AbstractPacket {
     public void setItem(ItemStack value) {
         handle.getItemModifier().write(0, value);
     }
+
+    private int getSlot(ItemSlot slot) {
+        switch (slot) {
+            case MAINHAND: return 0;
+            case FEET: return 1;
+            case LEGS: return 2;
+            case CHEST: return 3;
+            case HEAD: return 4;
+            default: return 0;
+        }
+    }
+
+    private ItemSlot itemSlotFromNum(int val) {
+        switch (val) {
+            case 0: return ItemSlot.MAINHAND;
+            case 1: return ItemSlot.FEET;
+            case 2: return ItemSlot.LEGS;
+            case 3: return ItemSlot.CHEST;
+            case 4: return ItemSlot.HEAD;
+            default: return ItemSlot.MAINHAND;
+        }
+    }
+
+
+
 }

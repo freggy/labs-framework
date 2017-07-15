@@ -2,6 +2,7 @@ package de.bergwerklabs.framework.commons.spigot;
 
 import de.bergwerklabs.framework.commons.spigot.file.FileUtil;
 import de.bergwerklabs.framework.commons.spigot.general.LabsController;
+import de.bergwerklabs.framework.commons.spigot.npc.NpcManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -29,16 +30,11 @@ public class SpigotCommons extends JavaPlugin implements Listener, LabsControlle
         FileUtil.createFolderIfNotExistent(this.getDataFolder());
         instance = this;
 
-        this.getServer().getPluginManager().registerEvents(this, this);
+        this.getServer().getPluginManager().registerEvents(new NpcManager(), this);
     }
 
     @Override
     public void onDisable() {
         this.getServer().getScheduler().cancelTasks(this);
-    }
-
-    @EventHandler
-    private void respwan(PlayerRespawnEvent e) {
-
     }
 }
