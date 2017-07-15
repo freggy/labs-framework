@@ -41,12 +41,8 @@ public class LabsTimer {
      * Starts the timer that will run every second.
      */
     public void start() {
-        task = Bukkit.getScheduler().runTaskTimerAsynchronously(SpigotCommons.getInstance(), () -> {
-            runnable.run(timeLeft);
-            if (timeLeft <= 0) this.stop();
-            timeLeft--;
-        }, 0, 20L);
-        Bukkit.getServer().getPluginManager().callEvent(new LabsTimerStartEvent(this));
+        this.startTask();
+        Bukkit.getServer().getPluginManager().callEvent(new LabsTimerStartEvent(this, LabsTimerStartCause.INITIAL));
     }
 
     /**
@@ -61,6 +57,18 @@ public class LabsTimer {
      * Resumes at the time the timer stopped.
      */
     public void resume() {
-        this.start();
+        this.startTask();
+        Bukkit.getServer().getPluginManager().callEvent(new LabsTimerStartEvent(this, LabsTimerStartCause.RESUMED));
+    }
+
+    /**
+     * Starts the timer task.
+     */
+    private void startTask() {
+        task = Bukkit.getScheduler().runTaskTimerAsynchronously(SpigotCommons.getInstance(), () -> {
+            runnable.run(timeLeft);
+            if (timeLeft <= 0) this.stop();
+            timeLeft--;
+        }, 0, 20L);
     }
 }

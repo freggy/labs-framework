@@ -1,15 +1,11 @@
 package de.bergwerklabs.framework.commons.spigot.npc;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import com.google.gson.JsonObject;
 import de.bergwerklabs.framework.commons.spigot.item.ItemStackUtil;
 import de.bergwerklabs.framework.commons.spigot.location.LocationUtil;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.v1MV8.WrapperPlayServerNamedEntitySpawn;
 import de.bergwerklabs.util.entity.NPC;
 import de.bergwerklabs.util.entity.PlayerSkin;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 
 /**
  * Created by Yannic Rieger on 01.05.2017.

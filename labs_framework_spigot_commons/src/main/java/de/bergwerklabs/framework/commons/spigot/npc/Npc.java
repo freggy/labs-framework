@@ -2,9 +2,9 @@ package de.bergwerklabs.framework.commons.spigot.npc;
 
 import com.comphenix.protocol.wrappers.*;
 import com.mojang.authlib.GameProfile;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.v1MV8.WrapperPlayServerEntityEquipment;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.v1MV8.WrapperPlayServerNamedEntitySpawn;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.v1MV8.WrapperPlayServerPlayerInfo;
+import de.bergwerklabs.framework.commons.spigot.nms.packet.entityequipment.v1_8.WrapperPlayServerEntityEquipment;
+import de.bergwerklabs.framework.commons.spigot.nms.packet.namedentityspawn.v1_8.WrapperPlayServerNamedEntitySpawn;
+import de.bergwerklabs.framework.commons.spigot.nms.packet.v1_8.WrapperPlayServerPlayerInfo;
 import de.bergwerklabs.util.entity.EntityUtil;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -38,8 +38,11 @@ public class Npc {
     private int entityId;
     private Location location;
     private GameProfile gameProfile;
+
     private WrapperPlayServerNamedEntitySpawn spawnPacket = new WrapperPlayServerNamedEntitySpawn();
     private WrapperPlayServerEntityEquipment entityEquipmentPacket = new WrapperPlayServerEntityEquipment();
+    private WrapperPlayServerPlayerInfo info = new WrapperPlayServerPlayerInfo();
+    private WrappedDataWatcher watcher = new WrappedDataWatcher();
 
     public Npc(Location location, String name) {
         this.location = location;
@@ -78,10 +81,11 @@ public class Npc {
      * @param itemSlot
      * @param item
      */
-    public void setEquipment(EnumWrappers.ItemSlot itemSlot, ItemStack item) {
-        this.entityEquipmentPacket.setEntityID(this.entityId);
+    public void setEquipment(Player player, EnumWrappers.ItemSlot itemSlot, ItemStack item) {
         this.entityEquipmentPacket.setItem(item);
         this.entityEquipmentPacket.setSlot(itemSlot);
+        this.entityEquipmentPacket.setEntityID(this.entityId);
+        this.entityEquipmentPacket.sendPacket(player);
     }
 
     /**
@@ -90,8 +94,7 @@ public class Npc {
      * @return
      */
     private WrappedDataWatcher getMetadata()  {
-        WrappedDataWatcher watcher = new WrappedDataWatcher();
-        watcher.setObject(6, 20.0F);
+        this.watcher.setObject(6, 20.0F);
         return watcher;
     }
 
@@ -101,10 +104,9 @@ public class Npc {
      * @param action
      */
     private void handleTabList(Player player, EnumWrappers.PlayerInfoAction action) {
-        WrapperPlayServerPlayerInfo info = new WrapperPlayServerPlayerInfo();
         PlayerInfoData playerData = new PlayerInfoData(new WrappedGameProfile(gameProfile.getId(), gameProfile.getName()), 1, EnumWrappers.NativeGameMode.NOT_SET, WrappedChatComponent.fromText(gameProfile.getName()));
-        info.setData(Arrays.asList(playerData));
-        info.setAction(action);
-        info.sendPacket(player);
+        this.info.setData(Arrays.asList(playerData));
+        this.info.setAction(action);
+        this.info.sendPacket(player);
     }
 }
