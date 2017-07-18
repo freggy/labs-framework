@@ -1,23 +1,27 @@
 package de.bergwerklabs.framework.commons.spigot.npc;
 
+import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.wrappers.*;
 import com.mojang.authlib.GameProfile;
+import de.bergwerklabs.framework.commons.spigot.SpigotCommons;
 import de.bergwerklabs.framework.commons.spigot.general.reflection.LabsReflection;
-import de.bergwerklabs.framework.commons.spigot.nms.Version;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.Packet;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.entitiyheadrotation.EntityHeadRotationBuilder;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.entitiyheadrotation.EntityHeadRotationPacket;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.entitiyheadrotation.v1_8.WrapperPlayServerEntityHeadRotation;
+import de.bergwerklabs.framework.commons.spigot.nms.MinecraftVersion;
+import de.bergwerklabs.framework.commons.spigot.nms.packet.entityheadrotation.EntityHeadRotationBuilder;
+import de.bergwerklabs.framework.commons.spigot.nms.packet.entityheadrotation.EntityHeadRotationPacket;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.entityequipment.v1_8.WrapperPlayServerEntityEquipment;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.namedentityspawn.v1_8.WrapperPlayServerNamedEntitySpawn;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.entitiylook.v1_8.WrapperPlayServerEntityLook;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.v1_8.WrapperPlayServerPlayerInfo;
 import de.bergwerklabs.util.entity.EntityUtil;
+import net.minecraft.server.v1_8_R2.ServerPing;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -42,16 +46,26 @@ public class Npc {
         return location;
     }
 
+    /**
+     *
+     */
+    public Map<EnumWrappers.ItemSlot, ItemStack> getEquipment() { return this.equipment; }
+
+
+
     private int entityId;
     private Location location;
-    private GameProfile gameProfile;
+    private HashMap<EnumWrappers.ItemSlot, ItemStack> equipment = new HashMap<>();
 
+    private GameProfile gameProfile;
     private WrapperPlayServerNamedEntitySpawn spawnPacket = new WrapperPlayServerNamedEntitySpawn();
     private WrapperPlayServerEntityEquipment entityEquipmentPacket = new WrapperPlayServerEntityEquipment();
     private WrapperPlayServerPlayerInfo info = new WrapperPlayServerPlayerInfo();
     private WrappedDataWatcher watcher = new WrappedDataWatcher();
     private WrapperPlayServerEntityLook entityLookPacket = new WrapperPlayServerEntityLook();
+
     private EntityHeadRotationPacket entityHeadRotationPacket;
+
 
     public Npc(Location location, String name) {
         this.location = location;
@@ -70,6 +84,11 @@ public class Npc {
         this.spawnPacket.setYaw(this.location.getYaw());
         this.spawnPacket.setPitch(this.location.getPitch());
 
+        this.entityHeadRotationPacket = new EntityHeadRotationBuilder(MinecraftVersion.formString(LabsReflection.getVersion()))
+                .setEntityId(this.entityId)
+                .setHeadYaw(this.location.getYaw())
+                .build();
+
         NpcManager.getNpcs().put(this.entityId, this);
     }
 
@@ -83,9 +102,9 @@ public class Npc {
         // because otherwise the client will not render the npc.
         this.handleTabList(player, EnumWrappers.PlayerInfoAction.ADD_PLAYER);
         this.spawnPacket.sendPacket(player);
-        //this.updateHeadRotation(player, this.spawnPacket.getPitch(), this.spawnPacket.getYaw());
-        this.buildHeadRotationPacket(this.entityId, this.spawnPacket.getYaw()).sendPacket(player);
-        this.handleTabList(player, EnumWrappers.PlayerInfoAction.REMOVE_PLAYER);
+        this.entityHeadRotationPacket.sendPacket(player);
+        this.sendFullEquipment(player);
+        Bukkit.getScheduler().runTaskLater(SpigotCommons.getInstance(), () -> this.handleTabList(player, EnumWrappers.PlayerInfoAction.REMOVE_PLAYER), 1L);
     }
 
     /**
@@ -93,12 +112,43 @@ public class Npc {
      * @param itemSlot
      * @param item
      */
+    public void setEquipment(EnumWrappers.ItemSlot itemSlot, ItemStack item) {
+        this.equipment.putIfAbsent(itemSlot, item);
+    }
+
+    /**
+     *
+     * @param player
+     * @param itemSlot
+     * @param item
+     */
     public void setEquipment(Player player, EnumWrappers.ItemSlot itemSlot, ItemStack item) {
-        this.entityEquipmentPacket.setItem(item);
-        this.entityEquipmentPacket.setSlot(itemSlot);
+        this.equipment.putIfAbsent(itemSlot, item);
+        this.sendEquipmentPart(player, itemSlot, item);
+    }
+
+    /**
+     *
+     * @param player
+     */
+    private void sendFullEquipment(Player player) {
+        this.equipment.forEach((slot, item) -> this.sendEquipmentPart(player, slot, item));
+    }
+
+    /**
+     *
+     * @param player
+     * @param slot
+     * @param item
+     */
+    private void sendEquipmentPart(Player player, EnumWrappers.ItemSlot slot, ItemStack item) {
         this.entityEquipmentPacket.setEntityID(this.entityId);
+        this.entityEquipmentPacket.setSlot(slot);
+        this.entityEquipmentPacket.setItem(item);
         this.entityEquipmentPacket.sendPacket(player);
     }
+
+
 
     /**
      *
@@ -111,9 +161,6 @@ public class Npc {
         this.entityLookPacket.setOnGround(true);
         this.entityLookPacket.setPitch(pitch);
         this.entityLookPacket.setYaw(yaw);
-
-        this.entityLookPacket.sendPacket(player);
-        this.entityHeadRotationPacket.sendPacket(player);
     }
 
     /**
@@ -140,12 +187,5 @@ public class Npc {
         this.info.setData(Arrays.asList(playerData));
         this.info.setAction(action);
         this.info.sendPacket(player);
-    }
-
-    private Packet buildHeadRotationPacket(int entityId, float yaw) {
-        return new EntityHeadRotationBuilder(LabsReflection.getVersion())
-                .setEntityId(entityId)
-                .setHeadYaw(yaw)
-                .build();
     }
 }

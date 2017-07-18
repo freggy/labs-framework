@@ -16,11 +16,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.bergwerklabs.framework.commons.spigot.nms.packet.entitiyheadrotation.v1_8;
+package de.bergwerklabs.framework.commons.spigot.nms.packet.entityheadrotation.v1_8;
 
-import de.bergwerklabs.framework.commons.spigot.nms.NmsUtil;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.AbstractPacket;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.entitiyheadrotation.EntityHeadRotationPacket;
+import de.bergwerklabs.framework.commons.spigot.nms.packet.entityheadrotation.EntityHeadRotationPacket;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 

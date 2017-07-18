@@ -77,7 +77,7 @@ public class InventoryMenu implements Listener, Versionable, Identifiable {
     /**
      * @param inventory  Minecraft Inventory.
      * @param items      Items contained in this inventory.
-     * @param version    Version of the inventory json file.
+     * @param version    MinecraftVersion of the inventory json file.
      * @param controller Controller which contains the important methods.
      */
     public InventoryMenu(Inventory inventory, String version, String id, LabsController controller, ArrayList<InventoryItem> items,

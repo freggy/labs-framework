@@ -36,18 +36,18 @@ public class WrapperHandshakingClientSetProtocol extends AbstractPacket {
     }
 
     /**
-     * Retrieve Protocol Version.
+     * Retrieve Protocol MinecraftVersion.
      * <p>
      * Notes: (4 as of 1.7.2)
      *
-     * @return The current Protocol Version
+     * @return The current Protocol MinecraftVersion
      */
     public int getProtocolVersion() {
         return handle.getIntegers().read(0);
     }
 
     /**
-     * Set Protocol Version.
+     * Set Protocol MinecraftVersion.
      *
      * @param value - new value.
      */

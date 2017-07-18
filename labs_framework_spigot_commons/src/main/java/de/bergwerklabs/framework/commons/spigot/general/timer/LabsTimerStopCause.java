@@ -8,5 +8,5 @@ package de.bergwerklabs.framework.commons.spigot.general.timer;
  * @author Yannic Rieger
  */
 public enum LabsTimerStopCause {
-    TIMES_UP, STOPPED
+    TIMES_UP, STOPPED, RESTART
 }

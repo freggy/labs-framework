@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.commons.spigot.nms.packet.entitiyheadrotation;
+package de.bergwerklabs.framework.commons.spigot.nms.packet.entityheadrotation;
 
 import de.bergwerklabs.framework.commons.spigot.nms.packet.Packet;
 

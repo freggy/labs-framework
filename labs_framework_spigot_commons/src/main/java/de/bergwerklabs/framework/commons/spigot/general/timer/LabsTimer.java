@@ -42,7 +42,14 @@ public class LabsTimer {
      */
     public void start() {
         this.startTask();
+        this.timeLeft = duration;
         Bukkit.getServer().getPluginManager().callEvent(new LabsTimerStartEvent(this, LabsTimerStartCause.INITIAL));
+    }
+
+    public void restart() {
+        this.stopTask(LabsTimerStopCause.RESTART);
+        this.timeLeft = this.duration;
+        this.startTask();
     }
 
     /**
@@ -64,11 +71,13 @@ public class LabsTimer {
      * Starts the timer task.
      */
     private void startTask() {
-        task = Bukkit.getScheduler().runTaskTimerAsynchronously(SpigotCommons.getInstance(), () -> {
-            runnable.run(timeLeft);
-            if (timeLeft <= 0) this.stopTask(LabsTimerStopCause.TIMES_UP);
-            timeLeft--;
-        }, 0, 20L);
+        if (this.task == null) {
+            task = Bukkit.getScheduler().runTaskTimerAsynchronously(SpigotCommons.getInstance(), () -> {
+                runnable.run(timeLeft);
+                if (timeLeft <= 0) this.stopTask(LabsTimerStopCause.TIMES_UP);
+                timeLeft--;
+            }, 0, 20L);
+        }
     }
 
     /**
@@ -77,7 +86,8 @@ public class LabsTimer {
      * @param cause Reason why the timer stopped.
      */
     private void stopTask(LabsTimerStopCause cause) {
-        this.task.cancel();
+        if (task != null) this.task.cancel();
+        this.task = null;
         Bukkit.getServer().getPluginManager().callEvent(new LabsTimerStopEvent(this, cause));
     }
 }

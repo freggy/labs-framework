@@ -1,5 +1,7 @@
 package de.bergwerklabs.framework.commons.spigot.npc;
 
+import de.bergwerklabs.framework.commons.spigot.SpigotCommons;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -23,6 +25,8 @@ public class NpcManager implements Listener {
 
     @EventHandler
     private void onPlayerRespawn(PlayerRespawnEvent e) {
-        getNpcs().values().forEach(npc -> npc.spawn(e.getPlayer()));
+        System.out.println("adawd");
+        System.out.println(npcs.values().size());
+        Bukkit.getScheduler().runTaskLater(SpigotCommons.getInstance(), () -> getNpcs().values().forEach(npc -> npc.spawn(e.getPlayer())), 2 * 20);
     }
 }

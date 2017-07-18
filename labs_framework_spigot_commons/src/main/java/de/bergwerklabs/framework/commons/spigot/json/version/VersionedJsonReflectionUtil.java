@@ -27,7 +27,7 @@ public class VersionedJsonReflectionUtil {
      * Gets the correct deserializer according to the version.
      *
      * @param pathToDeserializer Path where the deserializer is located.
-     * @param version Version deserializer deserialize.
+     * @param version MinecraftVersion deserializer deserialize.
      * @return the correct deserializer based on the version.
      */
     public static Deserializer getDeserializer(String pathToDeserializer, String version) {
@@ -38,7 +38,7 @@ public class VersionedJsonReflectionUtil {
      * Gets the correct serializer according to the version.
      *
      * @param pathToSerializer Path where the serializer is located.
-     * @param version Version the serializer can serialize.
+     * @param version MinecraftVersion the serializer can serialize.
      * @return the correct serializer based on the version.
      */
     public static Serializer getSerializer(String pathToSerializer, String version) {
@@ -49,7 +49,7 @@ public class VersionedJsonReflectionUtil {
      * Gets the correct coder according to the version.
      *
      * @param pathToCoder Path where the coder is located.
-     * @param version Version the coder can en/decode.
+     * @param version MinecraftVersion the coder can en/decode.
      * @return correct coder based on the version.
      */
     private static Coder getCoder(String pathToCoder, String version) {

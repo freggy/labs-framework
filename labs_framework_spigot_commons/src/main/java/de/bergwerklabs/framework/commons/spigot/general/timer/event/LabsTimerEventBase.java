@@ -1,5 +1,6 @@
 package de.bergwerklabs.framework.commons.spigot.general.timer.event;
 
+import de.bergwerklabs.framework.commons.spigot.general.LabsEvent;
 import de.bergwerklabs.framework.commons.spigot.general.timer.LabsTimer;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -9,19 +10,13 @@ import org.bukkit.event.HandlerList;
  * <p> Base class for LabsTimer events. </p>
  * @author Yannic Rieger
  */
-class LabsTimerEventBase extends Event {
-
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+class LabsTimerEventBase extends LabsEvent {
 
     /**
      *
      */
     public LabsTimer getTimer() { return this.timer; }
 
-    private static final HandlerList handlers = new HandlerList();
     protected LabsTimer timer;
 
     public LabsTimerEventBase(LabsTimer timer) {
