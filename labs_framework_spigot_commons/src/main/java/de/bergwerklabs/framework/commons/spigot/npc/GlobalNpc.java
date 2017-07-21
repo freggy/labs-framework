@@ -16,6 +16,9 @@ import org.bukkit.inventory.ItemStack;
  */
 public class GlobalNpc extends Npc {
 
+    @Override
+    public NpcType getType() { return NpcType.GLOBAL; }
+
     private GlobalHologramCompound compound;
 
     public GlobalNpc(Location location, PlayerSkin skin, GlobalHologramCompound compound) {
@@ -23,12 +26,8 @@ public class GlobalNpc extends Npc {
         compound.getHolograms().remove(compound.getHolograms().getLast());
         this.compound = compound;
         if (skin != null) skin.inject(this.gameProfile);
-        NpcManager.getGlobalNpcs().put(this.entityId, this);
     }
 
-    /**
-     *
-     */
     @Override
     public void spawn() {
         this.compound.display(this.location.clone().add(0, 1.64, 0));
@@ -42,14 +41,6 @@ public class GlobalNpc extends Npc {
             this.entityDestroyPacket.setEntityIds(new int[] { this.entityId });
             this.entityDestroyPacket.sendPacket(player);
         });
-    }
-
-    /**
-     *
-     * @param player
-     */
-    void spawnSingle(Player player) {
-        this.handleSpawn(player);
     }
 
     @Override

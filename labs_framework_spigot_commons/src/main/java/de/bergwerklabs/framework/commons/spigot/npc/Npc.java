@@ -66,9 +66,7 @@ public abstract class Npc {
 
     protected EntityHeadRotationPacket entityHeadRotationPacket;
 
-
     public Npc() {}
-
 
     public Npc(Location location, PlayerSkin skin, String name) {
         this.location = location;
@@ -92,6 +90,7 @@ public abstract class Npc {
                 .setEntityId(this.entityId)
                 .setHeadYaw(this.location.getYaw())
                 .build();
+        NpcManager.geNpcs().put(this.entityId, this);
     }
 
     /**
@@ -131,6 +130,11 @@ public abstract class Npc {
     /**
      *
      */
+    public abstract NpcType getType();
+
+    /**
+     *
+     */
     public abstract void despawn();
 
     /**
@@ -148,4 +152,28 @@ public abstract class Npc {
         this.info.sendPacket(player);
     }
 
+    /**
+     *
+     * @param player
+     */
+    void handleRespawn(Player player) {
+        this.sendNpc(player);
+    }
+
+    /**
+     *
+     * @param player
+     */
+    void handleJoin(Player player) {
+        this.sendNpc(player);
+    }
+
+    private void sendNpc(Player player) {
+        this.handleTabList(player, EnumWrappers.PlayerInfoAction.ADD_PLAYER);
+        this.spawnPacket.sendPacket(player);
+        this.entityLookPacket.sendPacket(player);
+        this.entityHeadRotationPacket.sendPacket(player);
+        this.entityEquipmentPacket.sendPacket(player);
+        Bukkit.getScheduler().runTaskLater(SpigotCommons.getInstance(), () -> this.handleTabList(player, EnumWrappers.PlayerInfoAction.REMOVE_PLAYER), 5L);
+    }
 }

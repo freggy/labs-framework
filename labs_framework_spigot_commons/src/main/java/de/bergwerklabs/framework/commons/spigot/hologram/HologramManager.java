@@ -1,7 +1,6 @@
 package de.bergwerklabs.framework.commons.spigot.hologram;
 
 import de.bergwerklabs.framework.commons.spigot.SpigotCommons;
-import de.bergwerklabs.framework.commons.spigot.hologram.compound.GlobalHologramCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,13 +16,13 @@ import java.util.HashSet;
  */
 public class HologramManager implements Listener {
 
-    public static HashSet<GlobalHologramCompound> getGlobalHologramCompound() { return globalHologramCompounds; }
+    public static HashSet<Hologram> getHolograms() { return holograms; }
 
-    private static HashSet<GlobalHologramCompound> globalHologramCompounds = new HashSet<>();
+    private static HashSet<Hologram> holograms = new HashSet<>();
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
-        Bukkit.getScheduler().runTaskLater(SpigotCommons.getInstance(), () -> globalHologramCompounds.forEach(GlobalHologramCompound::destroy), 5L);
-        Bukkit.getScheduler().runTaskLater(SpigotCommons.getInstance(), () -> globalHologramCompounds.forEach(compound -> compound.display(compound.getLocation())), 10L);
+        Bukkit.getScheduler().runTaskLater(SpigotCommons.getInstance(),
+                                           () -> holograms.forEach(hologram -> hologram.handleJoin(e.getPlayer())), 10L);
     }
 }

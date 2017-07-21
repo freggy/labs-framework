@@ -27,7 +27,6 @@ public class GlobalHologramCompound {
         for (String aText : text) {
             this.holograms.add(new Hologram(aText));
         }
-        HologramManager.getGlobalHologramCompound().add(this);
     }
 
     /**

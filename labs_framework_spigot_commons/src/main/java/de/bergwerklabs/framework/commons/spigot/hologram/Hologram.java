@@ -36,6 +36,7 @@ public class Hologram {
         catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+        HologramManager.getHolograms().add(this);
     }
 
     /**
@@ -78,7 +79,7 @@ public class Hologram {
      *
      * @return
      */
-    private WrappedDataWatcher getMetadata() {
+    protected WrappedDataWatcher getMetadata() {
         byte data = 0;
         data |= 0x20;
 
@@ -86,5 +87,9 @@ public class Hologram {
         this.watcher.setObject(2, this.line);
         this.watcher.setObject(3, (byte) 1);
         return this.watcher;
+    }
+
+    void handleJoin(Player player) {
+        this.entityPacket.sendPacket(player);
     }
 }
