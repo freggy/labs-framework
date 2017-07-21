@@ -4,6 +4,7 @@ import de.bergwerklabs.framework.commons.spigot.SpigotCommons;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 import java.util.HashMap;
@@ -19,14 +20,21 @@ public class NpcManager implements Listener {
     /**
      *
      */
-    public static HashMap<Integer, Npc> getNpcs() { return npcs; }
+    public static HashMap<Integer, GlobalNpc> getGlobalNpcs() { return globalNpcs; }
 
-    private static HashMap<Integer, Npc> npcs = new HashMap<>();
+    private static HashMap<Integer, GlobalNpc> globalNpcs = new HashMap<>();
 
     @EventHandler
     private void onPlayerRespawn(PlayerRespawnEvent e) {
-        System.out.println("adawd");
-        System.out.println(npcs.values().size());
-        Bukkit.getScheduler().runTaskLater(SpigotCommons.getInstance(), () -> getNpcs().values().forEach(npc -> npc.spawn(e.getPlayer())), 2 * 20);
+        Bukkit.getScheduler().runTaskLater(SpigotCommons.getInstance(), () -> {
+            getGlobalNpcs().values().forEach(npc -> npc.spawnSingle(e.getPlayer()));
+        }, 5);
+    }
+
+    @EventHandler
+    private void onPlayerJoin(PlayerJoinEvent e) {
+        Bukkit.getScheduler().runTaskLater(SpigotCommons.getInstance(), () -> {
+            globalNpcs.values().forEach(npc -> npc.spawnSingle(e.getPlayer()));
+        }, 5);
     }
 }

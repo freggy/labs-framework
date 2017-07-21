@@ -1,5 +1,6 @@
 package de.bergwerklabs.framework.commons.spigot.nms.packet.entityheadrotation;
 
+import de.bergwerklabs.framework.commons.spigot.general.reflection.LabsReflection;
 import de.bergwerklabs.framework.commons.spigot.nms.MinecraftVersion;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.PacketBuilder;
 
@@ -16,6 +17,13 @@ public class EntityHeadRotationBuilder extends PacketBuilder<EntityHeadRotationP
      */
     public EntityHeadRotationBuilder(MinecraftVersion version) {
         this.assignPacketClass(version, "entityheadrotation", "WrapperPlayServerEntityHeadRotation");
+    }
+
+    /**
+     *
+     */
+    public EntityHeadRotationBuilder() {
+        this.assignPacketClass(MinecraftVersion.formString(LabsReflection.getVersion()), "entityheadrotation", "WrapperPlayServerEntityHeadRotation");
     }
 
     /**

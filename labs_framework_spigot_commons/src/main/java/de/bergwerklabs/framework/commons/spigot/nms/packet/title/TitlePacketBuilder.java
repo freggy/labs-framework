@@ -38,12 +38,12 @@ public class TitlePacketBuilder extends PacketBuilder<TitlePacket> {
     }
 
     public TitlePacketBuilder setTitle(WrappedChatComponent chatComponent) {
-        this.setTitle(chatComponent);
+        this.packet.setTitle(chatComponent);
         return this;
     }
 
     public TitlePacketBuilder setAction(EnumWrappers.TitleAction action) {
-        this.setAction(action);
+        this.packet.setAction(action);
         return this;
     }
 }

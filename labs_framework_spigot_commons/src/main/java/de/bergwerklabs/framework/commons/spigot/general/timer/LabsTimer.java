@@ -72,7 +72,7 @@ public class LabsTimer {
      */
     private void startTask() {
         if (this.task == null) {
-            task = Bukkit.getScheduler().runTaskTimerAsynchronously(SpigotCommons.getInstance(), () -> {
+            task = Bukkit.getScheduler().runTaskTimer(SpigotCommons.getInstance(), () -> {
                 runnable.run(timeLeft);
                 if (timeLeft <= 0) this.stopTask(LabsTimerStopCause.TIMES_UP);
                 timeLeft--;

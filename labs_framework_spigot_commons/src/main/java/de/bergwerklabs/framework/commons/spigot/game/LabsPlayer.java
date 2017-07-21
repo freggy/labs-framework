@@ -16,11 +16,10 @@ public class LabsPlayer {
      * Freezes the player completely.
      *
      * @param player Player to freeze.
-     * @param ticks ticks the player shouldn't be able to jump.
      */
-    public static void freeze(Player player, int ticks) {
+    public static void freeze(Player player) {
         player.setWalkSpeed(0);
-        PotionEffect effect = new PotionEffect(PotionEffectType.JUMP, ticks, 128, false, false);
+        PotionEffect effect = new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 128, false, false);
         effect.apply(player);
     }
 

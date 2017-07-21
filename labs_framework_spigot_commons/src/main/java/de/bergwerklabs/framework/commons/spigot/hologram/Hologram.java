@@ -1,6 +1,7 @@
 package de.bergwerklabs.framework.commons.spigot.hologram;
 
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
+import de.bergwerklabs.framework.commons.spigot.nms.packet.entitydestroy.WrapperPlayServerEntityDestroy;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.spawnentityliving.v1_8.WrapperPlayServerSpawnEntityLiving;
 import de.bergwerklabs.util.entity.EntityUtil;
 import org.bukkit.Location;
@@ -16,11 +17,14 @@ import org.bukkit.entity.Player;
  */
 public class Hologram {
 
+    public String getText() { return this.line; }
+
     private String line;
-    private Location location;
+    protected Location location;
     private int entityId;
 
     private WrapperPlayServerSpawnEntityLiving entityPacket = new WrapperPlayServerSpawnEntityLiving();
+    private WrapperPlayServerEntityDestroy entityDestroyPacket = new WrapperPlayServerEntityDestroy();
     private WrappedDataWatcher watcher = new WrappedDataWatcher();
 
     public Hologram(String line) {
@@ -34,8 +38,13 @@ public class Hologram {
         }
     }
 
+    /**
+     *
+     * @param player
+     * @param location
+     */
     public void display(Player player, Location location) {
-        this.location = location;
+        this.location = location.clone().subtract(0, 1.85, 0);
         this.entityPacket.setEntityID(this.entityId);
 
         this.entityPacket.setHeadPitch(location.getPitch());
@@ -56,20 +65,26 @@ public class Hologram {
         this.entityPacket.sendPacket(player);
     }
 
-
-    private WrappedDataWatcher getMetadata() {
-        byte data = 0;
-        data |= 0x2; // setGravity
-        data |= 0x4; // setArms
-        data |= 0x8; // setBaseplate
-
-        this.watcher.setObject(10,data);
-        this.watcher.setObject(0, 0x20);
-        this.watcher.setObject(2, this.line);
-        this.watcher.setObject(3, 1);
-        return this.watcher;
+    /**
+     *
+     * @param player
+     */
+    public void destroy(Player player) {
+        this.entityDestroyPacket.setEntityIds(new int[] { this.entityId });
+        this.entityDestroyPacket.sendPacket(player);
     }
 
+    /**
+     *
+     * @return
+     */
+    private WrappedDataWatcher getMetadata() {
+        byte data = 0;
+        data |= 0x20;
 
-
+        this.watcher.setObject(0, data);
+        this.watcher.setObject(2, this.line);
+        this.watcher.setObject(3, (byte) 1);
+        return this.watcher;
+    }
 }

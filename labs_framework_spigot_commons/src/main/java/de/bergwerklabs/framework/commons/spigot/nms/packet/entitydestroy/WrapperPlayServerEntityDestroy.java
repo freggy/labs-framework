@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.bergwerklabs.framework.commons.spigot.nms.packet.v1_8;
+package de.bergwerklabs.framework.commons.spigot.nms.packet.entitydestroy;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
