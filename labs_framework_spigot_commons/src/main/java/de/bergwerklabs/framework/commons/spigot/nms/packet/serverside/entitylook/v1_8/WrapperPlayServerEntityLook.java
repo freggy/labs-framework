@@ -16,10 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.bergwerklabs.framework.commons.spigot.nms.packet.entityheadrotation.v1_8;
+package de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.entitylook.v1_8;
 
 import de.bergwerklabs.framework.commons.spigot.nms.packet.AbstractPacket;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.entityheadrotation.EntityHeadRotationPacket;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 
@@ -27,15 +26,15 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 
-public class WrapperPlayServerEntityHeadRotation extends AbstractPacket implements EntityHeadRotationPacket {
-    public static final PacketType TYPE = PacketType.Play.Server.ENTITY_HEAD_ROTATION;
+public class WrapperPlayServerEntityLook extends AbstractPacket {
+    public static final PacketType TYPE = PacketType.Play.Server.ENTITY_LOOK;
 
-    public WrapperPlayServerEntityHeadRotation() {
+    public WrapperPlayServerEntityLook() {
         super(new PacketContainer(TYPE), TYPE);
         handle.getModifier().writeDefaults();
     }
 
-    public WrapperPlayServerEntityHeadRotation(PacketContainer packet) {
+    public WrapperPlayServerEntityLook(PacketContainer packet) {
         super(packet, TYPE);
     }
 
@@ -46,7 +45,7 @@ public class WrapperPlayServerEntityHeadRotation extends AbstractPacket implemen
      *
      * @return The current Entity ID
      */
-    public Number getEntityId() {
+    public int getEntityID() {
         return handle.getIntegers().read(0);
     }
 
@@ -55,8 +54,8 @@ public class WrapperPlayServerEntityHeadRotation extends AbstractPacket implemen
      *
      * @param value - new value.
      */
-    public void setEntityId(Number value) {
-        handle.getIntegers().write(0, value.intValue());
+    public void setEntityID(int value) {
+        handle.getIntegers().write(0, value);
     }
 
     /**
@@ -80,22 +79,56 @@ public class WrapperPlayServerEntityHeadRotation extends AbstractPacket implemen
     }
 
     /**
-     * Retrieve Head Yaw.
-     * <p>
-     * Notes: head yaw in steps of 2p/256
+     * Retrieve the yaw of the current entity.
      *
-     * @return The current Head Yaw
+     * @return The current Yaw
      */
-    public Number getHeadYaw() {
+    public float getYaw() {
         return (handle.getBytes().read(0) * 360.F) / 256.0F;
     }
 
     /**
-     * Set Head Yaw.
+     * Set the yaw of the current entity.
+     *
+     * @param value - new yaw.
+     */
+    public void setYaw(float value) {
+        handle.getBytes().write(0, (byte) (value * 256.0F / 360.0F));
+    }
+
+    /**
+     * Retrieve the pitch of the current entity.
+     *
+     * @return The current pitch
+     */
+    public float getPitch() {
+        return (handle.getBytes().read(1) * 360.F) / 256.0F;
+    }
+
+    /**
+     * Set the pitch of the current entity.
+     *
+     * @param value - new pitch.
+     */
+    public void setPitch(float value) {
+        handle.getBytes().write(1, (byte) (value * 256.0F / 360.0F));
+    }
+
+    /**
+     * Retrieve On Ground.
+     *
+     * @return The current On Ground
+     */
+    public boolean getOnGround() {
+        return handle.getBooleans().read(0);
+    }
+
+    /**
+     * Set On Ground.
      *
      * @param value - new value.
      */
-    public void setHeadYaw(Number value) {
-        handle.getBytes().write(0,  (byte) (value.floatValue() * 256.0F / 360.0F));
+    public void setOnGround(boolean value) {
+        handle.getBooleans().write(0, value);
     }
 }

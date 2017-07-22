@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.commons.spigot.nms.packet.title;
+package de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.title;
 
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;

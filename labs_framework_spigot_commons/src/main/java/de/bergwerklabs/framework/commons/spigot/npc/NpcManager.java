@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.PluginManager;
 
@@ -48,20 +49,7 @@ public class NpcManager implements Listener {
     }
 
     @EventHandler
-    private void onPlayerInteractEntityEvent(PlayerInteractEntityEvent e) {
-        npcs.values().stream().filter(npc -> npc.getEntityId() == e.getRightClicked().getEntityId())
-                  .findFirst()
-                  .ifPresent(npc -> manager.callEvent(new NpcInteractEvent(npc, e.getPlayer(), Action.RIGHT_CLICK)));
-    }
-
-    @EventHandler
-    private void onPlayerDamageEntity(EntityDamageByEntityEvent e) {
-        Entity damager = e.getDamager();
-
-        if (damager instanceof Player) {
-            npcs.values().stream().filter(npc -> npc.getEntityId() == e.getEntity().getEntityId())
-                .findFirst()
-                .ifPresent(npc -> manager.callEvent(new NpcInteractEvent(npc, (Player) damager, Action.HIT)));
-        }
+    private void onPlayerMove(PlayerMoveEvent e) {
+        npcs.values().forEach(npc -> npc.handleMove(e));
     }
 }

@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.bergwerklabs.framework.commons.spigot.nms.packet.title.v1_8;
+package de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.title.v1_8;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.EnumWrappers.TitleAction;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.AbstractPacket;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.title.TitlePacket;
+import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.title.TitlePacket;
 
 public class WrapperPlayServerTitle extends AbstractPacket implements TitlePacket {
     public static final PacketType TYPE = PacketType.Play.Server.TITLE;

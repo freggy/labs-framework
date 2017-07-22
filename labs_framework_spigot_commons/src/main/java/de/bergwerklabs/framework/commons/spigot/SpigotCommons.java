@@ -1,12 +1,22 @@
 package de.bergwerklabs.framework.commons.spigot;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.*;
+import com.comphenix.protocol.wrappers.EnumWrappers;
 import de.bergwerklabs.framework.commons.spigot.file.FileUtil;
 import de.bergwerklabs.framework.commons.spigot.general.LabsController;
 import de.bergwerklabs.framework.commons.spigot.hologram.HologramManager;
+import de.bergwerklabs.framework.commons.spigot.nms.packet.clientside.useentity.v1_8.WrapperPlayClientUseEntity;
+import de.bergwerklabs.framework.commons.spigot.npc.Npc;
 import de.bergwerklabs.framework.commons.spigot.npc.NpcManager;
-import org.bukkit.event.EventHandler;
+import de.bergwerklabs.framework.commons.spigot.npc.event.Action;
+import de.bergwerklabs.framework.commons.spigot.npc.event.NpcInteractAtEvent;
+import de.bergwerklabs.framework.commons.spigot.npc.event.NpcInteractEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -17,13 +27,23 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class SpigotCommons extends JavaPlugin implements Listener, LabsController {
 
     /**
+     *
+     */
+    public ProtocolManager getProtocolManager() { return this.protocolManager; }
+
+    /**
      * Gets the instance of the Framework Plugin.
      */
     public static SpigotCommons getInstance() { return instance; }
 
+    /**
+     *
+     */
     public final String CONSOLE_PREFIX = "[SpigotCommons] ";
 
     private static SpigotCommons instance;
+
+    private ProtocolManager protocolManager;
 
     @Override
     public void onEnable() {
@@ -31,8 +51,38 @@ public class SpigotCommons extends JavaPlugin implements Listener, LabsControlle
         FileUtil.createFolderIfNotExistent(this.getDataFolder());
         instance = this;
 
+        this.protocolManager = ProtocolLibrary.getProtocolManager();
+
         this.getServer().getPluginManager().registerEvents(new NpcManager(), this);
         this.getServer().getPluginManager().registerEvents(new HologramManager(), this);
+
+        this.protocolManager.addPacketListener(new PacketAdapter(this, PacketType.Play.Client.USE_ENTITY) {
+
+            @Override
+            public void onPacketReceiving(PacketEvent event) {
+                WrapperPlayClientUseEntity useEntityPacket = new WrapperPlayClientUseEntity(event.getPacket());
+                int id = useEntityPacket.getTargetID();
+
+                if (NpcManager.geNpcs().keySet().contains(id)) {
+                    Npc npc = NpcManager.geNpcs().get(id);
+                    Action action = this.determineAction(useEntityPacket.getType());
+
+                    if (action != Action.INTERACT_AT)
+                        Bukkit.getServer().getPluginManager().callEvent(new NpcInteractEvent(npc, event.getPlayer(), action));
+                    else
+                        Bukkit.getServer().getPluginManager().callEvent(new NpcInteractAtEvent(npc, event.getPlayer(), action, useEntityPacket.getTargetVector()));
+                }
+            }
+
+            private Action determineAction(EnumWrappers.EntityUseAction action) {
+                switch (action) {
+                    case INTERACT: return Action.RIGHT_CLICK;
+                    case ATTACK: return Action.HIT;
+                    case INTERACT_AT: return Action.INTERACT_AT;
+                    default: return null;
+                }
+            }
+        });
     }
 
     @Override

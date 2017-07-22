@@ -12,9 +12,11 @@ public class PacketBuilder<T extends Packet> {
 
     protected T packet;
 
+    // TODO: determine if serverside or clientside.
+
     protected void assignPacketClass(MinecraftVersion version, String packageString, String className) {
         try {
-            this.packet = (T) Class.forName("de.bergwerklabs.framework.commons.spigot.nms.packet." + packageString + "." + version.name().toLowerCase() + "." + className).newInstance();
+            this.packet = (T) Class.forName("de.bergwerklabs.framework.commons.spigot.nms.packet.serverside." + packageString + "." + version.name().toLowerCase() + "." + className).newInstance();
         }
         catch (Exception ex) {
             ex.printStackTrace();

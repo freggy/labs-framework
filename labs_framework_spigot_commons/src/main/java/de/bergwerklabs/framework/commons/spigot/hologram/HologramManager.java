@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 import java.util.HashSet;
 
@@ -19,6 +20,12 @@ public class HologramManager implements Listener {
     public static HashSet<Hologram> getHolograms() { return holograms; }
 
     private static HashSet<Hologram> holograms = new HashSet<>();
+
+    @EventHandler
+    private void onPlayerRespawn(PlayerRespawnEvent e) {
+        Bukkit.getScheduler().runTaskLater(SpigotCommons.getInstance(),
+                                           () -> holograms.forEach(hologram -> hologram.handleRespawn(e.getPlayer())), 10L);
+    }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {

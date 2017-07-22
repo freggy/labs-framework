@@ -1,7 +1,7 @@
 package de.bergwerklabs.framework.commons.spigot.npc;
 
 import com.comphenix.protocol.wrappers.EnumWrappers;
-import de.bergwerklabs.framework.commons.spigot.SpigotCommons;
+import com.mojang.authlib.properties.Property;
 import de.bergwerklabs.framework.commons.spigot.hologram.compound.GlobalHologramCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -22,15 +22,13 @@ public class GlobalNpc extends Npc {
     private GlobalHologramCompound compound;
 
     public GlobalNpc(Location location, PlayerSkin skin, GlobalHologramCompound compound) {
-        super(location, skin, compound.getHolograms().getLast().getText());
+        super(location, compound.getHolograms().getLast().getText());
         compound.getHolograms().remove(compound.getHolograms().getLast());
         this.compound = compound;
-        if (skin != null) skin.inject(this.gameProfile);
     }
 
     @Override
     public void spawn() {
-        this.compound.display(this.location.clone().add(0, 1.64, 0));
         Bukkit.getOnlinePlayers().forEach(this::handleSpawn);
     }
 
@@ -45,6 +43,7 @@ public class GlobalNpc extends Npc {
 
     @Override
     public void setSkin(PlayerSkin skin) {
+        this.despawn();
         skin.inject(this.gameProfile);
         this.spawn();
     }
@@ -71,27 +70,29 @@ public class GlobalNpc extends Npc {
         });
     }
 
-    /**
-     *
-     */
-    private void sendFullEquipment() {
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            this.equipment.forEach((slot, itemStack) -> {
-                this.entityEquipmentPacket.setSlot(slot);
-                this.entityEquipmentPacket.setItem(itemStack);
-                this.entityEquipmentPacket.setEntityID(this.entityId);
-                this.entityEquipmentPacket.sendPacket(player);
-            });
-        });
+    @Override
+    public void updateSkin() {
+        this.despawn();
+        this.spawn();
     }
 
-    private void handleSpawn(Player player) {
-        // The PlayerInfo packet has to be sent BEFORE sending the PacketPlayOutNamedEntitySpawn
-        // because otherwise the client will not render the npc.
-        this.handleTabList(player, EnumWrappers.PlayerInfoAction.ADD_PLAYER);
-        this.spawnPacket.sendPacket(player);
-        this.entityHeadRotationPacket.sendPacket(player);
-        this.sendFullEquipment();
-        Bukkit.getScheduler().runTaskLater(SpigotCommons.getInstance(), () -> this.handleTabList(player, EnumWrappers.PlayerInfoAction.REMOVE_PLAYER), 5L);
+    @Override
+    public void updateSkin(PlayerSkin skin) {
+        this.despawn();
+        skin.inject(this.gameProfile);
+        this.spawn();
+    }
+
+    @Override
+    void handleSpawn(Player player) {
+        this.compound.display(this.location.clone().add(0, 1.64, 0));
+        this.sendNpcData(player);
+    }
+
+    @Override
+    void handleDespawn(Player player) {
+        this.compound.getHolograms().forEach(hologram -> hologram.destroy(player));
+        this.entityDestroyPacket.setEntityIds(new int[] { this.entityId });
+        this.entityDestroyPacket.sendPacket(player);
     }
 }

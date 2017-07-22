@@ -8,5 +8,7 @@ package de.bergwerklabs.framework.commons.spigot.npc.event;
  */
 public enum Action {
     RIGHT_CLICK,
+    INTERACT_AT,
     HIT
+
 }

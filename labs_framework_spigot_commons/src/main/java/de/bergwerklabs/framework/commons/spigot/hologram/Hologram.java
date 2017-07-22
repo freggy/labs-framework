@@ -1,8 +1,8 @@
 package de.bergwerklabs.framework.commons.spigot.hologram;
 
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.entitydestroy.WrapperPlayServerEntityDestroy;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.spawnentityliving.v1_8.WrapperPlayServerSpawnEntityLiving;
+import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.entitydestroy.WrapperPlayServerEntityDestroy;
+import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.spawnentityliving.v1_8.WrapperPlayServerSpawnEntityLiving;
 import de.bergwerklabs.util.entity.EntityUtil;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
@@ -87,6 +87,10 @@ public class Hologram {
         this.watcher.setObject(2, this.line);
         this.watcher.setObject(3, (byte) 1);
         return this.watcher;
+    }
+
+    void handleRespawn(Player player) {
+        this.entityPacket.sendPacket(player);
     }
 
     void handleJoin(Player player) {

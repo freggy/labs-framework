@@ -4,8 +4,8 @@ import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import com.google.common.base.Strings;
 import com.google.gson.JsonObject;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.title.TitlePacket;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.title.TitlePacketBuilder;
+import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.title.TitlePacket;
+import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.title.TitlePacketBuilder;
 import org.bukkit.entity.Player;
 
 /**
