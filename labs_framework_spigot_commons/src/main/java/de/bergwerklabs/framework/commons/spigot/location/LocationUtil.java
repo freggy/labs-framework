@@ -50,29 +50,30 @@ public class LocationUtil {
     }
 
     /**
+     * Returns the euclidean distance using {@link SQRT#fast(double)}.
      *
-     * @param from
-     * @param to
-     * @return
+     * @param a a {@link Location}
+     * @param b another {@link Location}
+     * @return the euclidean distance between the two given locations.
      */
-    public static double calculateDistanceFast(Location from, Location to) {
-
-        return SQRT.fast(from.getX() - to.getX()) +
-               SQRT.fast(from.getY() - to.getY()) +
-               SQRT.fast(from.getZ() - to.getZ());
+    public static double calculateDistanceFast(Location a, Location b) {
+        return SQRT.fast(Math.pow(a.getX() - b.getX(), 2) +
+                            Math.pow(a.getY() - b.getY(), 2) +
+                            Math.pow(a.getZ() - b.getZ(), 2));
 
     }
 
     /**
+     * Returns the euclidean distance using {@link SQRT#fastest(double)}.
      *
-     * @param from
-     * @param to
-     * @return
+     * @param a a {@link Location}
+     * @param b another {@link Location}
+     * @return the euclidean distance between the two given locations.
      */
-    public static double calculateDistanceFastes(Location from, Location to) {
-        return SQRT.fastest(from.getX() - to.getX()) +
-               SQRT.fastest(from.getY() - to.getY()) +
-               SQRT.fastest(from.getZ() - to.getZ());
+    public static double calculateDistanceFastes(Location a, Location b) {
+        return SQRT.fastest(Math.pow(a.getX() - b.getX(), 2) +
+                               Math.pow(a.getY() - b.getY(), 2) +
+                               Math.pow(a.getZ() - b.getZ(), 2));
     }
 
 }

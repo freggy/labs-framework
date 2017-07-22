@@ -234,6 +234,7 @@ public abstract class Npc {
 
         Player player = e.getPlayer();
 
+        // TODO: use LocationUtil#calculateDistanceFast
         double distanceTo = this.getLocation().distanceSquared(e.getTo());
         double distanceFrom = this.getLocation().distanceSquared(e.getFrom());
 
