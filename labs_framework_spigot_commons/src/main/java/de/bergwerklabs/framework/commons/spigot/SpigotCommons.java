@@ -5,19 +5,23 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.*;
 import com.comphenix.protocol.wrappers.EnumWrappers;
+import de.bergwerklabs.framework.commons.spigot.entity.EntityManager;
 import de.bergwerklabs.framework.commons.spigot.file.FileUtil;
 import de.bergwerklabs.framework.commons.spigot.general.LabsController;
-import de.bergwerklabs.framework.commons.spigot.hologram.HologramManager;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.clientside.useentity.v1_8.WrapperPlayClientUseEntity;
-import de.bergwerklabs.framework.commons.spigot.npc.Npc;
+import de.bergwerklabs.framework.commons.spigot.entity.npc.Npc;
 import de.bergwerklabs.framework.commons.spigot.npc.NpcManager;
-import de.bergwerklabs.framework.commons.spigot.npc.event.Action;
-import de.bergwerklabs.framework.commons.spigot.npc.event.NpcInteractAtEvent;
-import de.bergwerklabs.framework.commons.spigot.npc.event.NpcInteractEvent;
+import de.bergwerklabs.framework.commons.spigot.entity.npc.event.Action;
+import de.bergwerklabs.framework.commons.spigot.entity.npc.event.NpcInteractAtEvent;
+import de.bergwerklabs.framework.commons.spigot.entity.npc.event.NpcInteractEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashSet;
+import java.util.UUID;
 
 /**
  * Created by Yannic Rieger on 02.05.2017.
@@ -30,6 +34,11 @@ public class SpigotCommons extends JavaPlugin implements Listener, LabsControlle
      *
      */
     public ProtocolManager getProtocolManager() { return this.protocolManager; }
+
+    /**
+     *
+     */
+    public HashSet<UUID> getJoiningPlayers() { return this.joiningPlayers; }
 
     /**
      * Gets the instance of the Framework Plugin.
@@ -45,6 +54,8 @@ public class SpigotCommons extends JavaPlugin implements Listener, LabsControlle
 
     private ProtocolManager protocolManager;
 
+    private HashSet<UUID> joiningPlayers = new HashSet<>();
+
     @Override
     public void onEnable() {
         // Just for test purposes
@@ -53,8 +64,9 @@ public class SpigotCommons extends JavaPlugin implements Listener, LabsControlle
 
         this.protocolManager = ProtocolLibrary.getProtocolManager();
 
+        this.getServer().getPluginManager().registerEvents(this, this);
         this.getServer().getPluginManager().registerEvents(new NpcManager(), this);
-        this.getServer().getPluginManager().registerEvents(new HologramManager(), this);
+        this.getServer().getPluginManager().registerEvents(new EntityManager(), this);
 
         this.protocolManager.addPacketListener(new PacketAdapter(this, PacketType.Play.Client.USE_ENTITY) {
 
@@ -89,4 +101,14 @@ public class SpigotCommons extends JavaPlugin implements Listener, LabsControlle
     public void onDisable() {
         this.getServer().getScheduler().cancelTasks(this);
     }
+
+
+    @EventHandler
+    private void onPlayerJoin(PlayerJoinEvent e) {
+        UUID uuid = e.getPlayer().getUniqueId();
+        this.joiningPlayers.add(uuid);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> this.joiningPlayers.remove(uuid), 40);
+    }
+
+
 }

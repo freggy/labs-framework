@@ -1,7 +1,10 @@
-package de.bergwerklabs.framework.commons.spigot.npc;
+package de.bergwerklabs.framework.commons.spigot.entity.npc;
 
 import com.comphenix.protocol.wrappers.*;
 import de.bergwerklabs.framework.commons.spigot.SpigotCommons;
+import de.bergwerklabs.framework.commons.spigot.entity.Entity;
+import de.bergwerklabs.framework.commons.spigot.entity.EntityManager;
+import de.bergwerklabs.framework.commons.spigot.entity.npc.behavior.AbstractBehavior;
 import de.bergwerklabs.framework.commons.spigot.general.reflection.LabsReflection;
 import de.bergwerklabs.framework.commons.spigot.nms.MinecraftVersion;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.entitydestroy.WrapperPlayServerEntityDestroy;
@@ -11,11 +14,11 @@ import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.entityequi
 import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.namedentityspawn.v1_8.WrapperPlayServerNamedEntitySpawn;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.entitylook.v1_8.WrapperPlayServerEntityLook;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.v1_8.WrapperPlayServerPlayerInfo;
-import de.bergwerklabs.util.entity.EntityUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -26,14 +29,7 @@ import java.util.*;
  *
  * @author Yannic Rieger
  */
-public abstract class Npc {
-
-    /**
-     * Gets the entity id of this NPC.
-     */
-    public int getEntityId() {
-        return entityId;
-    }
+public abstract class Npc extends Entity {
 
     /**
      * Gets the {@link Location} where this NPC is located.
@@ -55,6 +51,12 @@ public abstract class Npc {
 
     /**
      *
+     * @return
+     */
+    public String getName() { return this.name; }
+
+    /**
+     *
      * @param skin
      */
     public void setSkin(PlayerSkin skin) {
@@ -62,9 +64,18 @@ public abstract class Npc {
         this.skin.inject(this.gameProfile);
     }
 
-    protected int entityId;
+    /**
+     *
+     * @param
+     */
+    public void setName(String name) {
+        // TODO: set name
+        this.gameProfile = new WrappedGameProfile(this.getUuid(), name);
+    }
+
     protected Location location;
-    private PlayerSkin skin;
+    protected PlayerSkin skin;
+    protected String name;
     protected HashMap<EnumWrappers.ItemSlot, ItemStack> equipment = new HashMap<>();
 
     protected WrappedGameProfile gameProfile;
@@ -74,22 +85,11 @@ public abstract class Npc {
     protected WrapperPlayServerEntityLook entityLookPacket = new WrapperPlayServerEntityLook();
     protected WrapperPlayServerEntityDestroy entityDestroyPacket = new WrapperPlayServerEntityDestroy();
     protected WrappedDataWatcher watcher = new WrappedDataWatcher();
-
     protected EntityHeadRotationPacket entityHeadRotationPacket;
 
-    private final double drawDistanceSquared = 20 * 20; // TODO: make configurable
-
-    private Npc() {}
-
     protected Npc(Location location, String name) {
+        super();
         this.location = location;
-
-        try {
-            this.entityId = EntityUtil.getNewNMSID();
-        }
-        catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
 
         this.gameProfile = new WrappedGameProfile(UUID.randomUUID(), name);
         this.spawnPacket.setEntityID(this.entityId);
@@ -103,7 +103,8 @@ public abstract class Npc {
                 .setEntityId(this.entityId)
                 .setHeadYaw(this.location.getYaw())
                 .build();
-        NpcManager.geNpcs().put(this.entityId, this);
+
+        EntityManager.getEntities().put(this.entityId, this);
     }
 
     /**
@@ -112,7 +113,6 @@ public abstract class Npc {
      * @param yaw
      */
     public abstract void setHeadRotation(float pitch, float yaw);
-
 
     /**
      *
@@ -123,39 +123,35 @@ public abstract class Npc {
     /**
      *
      */
-    public abstract void updateSkin();
-
-    /**
-     *
-     */
-    public abstract void updateSkin(PlayerSkin skin);
-
-    /**
-     *
-     */
-    public abstract void spawn();
-
-    /**
-     *
-     */
     public abstract NpcType getType();
 
     /**
      *
      */
-    public abstract void despawn();
+    public void updateSkin() {
+        this.despawn();
+        this.spawn();
+    }
 
     /**
      *
-     * @param player
+     * @param skin
      */
-    abstract void handleSpawn(Player player);
+    public void updateSkin(PlayerSkin skin) {
+        this.despawn();
+        skin.inject(this.gameProfile);
+        this.spawn();
+    }
 
     /**
      *
-     * @param player
+     * @param behavior
      */
-    abstract void handleDespawn(Player player);
+    public void addBehavior(AbstractBehavior behavior) {
+        behavior.setNpc(this);
+        Bukkit.getServer().getPluginManager().registerEvents(behavior, SpigotCommons.getInstance());
+    }
+
 
     /**
      *
@@ -192,7 +188,7 @@ public abstract class Npc {
         this.entityLookPacket.sendPacket(player);
         this.entityHeadRotationPacket.sendPacket(player);
         this.sendFullEquipment();
-        Bukkit.getScheduler().runTaskLater(SpigotCommons.getInstance(), () -> this.handleTabList(player, EnumWrappers.PlayerInfoAction.REMOVE_PLAYER), 5L);
+        Bukkit.getScheduler().runTaskLater(SpigotCommons.getInstance(), () -> this.handleTabList(player, EnumWrappers.PlayerInfoAction.REMOVE_PLAYER), 60L);
     }
 
     /**
@@ -213,7 +209,7 @@ public abstract class Npc {
      *
      * @param player
      */
-    void handleRespawn(Player player) {
+    public void handleRespawn(Player player) {
         this.sendNpcData(player);
     }
 
@@ -221,31 +217,61 @@ public abstract class Npc {
      *
      * @param player
      */
-    void handleJoin(Player player) {
+    public void handleJoin(Player player) {
         this.sendNpcData(player);
+    }
+
+    /**
+     *
+     * @param player
+     */
+    public void handleSpawn(Player player) {
+        this.sendNpcData(player);
+    }
+
+    /**
+     *
+     * @param player
+     */
+    public void handleDespawn(Player player) {
+        this.entityDestroyPacket.setEntityIds(new int[] { this.entityId });
+        this.entityDestroyPacket.sendPacket(player);
+    }
+
+    /**
+     *
+     * @param player
+     * @param to
+     * @param from
+     */
+    public void handleMove(Player player, Location to, Location from) {
+        if (SpigotCommons.getInstance().getJoiningPlayers().contains(player.getUniqueId())) return;
+
+        if (!this.getLocation().getWorld().getName().equals(to.getWorld().getName())) return;
+
+        // TODO: use LocationUtil#calculateDistanceFast
+        double distanceTo = this.getLocation().distanceSquared(to);
+        double distanceFrom = this.getLocation().distanceSquared(from);
+
+        if (distanceTo < this.drawDistanceSquared && distanceFrom > drawDistanceSquared) {
+            this.handleSpawn(player);
+        }
+        else if (distanceTo > drawDistanceSquared && distanceFrom < drawDistanceSquared) {
+            this.handleDespawn(player);
+        }
     }
 
     /**
      *
      * @param e
      */
-    void handleMove(PlayerMoveEvent e) {
-        if (!this.getLocation().getWorld().getName().equals(e.getTo().getWorld().getName())) return;
+    public void handleTeleport(PlayerTeleportEvent e) {
+        Location from = e.getFrom();
+        Location to = e.getTo();
+        String currentWorldName = this.getLocation().getWorld().getName();
 
-        Player player = e.getPlayer();
-
-        // TODO: use LocationUtil#calculateDistanceFast
-        double distanceTo = this.getLocation().distanceSquared(e.getTo());
-        double distanceFrom = this.getLocation().distanceSquared(e.getFrom());
-
-        if (distanceTo < drawDistanceSquared && distanceFrom > drawDistanceSquared) {
-            System.out.println("APPEAR");
-            this.handleSpawn(player);
-        }
-        else if (distanceTo > drawDistanceSquared && distanceFrom < drawDistanceSquared) {
-            System.out.println("DISAPPEAR");
-            this.handleDespawn(player);
+        if (currentWorldName.equals(from.getWorld().getName()) && currentWorldName.equals(to.getWorld().getName())) {
+            this.handleMove(e.getPlayer(), to, from);
         }
     }
-
 }

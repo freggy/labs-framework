@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.commons.spigot.npc.event;
+package de.bergwerklabs.framework.commons.spigot.entity.npc.event;
 
 /**
  * Created by Yannic Rieger on 21.07.2017.

@@ -1,7 +1,7 @@
-package de.bergwerklabs.framework.commons.spigot.npc.event;
+package de.bergwerklabs.framework.commons.spigot.entity.npc.event;
 
 import de.bergwerklabs.framework.commons.spigot.general.LabsEvent;
-import de.bergwerklabs.framework.commons.spigot.npc.Npc;
+import de.bergwerklabs.framework.commons.spigot.entity.npc.Npc;
 import org.bukkit.entity.Player;
 
 /**

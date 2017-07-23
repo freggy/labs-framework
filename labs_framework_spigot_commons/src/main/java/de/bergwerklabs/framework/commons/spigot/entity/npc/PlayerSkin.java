@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.commons.spigot.npc;
+package de.bergwerklabs.framework.commons.spigot.entity.npc;
 
 import com.comphenix.protocol.wrappers.WrappedGameProfile;
 import com.comphenix.protocol.wrappers.WrappedSignedProperty;

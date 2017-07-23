@@ -46,4 +46,8 @@ public class NmsUtil {
             e.printStackTrace();
         }
     }
+
+    public static byte getFixYawPitch(float yawpitch) {
+        return (byte) (yawpitch * 256.0F / 360.0F);
+    }
 }
