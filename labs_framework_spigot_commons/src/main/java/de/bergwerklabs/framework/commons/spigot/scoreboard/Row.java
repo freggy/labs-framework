@@ -68,6 +68,7 @@ public class Row implements Comparable<Row>, Updatable {
      */
     public void setIndex(int index) {
         this.index = index;
+        score.setScore(index);
     }
 
     private LabsScoreboard scoreboard;

@@ -1,10 +1,13 @@
 package de.bergwerklabs.framework.commons.spigot.entity.npc;
 
+import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.*;
 import de.bergwerklabs.framework.commons.spigot.SpigotCommons;
 import de.bergwerklabs.framework.commons.spigot.entity.Entity;
 import de.bergwerklabs.framework.commons.spigot.entity.EntityManager;
+import de.bergwerklabs.framework.commons.spigot.entity.EntityUtil;
 import de.bergwerklabs.framework.commons.spigot.entity.npc.behavior.AbstractBehavior;
+import de.bergwerklabs.framework.commons.spigot.entity.npc.behavior.ActivatedBehavior;
 import de.bergwerklabs.framework.commons.spigot.general.reflection.LabsReflection;
 import de.bergwerklabs.framework.commons.spigot.nms.MinecraftVersion;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.entitydestroy.WrapperPlayServerEntityDestroy;
@@ -13,9 +16,11 @@ import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.entityhead
 import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.entityequipment.v1_8.WrapperPlayServerEntityEquipment;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.namedentityspawn.v1_8.WrapperPlayServerNamedEntitySpawn;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.entitylook.v1_8.WrapperPlayServerEntityLook;
+import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.spawnentityliving.v1_8.WrapperPlayServerSpawnEntityLiving;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.v1_8.WrapperPlayServerPlayerInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -49,11 +54,7 @@ public abstract class Npc extends Entity {
      */
     public UUID getUuid() { return this.gameProfile.getUUID(); }
 
-    /**
-     *
-     * @return
-     */
-    public String getName() { return this.name; }
+    public HashSet<AbstractBehavior> getBehaviors() { return this.behaviors; }
 
     /**
      *
@@ -64,19 +65,10 @@ public abstract class Npc extends Entity {
         this.skin.inject(this.gameProfile);
     }
 
-    /**
-     *
-     * @param
-     */
-    public void setName(String name) {
-        // TODO: set name
-        this.gameProfile = new WrappedGameProfile(this.getUuid(), name);
-    }
-
     protected Location location;
     protected PlayerSkin skin;
-    protected String name;
     protected HashMap<EnumWrappers.ItemSlot, ItemStack> equipment = new HashMap<>();
+    protected HashSet<AbstractBehavior> behaviors = new HashSet<>();
 
     protected WrappedGameProfile gameProfile;
     protected WrapperPlayServerNamedEntitySpawn spawnPacket = new WrapperPlayServerNamedEntitySpawn();
@@ -87,11 +79,11 @@ public abstract class Npc extends Entity {
     protected WrappedDataWatcher watcher = new WrappedDataWatcher();
     protected EntityHeadRotationPacket entityHeadRotationPacket;
 
-    protected Npc(Location location, String name) {
+    protected Npc(Location location) {
         super();
         this.location = location;
 
-        this.gameProfile = new WrappedGameProfile(UUID.randomUUID(), name);
+        this.gameProfile = new WrappedGameProfile(UUID.randomUUID(), "");
         this.spawnPacket.setEntityID(this.entityId);
         this.spawnPacket.setPosition(location.toVector());
         this.spawnPacket.setMetadata(this.getMetadata());
@@ -103,7 +95,6 @@ public abstract class Npc extends Entity {
                 .setEntityId(this.entityId)
                 .setHeadYaw(this.location.getYaw())
                 .build();
-
         EntityManager.getEntities().put(this.entityId, this);
     }
 
@@ -148,8 +139,18 @@ public abstract class Npc extends Entity {
      * @param behavior
      */
     public void addBehavior(AbstractBehavior behavior) {
+        if (this.behaviors.contains(behavior)) return;
+
+        this.behaviors.add(behavior);
         behavior.setNpc(this);
         Bukkit.getServer().getPluginManager().registerEvents(behavior, SpigotCommons.getInstance());
+
+        if (behavior instanceof ActivatedBehavior) {
+            ActivatedBehavior activatedBehavior = (ActivatedBehavior) behavior;
+            if (!activatedBehavior.isActivated()) {
+                activatedBehavior.activate();
+            }
+        }
     }
 
 
@@ -188,6 +189,7 @@ public abstract class Npc extends Entity {
         this.entityLookPacket.sendPacket(player);
         this.entityHeadRotationPacket.sendPacket(player);
         this.sendFullEquipment();
+        this.sendPassengerArmorStand(player);
         Bukkit.getScheduler().runTaskLater(SpigotCommons.getInstance(), () -> this.handleTabList(player, EnumWrappers.PlayerInfoAction.REMOVE_PLAYER), 60L);
     }
 
@@ -273,5 +275,54 @@ public abstract class Npc extends Entity {
         if (currentWorldName.equals(from.getWorld().getName()) && currentWorldName.equals(to.getWorld().getName())) {
             this.handleMove(e.getPlayer(), to, from);
         }
+    }
+
+    /**
+     * Sends a armor stand that will be the passenger of this {@link Npc} to remove the nametag.
+     *
+     * @param player player to send the packet to.
+     */
+    private void sendPassengerArmorStand(Player player) {
+        WrapperPlayServerSpawnEntityLiving living = new WrapperPlayServerSpawnEntityLiving();
+        living.setEntityID(EntityUtil.getNmsId());
+        living.setType(EntityType.ARMOR_STAND);
+        living.setHeadPitch(location.getPitch());
+        living.setVelocityX(0);
+        living.setVelocityY(0);
+        living.setVelocityZ(0);
+        living.setPitch(location.getPitch());
+        living.setYaw(location.getYaw());
+        living.setX(location.getX());
+        living.setY(location.getY());
+        living.setZ(location.getZ());
+        living.setMetadata(getStandMetadata());
+        living.sendPacket(player);
+
+        // We need to do this with reflection again because ProtocolLib is like,
+        // "naah lets just not send the packet properly", which is nice!
+        try {
+            Object packet = LabsReflection.getNmsClass("PacketPlayOutAttachEntity").newInstance();
+            LabsReflection.getField(packet.getClass(), "a").set(packet, 0);
+            LabsReflection.getField(packet.getClass(), "b").set(packet, living.getEntityID());
+            LabsReflection.getField(packet.getClass(), "c").set(packet, this.entityId);
+            SpigotCommons.getInstance().getProtocolManager().sendServerPacket(player, PacketContainer.fromPacket(packet));
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Gets metadata for the passenger armor stand.
+     */
+    private WrappedDataWatcher getStandMetadata() {
+        WrappedDataWatcher watcher = new WrappedDataWatcher();
+        byte data = 0;
+        data |= 0x20;
+
+        watcher.setObject(0, data);
+        watcher.setObject(2, "");
+        watcher.setObject(3, (byte) 0);
+        return watcher;
     }
 }

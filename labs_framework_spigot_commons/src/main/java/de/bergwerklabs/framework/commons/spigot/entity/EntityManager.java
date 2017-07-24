@@ -9,8 +9,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.scoreboard.NameTagVisibility;
+import org.bukkit.scoreboard.Team;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Yannic Rieger on 22.07.2017.
@@ -23,9 +27,22 @@ public class EntityManager implements Listener {
     /**
      *
      */
-    public static HashMap<Integer, Entity> getEntities() { return entities; }
+    public static Map<Integer, Entity> getEntities() { return entities; }
 
-    private static HashMap<Integer, Entity> entities = new HashMap<>();
+    /**
+     *
+     */
+    public static Team getNpcInvisTeam() { return npcTeam; }
+
+
+    private static Map<Integer, Entity> entities = new ConcurrentHashMap<>();
+    private static Team npcTeam;
+
+    static {
+        npcTeam = Bukkit.getScoreboardManager().getNewScoreboard().registerNewTeam("npcs");
+        npcTeam.setNameTagVisibility(NameTagVisibility.NEVER);
+    }
+
 
     @EventHandler
     private void onPlayerRespawn(PlayerRespawnEvent e) {

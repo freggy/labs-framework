@@ -3,24 +3,23 @@ package de.bergwerklabs.framework.commons.spigot.entity.npc.behavior;
 import de.bergwerklabs.framework.commons.spigot.SpigotCommons;
 import de.bergwerklabs.util.math.SQRT;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-
-import java.util.Arrays;
 
 /**
  * Created by Yannic Rieger on 23.07.2017.
- * <p>  </p>
+ * <p> Behavior which will let the {@link de.bergwerklabs.framework.commons.spigot.entity.npc.Npc}
+ *     look at a player in a given range.
  *
  * @author Yannic Rieger
  */
-public class LookAtPlayerBehavior extends AbstractBehavior implements Listener {
+public class LookAtPlayerBehavior extends ActivatedBehavior {
 
     /**
-     *
+     * Gets whether or not this behavior will be executed globally.
      */
     public boolean isGlobal() {
         return global;
@@ -28,10 +27,18 @@ public class LookAtPlayerBehavior extends AbstractBehavior implements Listener {
 
     private boolean global = false;
     private int range;
-    private Float yaw, pitch, defaultYaw, defaultPitch;
+    private Float defaultYaw, defaultPitch;
     private Player focused;
 
-
+    /**
+     * @param global Determines whether or not this behavior will be executed globally.
+     * @param range Range in which the {@link de.bergwerklabs.framework.commons.spigot.entity.npc.Npc} will look at a player.
+     *              if 0, the default value if 25 will be set.
+     * @param defaultPitch Default pitch to which the {@link de.bergwerklabs.framework.commons.spigot.entity.npc.Npc} will fall back
+     *                     if out of range.
+     * @param defaultYaw Default yaw to which the {@link de.bergwerklabs.framework.commons.spigot.entity.npc.Npc} will fall back
+     *                   if out of range.
+     */
     public LookAtPlayerBehavior(boolean global, int range, Float defaultPitch, Float defaultYaw) {
         this.global = global;
         this.defaultPitch = defaultPitch;
@@ -39,8 +46,72 @@ public class LookAtPlayerBehavior extends AbstractBehavior implements Listener {
         this.range = range <= 0 ? 25 * 25 : range * range;
     }
 
-    @Override
-    public void perform(Player player) {
+    public void activate() {}
+
+    public void deactivate() {
+        PlayerMoveEvent.getHandlerList().unregister(this);
+    }
+
+    @EventHandler
+    private void onPlayerMove(PlayerMoveEvent e) {
+        Player player = e.getPlayer();
+        if (player.getGameMode() != GameMode.SPECTATOR) {
+            if (this.global) this.globalBehavior(e.getPlayer());
+            else this.singleBehavior(e.getPlayer());
+        }
+    }
+
+
+    /**
+     * The {@link de.bergwerklabs.framework.commons.spigot.entity.npc.Npc} will look at the closest player near him.
+     * This method will be executed for every one on the server.
+     */
+    private void globalBehavior(Player player) {
+        if (focused == null) focused = Bukkit.getOnlinePlayers().iterator().next();
+
+        Location focusedLocation = this.focused.getLocation();
+        Location newPlayerLoc = player.getLocation();
+
+        if (focusedLocation.getWorld().getName().equals(this.associated.getLocation().getWorld().getName())) {
+
+            double focusedDistance = focusedLocation.distanceSquared(this.associated.getLocation());
+            double newPlayerDistance = newPlayerLoc.distanceSquared(this.associated.getLocation());
+
+            if (newPlayerDistance > this.range || focusedDistance > this.range) {
+                if (this.defaultYaw != null && this.defaultPitch != null) {
+                    System.out.println("this.defaultYaw != null && this.defaultPitch != null");
+                    this.associated.setHeadRotation(defaultPitch, defaultYaw);
+                }
+            }
+            else if (newPlayerDistance < range) {
+                System.out.println("newPlayerDistance < range");
+                if (newPlayerDistance < focusedDistance || player.getUniqueId().equals(this.focused.getUniqueId())) {
+                    System.out.println("newPlayerDistance < focusedDistance");
+                    this.lookAtPlayer(player);
+                }
+            }
+        }
+    }
+
+    /**
+     * This method does the same thing but for only one specific player.
+     *
+     * @param player
+     */
+    private void singleBehavior(Player player) {
+            double playerDistance = player.getLocation().distanceSquared(this.associated.getLocation());
+
+            if (playerDistance > this.range) {
+                if (this.defaultYaw != null && this.defaultPitch != null)
+                    this.associated.setHeadRotation(defaultPitch, defaultYaw);
+            }
+            else if (playerDistance > range) {
+                Bukkit.getScheduler().runTaskLater(SpigotCommons.getInstance(), () -> this.lookAtPlayer(player), 20L);
+            }
+    }
+
+    private void lookAtPlayer(Player player) {
+        // logic for looking in the direction of the player.
         double dX = associated.getLocation().getX() - player.getLocation().getX();
         double dY = associated.getLocation().getY() - player.getLocation().getY();
         double dZ = associated.getLocation().getZ() - player.getLocation().getZ();
@@ -49,55 +120,6 @@ public class LookAtPlayerBehavior extends AbstractBehavior implements Listener {
         double pitch = Math.atan2(SQRT.fastest(dZ * dZ + dX * dX), dY) + Math.PI;
         this.focused = player;
         this.associated.setHeadRotation((float) (-Math.toDegrees(pitch) - 90), (float) (90 + Math.toDegrees(yaw)));
-    }
-
-    @EventHandler
-    private void onPlayerMove(PlayerMoveEvent e) {
-        if (this.global) this.globalBehavior();
-        else this.singleBehavior(e.getPlayer());
-    }
-
-    private void globalBehavior() {
-        System.out.println("adawd");
-
-        if (focused == null) focused = Bukkit.getOnlinePlayers().iterator().next();
-
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            Location focusedLocation = this.focused.getLocation();
-            Location newPlayerLoc = player.getLocation();
-
-            if (focusedLocation.getWorld().getName().equals(this.associated.getLocation().getWorld().getName())) {
-
-                double focusedDistance = focusedLocation.distanceSquared(this.associated.getLocation());
-                double newPlayerDistance = newPlayerLoc.distanceSquared(this.associated.getLocation());
-
-                if (newPlayerDistance > this.range || focusedDistance > this.range) {
-                    if (this.defaultYaw != null && this.defaultPitch != null) {
-                        System.out.println("this.defaultYaw != null && this.defaultPitch != null");
-                        this.associated.setHeadRotation(defaultPitch, defaultYaw);
-                    }
-                }
-                else if (newPlayerDistance < range) {
-                    System.out.println("newPlayerDistance < range");
-                    if (newPlayerDistance < focusedDistance || player.getUniqueId().equals(this.focused.getUniqueId())) {
-                        System.out.println("newPlayerDistance < focusedDistance");
-                        this.perform(player);
-                    }
-                }
-            }
-        });
-    }
-
-    private void singleBehavior(Player player) {
-        double playerDistance = player.getLocation().distanceSquared(this.associated.getLocation());
-
-        if (playerDistance > this.range) {
-            if (this.defaultYaw != null && this.defaultPitch != null)
-                this.associated.setHeadRotation(defaultPitch, defaultYaw);
-        }
-        else if (playerDistance > range) {
-            Bukkit.getScheduler().runTaskLater(SpigotCommons.getInstance(), () -> this.perform(player), 20L);
-        }
     }
 }
 

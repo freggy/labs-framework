@@ -1,8 +1,10 @@
 package de.bergwerklabs.framework.commons.spigot.entity.npc.behavior;
 
 import de.bergwerklabs.framework.commons.spigot.entity.npc.Npc;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.scheduler.BukkitTask;
+
+import java.util.HashSet;
 
 /**
  * Created by Yannic Rieger on 23.07.2017.
@@ -12,9 +14,14 @@ import org.bukkit.event.Listener;
  */
 public abstract class AbstractBehavior implements Listener {
 
+    /**
+     *
+     */
+    public HashSet<BukkitTask> getTasks() { return this.tasks; }
+
     protected Npc associated;
 
-    public abstract void perform(Player player);
+    protected HashSet<BukkitTask> tasks = new HashSet<>();
 
     public void setNpc(Npc npc) {
         this.associated = npc;

@@ -1,5 +1,7 @@
 package de.bergwerklabs.framework.commons.spigot.entity.hologram;
 
+import com.comphenix.protocol.wrappers.WrappedDataWatcher;
+import de.bergwerklabs.framework.commons.spigot.entity.npc.GlobalNpc;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
@@ -14,6 +16,11 @@ public class GlobalHologram extends Hologram {
     public GlobalHologram(String line, Location location) {
         super(line, location);
     }
+
+    public GlobalHologram(String line, Location location, WrappedDataWatcher metadata) {
+        super(line, location, metadata);
+    }
+
 
     @Override
     public void spawn() {

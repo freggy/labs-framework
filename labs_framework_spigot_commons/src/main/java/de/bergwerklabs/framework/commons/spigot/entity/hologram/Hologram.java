@@ -56,6 +56,34 @@ public abstract class Hologram extends Entity {
         EntityManager.getEntities().put(this.entityId, this);
     }
 
+    public Hologram(String line, Location location, WrappedDataWatcher metadata) {
+        this.line = line;
+
+        this.entityPacket.setEntityID(this.entityId);
+
+        this.entityPacket.setType(EntityType.ARMOR_STAND);
+
+        this.location = location.clone();
+        this.entityPacket.setHeadPitch(location.getPitch());
+        this.entityPacket.setPitch(this.location.getPitch());
+        this.entityPacket.setYaw(this.location.getYaw());
+        this.entityPacket.setX(this.location.getX());
+        this.entityPacket.setY(this.location.getY());
+        this.entityPacket.setZ(this.location.getZ());
+
+        this.entityPacket.setVelocityX(0);
+        this.entityPacket.setVelocityY(0);
+        this.entityPacket.setVelocityZ(0);
+
+        metadata.setObject(2, this.line);
+
+        this.entityPacket.setMetadata(metadata);
+
+        EntityManager.getEntities().put(this.entityId, this);
+    }
+
+
+
     /**
      *
      * @return
