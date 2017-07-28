@@ -1,11 +1,11 @@
 Module
 ======
 
-| Name                       | Package                                    |
-|----------------------------|--------------------------------------------|
-| LabsFrameworkSpigotCommons | de.bergwerklabs.framework.commons.spigot   |
-| LabsFrameworkCommons       | de.bergwerklabs.framework.commons          |
-| LabsSchematicService       | de.bergwerklabs.framework.schematicservice |
+| Name                       | Package                                    | Artifact Id                 |
+|----------------------------|--------------------------------------------|-----------------------------| 
+| LabsFrameworkSpigotCommons | de.bergwerklabs.framework.commons.spigot   | labsframework-spigotcommons |
+| LabsFrameworkCommons       | de.bergwerklabs.framework.commons          | labsframework-commons       |
+| LabsSchematicService       | de.bergwerklabs.framework.schematicservice | schematic-service           |
 
 
 Ein neues Projekt hinzufügen
@@ -15,7 +15,7 @@ Ein neues Projekt sollte den Parent-Tag in der `pom.xml` enhalten
 ```XML
 <parent>
     <groupId>de.bergwerklabs.framework</groupId>
-    <artifactId>LabsFramework</artifactId>
+    <artifactId>labsframework-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
 </parent>
 ```
