@@ -1,3 +1,27 @@
+Module
+======
+
+| Name                       | Package                                    |
+|----------------------------|--------------------------------------------|
+| LabsFrameworkSpigotCommons | de.bergwerklabs.framework.commons.spigot   |
+| LabsFrameworkCommons       | de.bergwerklabs.framework.commons          |
+| LabsSchematicService       | de.bergwerklabs.framework.schematicservice |
+
+
+Ein neues Projekt hinzufügen
+============================
+Ein neues Projekt sollte den Parent-Tag in der `pom.xml` enhalten
+
+```XML
+<parent>
+    <groupId>de.bergwerklabs.framework</groupId>
+    <artifactId>LabsFramework</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</parent>
+```
+Hinweis: Die Version kann natürlich variieren.
+
+
 Code Konventionen
 =================
 
