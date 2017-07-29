@@ -27,7 +27,7 @@ Code Konventionen
 
 Variablen
 ---------
-Auf Instanzvariablen soll immer über das this Keyword zugegriffen werden. Dies gilt auch für Instanzmethoden.
+Auf Instanzvariablen soll immer über das `this` Keyword zugegriffen werden. Dies gilt auch für Instanzmethoden.
 
 Benennung der Variablen
 -----------------------
