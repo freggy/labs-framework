@@ -42,6 +42,6 @@ public class TaskManager {
     private static BukkitTask createUpdateScheduler(Integer interval) {
         return Bukkit.getScheduler().runTaskTimerAsynchronously(SpigotCommons.getInstance(), () -> {
                 items.get(interval).forEach(item -> item.update());
-        }, (interval / 1000) * 20, (interval / 1000) * 20);
+        }, 0, interval;
     }
 }
