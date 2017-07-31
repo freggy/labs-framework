@@ -8,9 +8,9 @@ Module
 | LabsSchematicService       | de.bergwerklabs.framework.schematicservice | schematic-service           |
 
 
-Ein neues Projekt hinzufügen
+Ein neues Modul hinzufügen
 ============================
-Ein neues Projekt sollte den Parent-Tag in der `pom.xml` enhalten
+Ein neues Modul sollte den Parent-Tag in der `pom.xml` enhalten
 
 ```XML
 <parent>
