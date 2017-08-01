@@ -31,7 +31,7 @@ public abstract class Entity {
      */
     public int getEntityId() { return this.entityId; }
 
-    protected double drawDistanceSquared = 20 * 20;
+    protected double drawDistanceSquared = 30 * 30;
     protected boolean isVisible = false;
     protected int entityId;
 

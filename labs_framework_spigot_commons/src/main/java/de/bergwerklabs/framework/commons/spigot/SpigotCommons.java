@@ -5,6 +5,7 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.*;
 import com.comphenix.protocol.wrappers.EnumWrappers;
+import de.bergwerklabs.framework.commons.spigot.entity.Entity;
 import de.bergwerklabs.framework.commons.spigot.entity.EntityManager;
 import de.bergwerklabs.framework.commons.spigot.file.FileUtil;
 import de.bergwerklabs.framework.commons.spigot.general.LabsController;
@@ -22,6 +23,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashSet;
 import java.util.UUID;
+import java.util.concurrent.Callable;
 
 /**
  * Created by Yannic Rieger on 02.05.2017.
@@ -51,9 +53,7 @@ public class SpigotCommons extends JavaPlugin implements Listener, LabsControlle
     public final String CONSOLE_PREFIX = "[SpigotCommons] ";
 
     private static SpigotCommons instance;
-
     private ProtocolManager protocolManager;
-
     private HashSet<UUID> joiningPlayers = new HashSet<>();
 
     @Override
@@ -69,20 +69,36 @@ public class SpigotCommons extends JavaPlugin implements Listener, LabsControlle
         this.getServer().getPluginManager().registerEvents(new EntityManager(), this);
 
         this.protocolManager.addPacketListener(new PacketAdapter(this, PacketType.Play.Client.USE_ENTITY) {
+            private Action previous = null;
 
             @Override
             public void onPacketReceiving(PacketEvent event) {
                 WrapperPlayClientUseEntity useEntityPacket = new WrapperPlayClientUseEntity(event.getPacket());
                 int id = useEntityPacket.getTargetID();
+                if (EntityManager.getEntities().keySet().contains(id)) {
+                    Entity entity = EntityManager.getEntities().get(id);
 
-                if (NpcManager.geNpcs().keySet().contains(id)) {
-                    Npc npc = NpcManager.geNpcs().get(id);
-                    Action action = this.determineAction(useEntityPacket.getType());
+                    if (entity instanceof Npc) {
+                        Npc npc = (Npc)entity;
+                        Action action = this.determineAction(useEntityPacket.getType());
 
-                    if (action != Action.INTERACT_AT)
-                        Bukkit.getServer().getPluginManager().callEvent(new NpcInteractEvent(npc, event.getPlayer(), action));
-                    else
-                        Bukkit.getServer().getPluginManager().callEvent(new NpcInteractAtEvent(npc, event.getPlayer(), action, useEntityPacket.getTargetVector()));
+                        // Nasty hack to stop it from executing the event twice
+                        if (previous != action) {
+                            this.previous = action;
+                            if (action != Action.INTERACT_AT) {
+                                Bukkit.getScheduler().callSyncMethod(SpigotCommons.getInstance(), () -> {
+                                    Bukkit.getServer().getPluginManager().callEvent(new NpcInteractEvent(npc, event.getPlayer(), action));
+                                    return null;
+                                });
+                            }
+                            else {
+                                Bukkit.getScheduler().callSyncMethod(SpigotCommons.getInstance(), () -> {
+                                    Bukkit.getServer().getPluginManager().callEvent(new NpcInteractAtEvent(npc, event.getPlayer(), action, useEntityPacket.getTargetVector()));
+                                    return null;
+                                });
+                            }
+                        }
+                    }
                 }
             }
 

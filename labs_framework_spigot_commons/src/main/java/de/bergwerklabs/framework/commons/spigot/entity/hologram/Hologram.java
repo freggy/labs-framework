@@ -89,12 +89,16 @@ public abstract class Hologram extends Entity {
      * @return
      */
     protected WrappedDataWatcher getMetadata() {
-        byte data = 0;
-        data |= 0x20;
+        byte dataEntity = 0;
+        dataEntity |= 0x20;
 
-        this.watcher.setObject(0, data);
+        byte armorStandData = 0;
+        armorStandData |= 0x10;
+
+        this.watcher.setObject(0, dataEntity);
         this.watcher.setObject(2, this.line);
         this.watcher.setObject(3, (byte) 1);
+        this.watcher.setObject(11, armorStandData);
         return this.watcher;
     }
 

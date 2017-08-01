@@ -40,7 +40,7 @@ public class GlobalNpc extends Npc {
 
     public GlobalNpc(Location location, PlayerSkin skin, String... text) {
         super(location);
-        this.compound = new GlobalHologramCompound(this.location.clone().add(0, 0.45, 0), text);
+        this.compound = new GlobalHologramCompound(this.location.clone().add(0, 0.10, 0), text);
         if (skin != null) this.setSkin(skin);
     }
 
@@ -94,12 +94,12 @@ public class GlobalNpc extends Npc {
 
     @Override
     public void handleJoin(Player player) {
-        this.handleSpawn(player);
+        super.handleJoin(player);
     }
 
     @Override
     public void handleSpawn(Player player) {
-        this.sendNpcData(player);
+        super.handleSpawn(player);
     }
 
     @Override

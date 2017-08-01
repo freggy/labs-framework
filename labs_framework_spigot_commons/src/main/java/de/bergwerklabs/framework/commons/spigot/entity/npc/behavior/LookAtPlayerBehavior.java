@@ -72,21 +72,20 @@ public class LookAtPlayerBehavior extends ActivatedBehavior {
         Location focusedLocation = this.focused.getLocation();
         Location newPlayerLoc = player.getLocation();
 
-        if (focusedLocation.getWorld().getName().equals(this.associated.getLocation().getWorld().getName())) {
+
+        if (focusedLocation.getWorld().getName().equals(this.associated.getLocation().getWorld().getName()) &&
+            newPlayerLoc.getWorld().getName().equals(this.associated.getLocation().getWorld().getName())) {
 
             double focusedDistance = focusedLocation.distanceSquared(this.associated.getLocation());
             double newPlayerDistance = newPlayerLoc.distanceSquared(this.associated.getLocation());
 
-            if (newPlayerDistance > this.range || focusedDistance > this.range) {
+            if (focusedDistance > this.range) {
                 if (this.defaultYaw != null && this.defaultPitch != null) {
-                    System.out.println("this.defaultYaw != null && this.defaultPitch != null");
                     this.associated.setHeadRotation(defaultPitch, defaultYaw);
                 }
             }
             else if (newPlayerDistance < range) {
-                System.out.println("newPlayerDistance < range");
                 if (newPlayerDistance < focusedDistance || player.getUniqueId().equals(this.focused.getUniqueId())) {
-                    System.out.println("newPlayerDistance < focusedDistance");
                     this.lookAtPlayer(player);
                 }
             }

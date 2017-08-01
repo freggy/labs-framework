@@ -18,6 +18,10 @@ public enum MinecraftVersion {
 
     private List<String> aliases;
 
+    /**
+     *
+     * @param aliases
+     */
     MinecraftVersion(String... aliases) {
         this.aliases = Arrays.asList(aliases);
     }
@@ -28,8 +32,6 @@ public enum MinecraftVersion {
      * @return
      */
     public static MinecraftVersion formString(String version) {
-        System.out.println(version);
-
        return Arrays.stream(MinecraftVersion.values()).filter(v -> v.aliases.contains(version)).findFirst().get();
     }
 }

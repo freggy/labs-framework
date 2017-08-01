@@ -28,4 +28,10 @@ public class Tuple<A, B> {
         this.value1 = value1;
         this.value2 = value2;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        Tuple tuple = (Tuple)o;
+        return tuple != null && tuple.getValue2().equals(this.getValue2()) && tuple.getValue1().equals(this.getValue1());
+    }
 }

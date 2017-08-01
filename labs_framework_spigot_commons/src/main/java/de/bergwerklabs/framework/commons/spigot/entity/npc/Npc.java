@@ -73,7 +73,6 @@ public abstract class Npc extends Entity {
     protected WrappedGameProfile gameProfile;
     protected WrapperPlayServerNamedEntitySpawn spawnPacket = new WrapperPlayServerNamedEntitySpawn();
     protected WrapperPlayServerEntityEquipment entityEquipmentPacket = new WrapperPlayServerEntityEquipment();
-    protected WrapperPlayServerPlayerInfo info = new WrapperPlayServerPlayerInfo();
     protected WrapperPlayServerEntityLook entityLookPacket = new WrapperPlayServerEntityLook();
     protected WrapperPlayServerEntityDestroy entityDestroyPacket = new WrapperPlayServerEntityDestroy();
     protected WrappedDataWatcher watcher = new WrappedDataWatcher();
@@ -153,7 +152,6 @@ public abstract class Npc extends Entity {
         }
     }
 
-
     /**
      *
      * @return
@@ -170,13 +168,14 @@ public abstract class Npc extends Entity {
      * @param action
      */
     protected void handleTabList(Player player, EnumWrappers.PlayerInfoAction action) {
+        WrapperPlayServerPlayerInfo info = new WrapperPlayServerPlayerInfo();
 
         PlayerInfoData playerData = new PlayerInfoData(this.gameProfile, 1,
                                                        EnumWrappers.NativeGameMode.NOT_SET,
                                                        WrappedChatComponent.fromText(gameProfile.getName()));
-        this.info.setData(Arrays.asList(playerData));
-        this.info.setAction(action);
-        this.info.sendPacket(player);
+        info.setData(Arrays.asList(playerData));
+        info.setAction(action);
+        info.sendPacket(player);
     }
 
     /**
@@ -220,7 +219,10 @@ public abstract class Npc extends Entity {
      * @param player
      */
     public void handleJoin(Player player) {
-        this.sendNpcData(player);
+        double range = player.getLocation().distance(this.getLocation());
+        if (range < this.drawDistanceSquared) {
+            this.sendNpcData(player);
+        }
     }
 
     /**
@@ -251,16 +253,7 @@ public abstract class Npc extends Entity {
 
         if (!this.getLocation().getWorld().getName().equals(to.getWorld().getName())) return;
 
-        // TODO: use LocationUtil#calculateDistanceFast
-        double distanceTo = this.getLocation().distanceSquared(to);
-        double distanceFrom = this.getLocation().distanceSquared(from);
-
-        if (distanceTo < this.drawDistanceSquared && distanceFrom > drawDistanceSquared) {
-            this.handleSpawn(player);
-        }
-        else if (distanceTo > drawDistanceSquared && distanceFrom < drawDistanceSquared) {
-            this.handleDespawn(player);
-        }
+        this.calcRenderDistance(player, to, from);
     }
 
     /**
@@ -273,7 +266,20 @@ public abstract class Npc extends Entity {
         String currentWorldName = this.getLocation().getWorld().getName();
 
         if (currentWorldName.equals(from.getWorld().getName()) && currentWorldName.equals(to.getWorld().getName())) {
-            this.handleMove(e.getPlayer(), to, from);
+            this.calcRenderDistance(e.getPlayer(), to, from);
+        }
+    }
+
+    private void calcRenderDistance(Player player, Location to, Location from) {
+        // TODO: use LocationUtil#calculateDistanceFast
+        double distanceTo = this.getLocation().distanceSquared(to);
+        double distanceFrom = this.getLocation().distanceSquared(from);
+
+        if (distanceTo < this.drawDistanceSquared && distanceFrom > drawDistanceSquared) {
+            this.handleSpawn(player);
+        }
+        else if (distanceTo > drawDistanceSquared && distanceFrom < drawDistanceSquared) {
+            this.handleDespawn(player);
         }
     }
 

@@ -4,6 +4,7 @@ import de.bergwerklabs.framework.commons.spigot.SpigotCommons;
 import de.bergwerklabs.framework.commons.spigot.entity.npc.Npc;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -29,41 +30,28 @@ public class EntityManager implements Listener {
      */
     public static Map<Integer, Entity> getEntities() { return entities; }
 
-    /**
-     *
-     */
-    public static Team getNpcInvisTeam() { return npcTeam; }
-
-
     private static Map<Integer, Entity> entities = new ConcurrentHashMap<>();
-    private static Team npcTeam;
 
-    static {
-        npcTeam = Bukkit.getScoreboardManager().getNewScoreboard().registerNewTeam("npcs");
-        npcTeam.setNameTagVisibility(NameTagVisibility.NEVER);
-    }
-
-
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     private void onPlayerRespawn(PlayerRespawnEvent e) {
         Bukkit.getScheduler().runTaskLaterAsynchronously(SpigotCommons.getInstance(), () -> {
             entities.values().forEach(npc -> npc.handleRespawn(e.getPlayer()));
         }, 10);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     private void onPlayerJoin(PlayerJoinEvent e) {
         Bukkit.getScheduler().runTaskLaterAsynchronously(SpigotCommons.getInstance(), () -> {
             entities.values().stream().filter(Entity::isVisible).forEach(npc -> npc.handleJoin(e.getPlayer()));
         }, 10);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     private void onPlayerMove(PlayerMoveEvent e) {
         entities.values().stream().filter(Entity::isVisible).forEach(npc -> npc.handleMove(e.getPlayer(), e.getTo(), e.getFrom()));
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     private void onPlayerTeleport(PlayerTeleportEvent e) {
         Bukkit.getScheduler().runTaskLaterAsynchronously(SpigotCommons.getInstance(), () -> {
             entities.values().stream().filter(Entity::isVisible).forEach(npc -> npc.handleTeleport(e));
