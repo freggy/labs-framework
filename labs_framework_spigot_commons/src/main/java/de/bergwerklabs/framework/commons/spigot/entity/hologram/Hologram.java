@@ -82,8 +82,6 @@ public abstract class Hologram extends Entity {
         EntityManager.getEntities().put(this.entityId, this);
     }
 
-
-
     /**
      *
      * @return

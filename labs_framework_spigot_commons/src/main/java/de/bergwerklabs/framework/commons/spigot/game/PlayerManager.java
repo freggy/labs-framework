@@ -17,5 +17,16 @@ public class PlayerManager<T extends LabsPlayer> {
      */
     public HashMap<UUID, T> getPlayers() { return players; }
 
+    /**
+     * Gets all the Spectators in a {@link LabsGame}.
+     */
+    public HashMap<UUID, T> getSpectators() { return spectators; }
+
     private HashMap<UUID, T> players = new HashMap<>();
+    private HashMap<UUID, T> spectators = new HashMap<>();
+
+
+
+
+
 }
