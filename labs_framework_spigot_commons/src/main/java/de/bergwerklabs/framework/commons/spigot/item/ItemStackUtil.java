@@ -165,4 +165,17 @@ public class ItemStackUtil {
 
         return builder.create();
     }
+
+    /**
+     * Checks whether two ItemStacks are equal.
+     *
+     * @param a first ItemStack.
+     * @param b second ItemStack.
+     * @return whether the two ItemStacks are equal.
+     */
+    public static boolean equals(ItemStack a, ItemStack b) {
+        return a.getType() == b.getType()
+                && a.getData().equals(b.getData())
+                && a.getItemMeta().getDisplayName().equals(b.getItemMeta().getDisplayName());
+    }
 }
