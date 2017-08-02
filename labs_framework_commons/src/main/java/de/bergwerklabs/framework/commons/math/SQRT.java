@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.commons.algorithm.math;
+package de.bergwerklabs.framework.commons.math;
 
 /**
  * Created by Yannic Rieger on 21.07.2017.

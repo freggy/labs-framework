@@ -1,5 +1,7 @@
 package de.bergwerklabs.framework.commons.spigot.general;
 
+import java.util.Objects;
+
 /**
  * Created by Yannic Rieger on 01.05.2017.
  * <p> Class represents a pair of two different values. </p>
@@ -33,5 +35,10 @@ public class Tuple<A, B> {
     public boolean equals(Object o) {
         Tuple tuple = (Tuple)o;
         return tuple != null && tuple.getValue2().equals(this.getValue2()) && tuple.getValue1().equals(this.getValue1());
+    }
+
+    @Override
+    public int hashCode() {
+       return Objects.hash(this.value1, this.value2);
     }
 }

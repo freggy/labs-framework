@@ -18,7 +18,7 @@ public class LabsPlayer {
      */
     public Player getPlayer() { return  this.player; }
 
-    private Player player;
+    protected Player player;
 
     /**
      * @param player

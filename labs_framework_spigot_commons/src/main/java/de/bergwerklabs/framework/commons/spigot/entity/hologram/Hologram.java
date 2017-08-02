@@ -96,7 +96,7 @@ public abstract class Hologram extends Entity {
         this.watcher.setObject(0, dataEntity);
         this.watcher.setObject(2, this.line);
         this.watcher.setObject(3, (byte) 1);
-        this.watcher.setObject(11, armorStandData);
+        //this.watcher.setObject(11, armorStandData);
         return this.watcher;
     }
 
