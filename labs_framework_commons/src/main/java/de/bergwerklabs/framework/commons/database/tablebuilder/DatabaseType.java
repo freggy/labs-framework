@@ -1,6 +1,6 @@
-package de.bwueller.database.schemer;
+package de.bergwerklabs.framework.commons.database.tablebuilder;
 
-import de.bwueller.database.schemer.column.*;
+import de.bergwerklabs.framework.commons.database.tablebuilder.column.*;
 
 /**
  * Created by Benedikt on 30.07.2017.

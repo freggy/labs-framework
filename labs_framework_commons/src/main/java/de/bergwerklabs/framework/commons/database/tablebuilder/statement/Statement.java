@@ -1,6 +1,6 @@
 package de.bergwerklabs.framework.commons.database.tablebuilder.statement;
 
-import de.bwueller.database.schemer.column.ColumnType;
+import de.bergwerklabs.framework.commons.database.tablebuilder.column.ColumnType;
 import de.bergwerklabs.framework.commons.database.tablebuilder.exception.SQLQueryException;
 
 import java.sql.Connection;

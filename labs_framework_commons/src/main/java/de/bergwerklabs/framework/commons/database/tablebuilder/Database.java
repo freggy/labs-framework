@@ -1,12 +1,12 @@
-package de.bwueller.database.schemer;
+package de.bergwerklabs.framework.commons.database.tablebuilder;
 
-import de.bwueller.database.schemer.column.Column;
-import de.bwueller.database.schemer.column.ColumnFlag;
-import de.bwueller.database.schemer.exception.SQLConnectionException;
-import de.bwueller.database.schemer.exception.SQLQueryException;
-import de.bwueller.database.schemer.statement.Row;
-import de.bwueller.database.schemer.statement.Statement;
-import de.bwueller.database.schemer.statement.StatementResult;
+import de.bergwerklabs.framework.commons.database.tablebuilder.column.Column;
+import de.bergwerklabs.framework.commons.database.tablebuilder.column.ColumnFlag;
+import de.bergwerklabs.framework.commons.database.tablebuilder.exception.SQLConnectionException;
+import de.bergwerklabs.framework.commons.database.tablebuilder.exception.SQLQueryException;
+import de.bergwerklabs.framework.commons.database.tablebuilder.statement.Row;
+import de.bergwerklabs.framework.commons.database.tablebuilder.statement.Statement;
+import de.bergwerklabs.framework.commons.database.tablebuilder.statement.StatementResult;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

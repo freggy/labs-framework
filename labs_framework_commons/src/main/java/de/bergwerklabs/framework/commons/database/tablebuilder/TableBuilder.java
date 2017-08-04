@@ -1,14 +1,16 @@
-package de.bwueller.database.schemer;
+package de.bergwerklabs.framework.commons.database.tablebuilder;
 
-import de.bwueller.database.schemer.column.Column;
-import de.bwueller.database.schemer.column.ColumnFlag;
-import de.bwueller.database.schemer.column.ColumnType;
-import de.bwueller.database.schemer.column.StringColumn;
+import de.bergwerklabs.framework.commons.database.tablebuilder.column.Column;
+import de.bergwerklabs.framework.commons.database.tablebuilder.column.ColumnFlag;
+import de.bergwerklabs.framework.commons.database.tablebuilder.column.ColumnType;
+import de.bergwerklabs.framework.commons.database.tablebuilder.column.StringColumn;
 
 import java.math.BigDecimal;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Benedikt on 29.07.2017.

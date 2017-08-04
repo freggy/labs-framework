@@ -1,9 +1,9 @@
-package de.bwueller.database.schemer;
+package de.bergwerklabs.framework.commons.database.tablebuilder;
 
-import de.bwueller.database.schemer.column.Column;
-import de.bwueller.database.schemer.column.ColumnFlag;
-import de.bwueller.database.schemer.exception.SQLArgumentException;
-import de.bwueller.database.schemer.statement.Statement;
+import de.bergwerklabs.framework.commons.database.tablebuilder.column.Column;
+import de.bergwerklabs.framework.commons.database.tablebuilder.column.ColumnFlag;
+import de.bergwerklabs.framework.commons.database.tablebuilder.exception.SQLArgumentException;
+import de.bergwerklabs.framework.commons.database.tablebuilder.statement.Statement;
 
 import java.util.ArrayList;
 import java.util.List;
