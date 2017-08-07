@@ -7,6 +7,8 @@ import de.bergwerklabs.framework.commons.spigot.general.method.UpdateMethod;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Objects;
+
 /**
  * Created by Yannic Rieger on 12.04.2017.
  * <p> Class representing an item in a InventoryMenu. </p>
@@ -123,5 +125,20 @@ public class InventoryItem implements Updatable {
         }
 
         this.place(this.slot);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof InventoryItem) {
+            InventoryItem other = (InventoryItem)o;
+            return this.isChild == other.isChild && this.associatedInventory.hashCode() == other.associatedInventory.hashCode() &&
+                   this.itemStack.equals(other.itemStack);
+        }
+        else return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.associatedInventory, this.isChild, this.itemStack, this.onClick, this.updatable, this.update);
     }
 }

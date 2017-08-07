@@ -14,4 +14,13 @@ public class SchematicMain extends JavaPlugin {
 
     public static final String CONSOLE_PREFIX = "[SchematicService] ";
 
+    public static SchematicMain getInstance() { return instance; }
+
+    private static SchematicMain instance;
+
+
+    @Override
+    public void onEnable() {
+        instance = this;
+    }
 }

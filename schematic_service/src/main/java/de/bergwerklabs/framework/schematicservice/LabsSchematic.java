@@ -1,20 +1,10 @@
 package de.bergwerklabs.framework.schematicservice;
 
-import com.boydti.fawe.FaweAPI;
-import com.boydti.fawe.util.EditSessionBuilder;
+import com.boydti.fawe.object.RunnableVal;
 import com.boydti.fawe.util.TaskManager;
-import com.flowpowered.nbt.CompoundTag;
-import com.sk89q.worldedit.EditSession;
-import com.sk89q.worldedit.MaxChangedBlocksException;
-import com.sk89q.worldedit.data.DataException;
-import com.sk89q.worldedit.schematic.SchematicFormat;
-import de.bergwerklabs.framework.schematicservice.event.SchematicPlacedEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by Yannic Rieger on 05.05.2017.
@@ -66,19 +56,23 @@ public class LabsSchematic<T> {
      * @param to Vector which conains x, y and z coordinates representing the paste location.
      */
     public void pasteAsync(String world, Vector to) {
-
         TaskManager.IMP.async(() -> {
-            EditSession session = new EditSessionBuilder(FaweAPI.getWorld(world)).fastmode(true).checkMemory(true).build(); // Maybe turn fast mode off?
-            try {
-                SchematicFormat.getFormat(schematicFile).load(schematicFile).paste(session, new com.sk89q.worldedit.Vector(to.getX(), to.getY(), to.getZ()), true, true);
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-            session.flushQueue();
+            Util.pasteSchematic(this.schematicFile, world, to, this);
+        });
+    }
 
-            synchronized (this) {
-                Bukkit.getPluginManager().callEvent(new SchematicPlacedEvent(this, new Location(Bukkit.getWorld(world), to.getX(), to.getY(), to.getZ())));
+    /**
+     *
+     * @param world
+     * @param to
+     */
+    public void pasteSync(String world, Vector to) {
+        File file = this.schematicFile;
+        LabsSchematic<T> instance = this;
+        TaskManager.IMP.syncWhenFree(new RunnableVal<Object>() {
+            @Override
+            public void run(Object value) {
+                Util.pasteSchematic(file, world, to, instance);
             }
         });
     }

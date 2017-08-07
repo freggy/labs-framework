@@ -5,9 +5,13 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Objects;
+
 /**
  * Created by Yannic Rieger on 28.04.2017.
- * <p> Useful wrapper class for Skulls. </p>
+ * <p>
+ * Useful wrapper class for Skulls.
+ *
  * @author Yannic Rieger
  */
 public class PlayerHead {
@@ -41,6 +45,22 @@ public class PlayerHead {
     private String owner, displayName;
     private boolean isCustom = false;
     private ItemStack item = new ItemStack(Material.SKULL_ITEM, 1, (short)3);
+
+    /**
+     * Creates a PlayerHead from JSON.
+     *
+     * @param json JsonObject representing the PlayerHead.
+     * @return PlayerHead created out of JSON.
+     */
+    public static PlayerHead fromJson(JsonObject json) {
+        ItemStack item = ItemStackUtil.createItemStackFromJson(json); // We just need the ItemMeta
+        String owner = json.get("owner").getAsString();
+
+        if (json.has("is-custom"))
+            return new PlayerHead(owner, json.get("is-custom").getAsBoolean(), item.getItemMeta());
+        else
+            return new PlayerHead(owner, false, item.getItemMeta());
+    }
 
     /**
      * @param owner Owner of the head.
@@ -81,18 +101,18 @@ public class PlayerHead {
         }
     }
 
-    /**
-     * Creates a PlayerHead from JSON.
-     * @param json JsonObject representing the PlayerHead.
-     * @return PlayerHead created out of JSON.
-     */
-    public static PlayerHead fromJson(JsonObject json) {
-        ItemStack item = ItemStackUtil.createItemStackFromJson(json); // We just need the ItemMeta
-        String owner = json.get("owner").getAsString();
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof PlayerHead) {
+            PlayerHead other = (PlayerHead)o;
+            return this.isCustom == other.isCustom && this.displayName.equals(other.displayName) &&
+                   this.owner.equals(other.owner) && this.item.equals(other.item);
+        }
+        else return false;
+    }
 
-        if (json.has("is-custom"))
-           return new PlayerHead(owner, json.get("is-custom").getAsBoolean(), item.getItemMeta());
-        else
-            return new PlayerHead(owner, false, item.getItemMeta());
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.displayName, this.isCustom, this.item, this.owner);
     }
 }

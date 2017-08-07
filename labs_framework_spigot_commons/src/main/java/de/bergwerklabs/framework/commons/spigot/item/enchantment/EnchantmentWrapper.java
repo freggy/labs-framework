@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.enchantments.Enchantment;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -90,5 +91,19 @@ public class EnchantmentWrapper {
      */
     public static List<EnchantmentWrapper> enchantmentsFromJson(JsonArray jsonElements) {
         return JsonUtil.jsonArrayToJsonObjectList(jsonElements).stream().map(jsonEnchantment -> fromJson(jsonEnchantment)).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof EnchantmentWrapper) {
+            EnchantmentWrapper other = (EnchantmentWrapper)o;
+            return this.ignoreRestriction == other.ignoreRestriction && this.enchantment.equals(other.enchantment) && this.level == other.level;
+        }
+        else return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.enchantment, this.ignoreRestriction, this.level);
     }
 }

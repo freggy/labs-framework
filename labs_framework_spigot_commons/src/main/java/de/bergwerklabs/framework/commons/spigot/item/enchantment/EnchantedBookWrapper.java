@@ -4,26 +4,32 @@ import com.google.gson.JsonObject;
 import de.bergwerklabs.framework.commons.spigot.item.ItemStackUtil;
 import de.bergwerklabs.framework.commons.spigot.json.JsonUtil;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by Yannic Rieger on 02.05.2017.
- * <p>  </p>
+ * <p>
+ *
  * @author Yannic Rieger
  */
 public class EnchantedBookWrapper {
 
     /**
      *
-     * @return
      */
     public ItemStack getBook() {
         return book;
     }
+
+    public Map<Enchantment, Integer> getEnchantments() { return this.book.getEnchantments(); }
 
     private ItemStack book = new ItemStack(Material.ENCHANTED_BOOK);
 
@@ -62,5 +68,19 @@ public class EnchantedBookWrapper {
         book.getBook().setItemMeta(bookMeta);
 
         return book;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof EnchantedBookWrapper) {
+            EnchantedBookWrapper other = (EnchantedBookWrapper)o;
+            return this.book.equals(other.book) && this.book.getEnchantments().hashCode() == other.book.getEnchantments().hashCode();
+        }
+        else return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.book);
     }
 }

@@ -17,10 +17,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -142,6 +139,21 @@ public class InventoryMenu implements Listener, Versionable, Identifiable {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof InventoryItem) {
+            InventoryMenu other = (InventoryMenu)o;
+            return this.allItems.equals(other.allItems) && this.id.equals(other.id) && this.controller.equals(other.controller) &&
+                   this.rowSpans.equals(other.rowSpans) && this.columnSpans.equals(other.columnSpans) && this.rects.equals(other.rects);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.allItems, this.columnSpans, this.rowSpans, this.controller, this.rects, this.id);
+    }
+
     // TODO: create extension method for itemstack getHashCode when using kotlin.
 
     /**
@@ -155,7 +167,6 @@ public class InventoryMenu implements Listener, Versionable, Identifiable {
         if (!columnSpans.isEmpty())  columnSpans.stream().filter(columnSpan -> columnSpan.isUpdated()).forEach(columnSpan -> this.allItems.addAll(columnSpan.getItems()));
         if (!items.isEmpty())        items.stream().filter(item -> item.isUpdated()).forEach(invItem -> Collections.addAll(items, invItem) );
     }
-
 
     /**
      *
