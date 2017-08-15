@@ -1,47 +1,118 @@
 package de.bergwerklabs.framework.commons.spigot.general.update;
 
-import de.bergwerklabs.framework.commons.spigot.SpigotCommons;
-import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitTask;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import io.netty.util.internal.ConcurrentSet;
+import org.bukkit.plugin.Plugin;
+
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Created by Yannic Rieger on 28.04.2017.
- * <p> Class keeps track of the current update tasks. </p>
- * @author Yannic Rieger
+ *
+ * @author Benedikt
  */
 public class TaskManager {
 
-    private static HashMap<Integer, BukkitTask> tasks = new HashMap<>();
-    private static HashMap<Integer, ArrayList<Updatable>> items = new HashMap<>();
+    private static final Set<Task> syncTasks = new ConcurrentSet<>();
+    private static final Set<Task> asyncTasks = new ConcurrentSet<>();
 
     /**
-     * Registers a new Updatable with the given interval
-     * @param interval interval to update the object in.
+     *
+     * @param plugin
      */
-    public static void registerNewUpdatable(Integer interval, Updatable item) {
-        Validate.notNull(item);
-        Validate.notNull(interval);
-
-        if (!items.containsKey(interval))
-            items.put(interval, new ArrayList<>());
-
-        items.get(interval).add(item);
-
-        if (!tasks.containsKey(interval))
-            tasks.put(interval, createUpdateScheduler(interval));
+    public static void startTimers(Plugin plugin) {
+        Bukkit.getScheduler().runTaskTimer(plugin, createRunnable(syncTasks), 0L, 1L);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, createRunnable(asyncTasks), 0L, 1L);
     }
 
     /**
-     * Creates a new scheduler to update the item.
-     * @param interval interval in which the update mehtod gets called.
+     *
+     * @param task
      */
-    private static BukkitTask createUpdateScheduler(Integer interval) {
-        return Bukkit.getScheduler().runTaskTimerAsynchronously(SpigotCommons.getInstance(), () -> {
-                items.get(interval).forEach(item -> item.update());
-        }, 0, interval);
+    public static void stopTask(Task task) {
+        syncTasks.remove(task);
+        asyncTasks.remove(task);
+    }
+
+    /**
+     *
+     * @param task
+     * @param delay
+     * @param interval
+     * @return
+     */
+    public static Task registerSyncRepeatingTask(Updatable task, long delay, long interval) {
+        Task result = new Task(task, delay, interval);
+        syncTasks.add(result);
+        return result;
+    }
+
+    /**
+     *
+     * @param task
+     * @param delay
+     * @return
+     */
+    public static Task registerSyncDelayedTask(Updatable task, long delay) {
+        Task result = new Task(task, delay);
+        syncTasks.add(result);
+        return result;
+    }
+
+    /**
+     *
+     * @param task
+     * @param delay
+     * @param interval
+     * @return
+     */
+    public static Task registerAsyncRepeatingTask(Updatable task, long delay, long interval) {
+        Task result = new Task(task, delay, interval);
+        asyncTasks.add(result);
+        return result;
+    }
+
+    /**
+     *
+     * @param task
+     * @param delay
+     * @return
+     */
+    public static Task registerAsyncDelayedTask(Updatable task, long delay) {
+        Task result = new Task(task, delay);
+        asyncTasks.add(result);
+        return result;
+    }
+
+    /**
+     *
+     * @param tasks
+     * @return
+     */
+    private static Runnable createRunnable(Set<Task> tasks) {
+        AtomicLong ticks = new AtomicLong(0);
+        return () -> {
+            long current = ticks.getAndIncrement();
+
+            for (Task task : tasks) {
+                if (task.getCreated() < 0) {
+                    task.setCreated(current);
+                }
+
+                if ((!task.isStarted() && task.getCreated() >= 0 && task.getCreated() + task.getDelay() <= current)
+                        || (task.isStarted() && task.isRepeating() && task.getLastUpdate() >= 0 && task.isDone() && task.getLastUpdate() + task.getInterval() <= current)) {
+                    task.setStarted(true);
+
+                    task.update();
+                    task.setLastUpdate(current);
+
+                    if (!task.isRepeating()) {
+                        tasks.remove(task);
+                    }
+                }
+            }
+        };
     }
 }
+
