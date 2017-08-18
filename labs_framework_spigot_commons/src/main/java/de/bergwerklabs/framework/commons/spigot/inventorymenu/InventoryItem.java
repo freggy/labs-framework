@@ -95,8 +95,8 @@ public class InventoryItem implements Updatable {
                 this.itemStack = update.invoke();
                 this.updatable = true;
 
-                if (update.getInterval() != -1 && !this.isChild)
-                    TaskManager.registerNewUpdatable(update.getInterval(), this);
+                //if (update.getInterval() != -1 && !this.isChild)
+                    //TaskManager.registerNewUpdatable(update.getInterval(), this);
             }
             catch (Exception e) {
                 e.printStackTrace();

@@ -27,18 +27,20 @@ import java.util.concurrent.Callable;
 
 /**
  * Created by Yannic Rieger on 02.05.2017.
- * <p> Main class </p>
+ * <p>
+ * Main class
+ *
  * @author Yannic Rieger
  */
 public class SpigotCommons extends JavaPlugin implements Listener, LabsController {
 
     /**
-     *
+     * Gets a {@link ProtocolManager}.
      */
     public ProtocolManager getProtocolManager() { return this.protocolManager; }
 
     /**
-     *
+     * Contains all joining players. A player will be hold in this list for approx. 2 seconds.
      */
     public HashSet<UUID> getJoiningPlayers() { return this.joiningPlayers; }
 
@@ -48,7 +50,7 @@ public class SpigotCommons extends JavaPlugin implements Listener, LabsControlle
     public static SpigotCommons getInstance() { return instance; }
 
     /**
-     *
+     * Prefix for console output.
      */
     public final String CONSOLE_PREFIX = "[SpigotCommons] ";
 
@@ -83,7 +85,7 @@ public class SpigotCommons extends JavaPlugin implements Listener, LabsControlle
                         Action action = this.determineAction(useEntityPacket.getType());
 
                         // Nasty hack to stop it from executing the event twice
-                        if (previous != action) {
+                        if (previous != action || previous == Action.HIT) {
                             this.previous = action;
                             if (action != Action.INTERACT_AT) {
                                 Bukkit.getScheduler().callSyncMethod(SpigotCommons.getInstance(), () -> {
@@ -125,6 +127,4 @@ public class SpigotCommons extends JavaPlugin implements Listener, LabsControlle
         this.joiningPlayers.add(uuid);
         Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> this.joiningPlayers.remove(uuid), 40);
     }
-
-
 }

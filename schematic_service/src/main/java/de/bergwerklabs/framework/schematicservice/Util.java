@@ -25,6 +25,7 @@ public class Util {
 
         session.flushQueue();
 
+        // Execute it on the main thread
         Bukkit.getScheduler().callSyncMethod(SchematicMain.getInstance(), () -> {
             Bukkit.getPluginManager().callEvent(new SchematicPlacedEvent(schematic, new Location(Bukkit.getWorld(world), to.getX(), to.getY(), to.getZ())));
             return null;

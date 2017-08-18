@@ -52,8 +52,8 @@ public abstract class InventoryItemSpanBase extends InventoryMenuElement {
         this.endSlot   = endSlot;
         this.item      = item;
 
-        if (item.isUpdatable() && item.getUpdateMethod().getInterval() != -1)
-            TaskManager.registerNewUpdatable(this.item.getUpdateMethod().getInterval(), this);
+        //if (item.isUpdatable() && item.getUpdateMethod().getInterval() != -1)
+            //TaskManager.registerNewUpdatable(this.item.getUpdateMethod().getInterval(), this);
     }
 
     @Override

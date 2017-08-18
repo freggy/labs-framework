@@ -91,9 +91,10 @@ public class Row implements Comparable<Row>, Updatable {
         this.index = index;
         this.updateMethod = updateMethod;
 
-        if (updateMethod != null && updateMethod.getInterval() != -1) {
-            TaskManager.registerNewUpdatable(updateMethod.getInterval(), this);
-        }
+        // TODO: work with new task manager
+        //if (updateMethod != null && updateMethod.getInterval() != -1) {
+            //TaskManager.registerAsyncRepeatingTask(, updateMethod.getInterval());
+        //}
     }
 
     /**

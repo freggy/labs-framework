@@ -36,7 +36,6 @@ public class NmsUtil {
      * @param packetInstance
      */
     public static void sendPacketOverPlayerConnection(Player player, Object packetInstance) {
-
         try {
             Object handle = LabsReflection.getHandle(player);
             Object connection = LabsReflection.getField(handle.getClass(), "playerConnection").get(handle);

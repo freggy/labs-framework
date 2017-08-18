@@ -116,14 +116,9 @@ public class Title {
      * @param player {@link Player} to display the title to.
      */
     public void display(Player player) {
-
         this.createTitlePacket(EnumWrappers.TitleAction.TIMES, "", this.fadeIn, this.fadeOut, this.stay).sendPacket(player);
-
-        if (!Strings.isNullOrEmpty(this.title))
-            this.createTitlePacket(EnumWrappers.TitleAction.TITLE, this.title, this.fadeIn, this.fadeOut, this.stay).sendPacket(player);
-
-        if (!Strings.isNullOrEmpty(this.subtitle))
-            this.createTitlePacket(EnumWrappers.TitleAction.SUBTITLE, this.title, this.fadeIn, this.fadeOut, this.stay).sendPacket(player);
+        this.createTitlePacket(EnumWrappers.TitleAction.TITLE, this.title == null || this.title.equalsIgnoreCase("") ? "" : this.title, this.fadeIn, this.fadeOut, this.stay).sendPacket(player);
+        this.createTitlePacket(EnumWrappers.TitleAction.SUBTITLE, this.subtitle == null || this.subtitle.equalsIgnoreCase("") ? "" : this.subtitle, this.fadeIn, this.fadeOut, this.stay).sendPacket(player);
     }
 
     /**

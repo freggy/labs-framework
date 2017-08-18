@@ -57,7 +57,7 @@ public class SchematicService<T> {
         CompoundTag tag = NbtUtil.readCompoundTag(file);
 
         if (!tag.getValue().containsKey("Metadata")) {
-            System.out.println(SchematicMain.CONSOLE_PREFIX + "File" + file.getName() + "does not contain metadata");
+            System.out.println(SchematicMain.CONSOLE_PREFIX + "File " + file.getName() + "does not contain metadata");
         }
         else {
             this.deserializer.deserialize((CompoundTag) tag.getValue().get("Metadata"));
