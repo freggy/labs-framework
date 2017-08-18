@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -95,6 +96,16 @@ public class ItemStackBuilder {
      */
     public ItemStackBuilder setLore(List<String> lore) {
         ItemStackUtil.setLore(this.item, lore);
+        return this;
+    }
+
+    /**
+     * Sets the lore of the ItemStack.
+     * @param lore Lore of the item.
+     * @return another ItemStackBuilder
+     */
+    public ItemStackBuilder setLore(String... lore) {
+        ItemStackUtil.setLore(this.item, Arrays.asList(lore));
         return this;
     }
 
