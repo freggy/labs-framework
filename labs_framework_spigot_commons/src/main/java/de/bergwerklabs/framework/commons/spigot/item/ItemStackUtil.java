@@ -8,25 +8,29 @@ import de.bergwerklabs.framework.commons.spigot.general.reflection.LabsReflectio
 import de.bergwerklabs.framework.commons.spigot.item.enchantment.EnchantmentWrapper;
 import de.bergwerklabs.framework.commons.spigot.json.JsonUtil;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
 
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
 /**
  * Created by Yannic Rieger on 13.04.2017.
- * <p> Class for creating ItemStacks </p>
+ * <p>
+ * Class for creating ItemStacks
  * @author Yannic Rieger
  */
 public class ItemStackUtil {
 
     /**
      * Sets the display name of an ItemStack.
+     *
      * @param item ItemStack where the display name will be set
      * @param name Name to be set.
      */
@@ -38,6 +42,19 @@ public class ItemStackUtil {
 
     /**
      * Sets the lore of the given item.
+     *
+     * @param item ItemStack where the lore will be set.
+     * @param lore Lore to set.
+     */
+    public static void setLore(ItemStack item, String... lore) {
+        ItemMeta meta = item.getItemMeta();
+        meta.setLore(Arrays.asList(lore));
+        item.setItemMeta(meta);
+    }
+
+    /**
+     * Sets the lore of the given item.
+     *
      * @param item ItemStack where the lore will be set.
      * @param lore Lore to set.
      */
@@ -45,6 +62,17 @@ public class ItemStackUtil {
         ItemMeta meta = item.getItemMeta();
         meta.setLore(lore);
         item.setItemMeta(meta);
+    }
+
+
+    /**
+     * Adds {@link ItemFlag}s to the {@link ItemStack}.
+     *
+     * @param item {@link ItemStack} where to set the flags.
+     * @param flags {@link ItemFlag}s to add.
+     */
+    public static void addItemFlags(ItemStack item, ItemFlag... flags) {
+        item.getItemMeta().addItemFlags(flags);
     }
 
     /**
@@ -60,6 +88,7 @@ public class ItemStackUtil {
 
     /**
      * Applies a custom texture to the skull.
+     *
      * @param url  Representing the url where the texture is stored.
      */
     public static void applyCustomHeadTexture(String url, ItemStack item) {

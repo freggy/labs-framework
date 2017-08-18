@@ -2,6 +2,7 @@ package de.bergwerklabs.framework.commons.spigot.item;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
@@ -29,6 +30,7 @@ public class ItemStackBuilder {
 
     /**
      * Sets the damage of an item.
+     *
      * @param damage Damage of the item.
      * @return another ItemStackBuilder
      */
@@ -39,6 +41,7 @@ public class ItemStackBuilder {
 
     /**
      * Sets the name of an item.
+     *
      * @param name Name of the item.
      * @return another ItemStackBuilder
      */
@@ -49,6 +52,7 @@ public class ItemStackBuilder {
 
     /**
      * Sets the type of the ItemStack
+     *
      * @param type Material to set
      * @return another ItemStackBuilder
      */
@@ -59,6 +63,7 @@ public class ItemStackBuilder {
 
     /**
      * Sets the amount.
+     *
      * @param amount Amount of ItemStack.
      * @return another ItemStackBuilder
      */
@@ -70,6 +75,7 @@ public class ItemStackBuilder {
 
     /**
      * Sets additional data.
+     *
      * @param data Data to set.
      * @return another ItemStackBuilder
      */
@@ -81,7 +87,19 @@ public class ItemStackBuilder {
     }
 
     /**
+     * Adds {@link ItemFlag}s to the {@link ItemStack}
+     *
+     * @param flags Flags to add.
+     * @return another {@link ItemStackBuilder}
+     */
+    public ItemStackBuilder addItemFlags(ItemFlag... flags) {
+        this.item.getItemMeta().addItemFlags(flags);
+        return this;
+    }
+
+    /**
      * Adds enchantments to the ItemStack
+     *
      * @return another ItemStackBuilder
      */
     public ItemStackBuilder addEnchantment(Enchantment enchantment, Integer level) {
@@ -91,6 +109,7 @@ public class ItemStackBuilder {
 
     /**
      * Sets the lore of the ItemStack.
+     *
      * @param lore Lore of the item.
      * @return another ItemStackBuilder
      */
@@ -101,6 +120,7 @@ public class ItemStackBuilder {
 
     /**
      * Sets the lore of the ItemStack.
+     *
      * @param lore Lore of the item.
      * @return another ItemStackBuilder
      */
@@ -111,6 +131,7 @@ public class ItemStackBuilder {
 
     /**
      * Creates the final ItemStack.
+     *
      * @return ItemStack that has been built.
      */
     public ItemStack create() {

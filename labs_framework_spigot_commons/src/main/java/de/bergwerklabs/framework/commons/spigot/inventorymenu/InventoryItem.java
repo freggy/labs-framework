@@ -1,9 +1,8 @@
 package de.bergwerklabs.framework.commons.spigot.inventorymenu;
 
-import de.bergwerklabs.framework.commons.spigot.general.update.TaskManager;
 import de.bergwerklabs.framework.commons.spigot.general.method.LabsMethod;
-import de.bergwerklabs.framework.commons.spigot.general.update.Updatable;
 import de.bergwerklabs.framework.commons.spigot.general.method.UpdateMethod;
+import de.bergwerklabs.framework.commons.spigot.general.update.Updatable;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
