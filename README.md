@@ -25,57 +25,6 @@ Hinweis: Die Version kann natürlich variieren.
 Code Konventionen
 =================
 
-Aufbau einer Klasse
--------------------
-Diese Vorgabe muss nicht zwingen umgesetzt werden, dennoch sollte zumindest ein Wenig darauf geachtet werden.
-```
-public class MyClass {
-    
-    {getter}
-    
-    {setter}
-
-    {öffentliche statische Variablen}
-
-    {öffentliche variablen}
-
-    {private statische Variablen}
-    
-    {protected Variablen}
-    
-    {private Variablen}
-    
-    {öffentliche statische Methoden}
-    
-    {private statische Methoden}
-    
-    {konstruktoren}
-    
-    {öffentliche überschriebene Methoden}
-    
-    {öffentliche Instanzmethoden}
-    
-    {package private Instanzmethoden}
-    
-    {private überschriebene Methoden}
-    
-    {private InstanzMethoden}
-}
-``` 
-Die Methoden sollten zu dem nach Datentypen sortiert sein. Zwischen jedem Getter muss immer eine Zeile freibleiben, dies gilt auch für Setter. Getter und Setter sind wie Methoden, nach dem Rückgabewert zu sortieren. Ebenfals gelten für sie die selbe Reihen folge wie bei Methoden.
-
-```
-{öffentliche überschriebene getter/setter}
-    
-{öffentliche getter/setter}
-    
-{package private getter/setter}
-    
-{private überschriebene getter/setter}
-    
-{private getter/setter}
-```
-
 Variablen
 ---------
 Auf Instanzvariablen soll immer über das this Keyword zugegriffen werden. Dies gilt auch für Instanzmethoden.
