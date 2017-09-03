@@ -1,14 +1,8 @@
 package de.bergwerklabs.framework.nick;
 
-import com.comphenix.protocol.wrappers.EnumWrappers;
-import com.comphenix.protocol.wrappers.PlayerInfoData;
-import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import com.comphenix.protocol.wrappers.WrappedGameProfile;
-import de.bergwerklabs.framework.commons.spigot.SpigotCommons;
+import com.google.common.collect.ImmutableSet;
 import de.bergwerklabs.framework.commons.spigot.entity.npc.PlayerSkin;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.entitydestroy.WrapperPlayServerEntityDestroy;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.namedentityspawn.v1_8.WrapperPlayServerNamedEntitySpawn;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.v1_8.WrapperPlayServerPlayerInfo;
 import de.bergwerklabs.framework.nick.api.NickApi;
 import de.bergwerklabs.framework.nick.api.NickInfo;
 import de.bergwerklabs.framework.nick.api.event.NickAction;
@@ -17,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Yannic Rieger on 03.09.2017.
@@ -26,8 +21,8 @@ import java.util.*;
  */
 class NickManager implements NickApi {
 
-    private Map<UUID, NickInfo> nickedPlayers = new HashMap<>();
-    private Set<String> takenNickNames        = new HashSet<>();
+    Map<UUID, NickInfo> nickedPlayers  = new HashMap<>();
+    private Set<String> takenNickNames = new HashSet<>();
     private List<String> nickNames;
     private List<PlayerSkin> skins;
 
@@ -38,7 +33,7 @@ class NickManager implements NickApi {
      */
     NickManager(List<String> nickNames, List<PlayerSkin> skins) {
         this.nickNames = nickNames;
-        this.skins = skins;
+        this.skins     = skins;
     }
 
     @Override
@@ -48,12 +43,12 @@ class NickManager implements NickApi {
 
     @Override
     public String getRealName(Player player) {
-        return nickedPlayers.get(player.getUniqueId()).getRealGameProfile().getName();
+        return this.nickedPlayers.get(player.getUniqueId()).getRealGameProfile().getName();
     }
 
     @Override
     public Set<NickInfo> getNickedPlayerInfos() {
-        return new HashSet<>(nickedPlayers.values());
+        return ImmutableSet.copyOf(nickedPlayers.values());
     }
 
     @Override
@@ -64,8 +59,13 @@ class NickManager implements NickApi {
     @Override
     public void removeNick(Player player) {
         NickInfo info = this.nickedPlayers.get(player.getUniqueId());
-        player.setDisplayName(info.getRealGameProfile().getName());
-        this.updatePlayerProfile(player, info.getRealGameProfile());
+        this.nickedPlayers.remove(player.getUniqueId());
+        String realName = info.getRealGameProfile().getName();
+
+        player.setDisplayName(realName);
+        player.setCustomName(realName);
+
+        this.resendPlayerInfo(player);
         Bukkit.getPluginManager().callEvent(new NickEvent(player, info, NickAction.REMOVE));
     }
 
@@ -75,36 +75,32 @@ class NickManager implements NickApi {
         PlayerSkin skin = this.skins.get(new Random().nextInt(this.skins.size()));
 
         player.setDisplayName(nickName);
+        player.setCustomName(nickName);
 
         WrappedGameProfile real = WrappedGameProfile.fromPlayer(player);
         WrappedGameProfile fake = new WrappedGameProfile(player.getUniqueId(), nickName);
         skin.inject(fake);
 
-        this.updatePlayerProfile(player, fake);
-
-        NickInfo info = new NickInfo(real, skin, nickName);
+        NickInfo info = new NickInfo(real, fake, skin, nickName);
         this.nickedPlayers.put(player.getUniqueId(), info);
         this.takenNickNames.add(info.getNickName());
+
+        this.resendPlayerInfo(player);
+
         Bukkit.getPluginManager().callEvent(new NickEvent(player, info, NickAction.NICKED));
         return info;
     }
 
-
     /**
      *
      * @param player
-     * @param profile
      */
-    private void updatePlayerProfile(Player player, WrappedGameProfile profile) {
-        WrapperPlayServerPlayerInfo playerInfoPacket = new WrapperPlayServerPlayerInfo();
-        playerInfoPacket.setAction(EnumWrappers.PlayerInfoAction.ADD_PLAYER);
-        playerInfoPacket.setData(Arrays.asList(new PlayerInfoData(profile, 1, EnumWrappers.NativeGameMode.fromBukkit(player.getGameMode()), WrappedChatComponent.fromText(profile.getName()))));
-        Bukkit.getOnlinePlayers().forEach(playerInfoPacket::sendPacket);
-
-        WrapperPlayServerEntityDestroy entityDestroyPacket = new WrapperPlayServerEntityDestroy();
-        entityDestroyPacket.setEntityIds(new int[] { player.getEntityId() });
-        Bukkit.getOnlinePlayers().forEach(playerInfoPacket::sendPacket);
-
-        SpigotCommons.getInstance().getProtocolManager().broadcastServerPacket(WrapperPlayServerNamedEntitySpawn.fromPlayer(player));
+    private void resendPlayerInfo(Player player) {
+        Bukkit.getScheduler().callSyncMethod(LabsNickPlugin.getInstance(), () -> {
+            List<Player> others = Bukkit.getOnlinePlayers().stream().filter(p -> !p.getUniqueId().equals(player.getUniqueId())).collect(Collectors.toList());
+            others.forEach(p -> p.hidePlayer(player));
+            others.forEach(p -> p.showPlayer(player));
+            return null;
+        });
     }
 }

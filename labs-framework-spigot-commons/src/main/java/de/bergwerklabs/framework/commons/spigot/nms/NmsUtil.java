@@ -46,6 +46,11 @@ public class NmsUtil {
         }
     }
 
+    /**
+     *
+     * @param yawpitch
+     * @return
+     */
     public static byte getFixYawPitch(float yawpitch) {
         return (byte) (yawpitch * 256.0F / 360.0F);
     }
