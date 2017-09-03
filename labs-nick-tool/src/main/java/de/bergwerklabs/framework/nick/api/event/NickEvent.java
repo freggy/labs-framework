@@ -40,6 +40,11 @@ public class NickEvent extends LabsEvent {
     private Player player;
     private NickAction action;
 
+    /**
+     * @param player
+     * @param info
+     * @param action
+     */
     public NickEvent(Player player, NickInfo info, NickAction action) {
         this.player = player;
         this.info   = info;

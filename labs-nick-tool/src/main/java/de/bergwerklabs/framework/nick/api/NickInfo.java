@@ -13,16 +13,22 @@ public class NickInfo {
 
     /**
      *
-     * @return
      */
     public WrappedGameProfile getRealGameProfile() {
         return realGameProfile;
     }
 
+    /**
+     *
+     */
     public PlayerSkin getSkin() {
         return skin;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNickName() {
         return nickName;
     }
@@ -31,9 +37,14 @@ public class NickInfo {
     private String nickName;
     private PlayerSkin skin;
 
+    /**
+     * @param realGameProfile
+     * @param skin
+     * @param fakeName
+     */
     public NickInfo(WrappedGameProfile realGameProfile, PlayerSkin skin, String fakeName) {
         this.realGameProfile = realGameProfile;
-        this.nickName = fakeName;
-        this.skin     = skin;
+        this.nickName        = fakeName;
+        this.skin            = skin;
     }
 }

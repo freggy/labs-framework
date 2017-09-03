@@ -28,11 +28,14 @@ class NickManager implements NickApi {
 
     private Map<UUID, NickInfo> nickedPlayers = new HashMap<>();
     private Set<String> takenNickNames        = new HashSet<>();
-    private Set<PlayerSkin> takenSkins        = new HashSet<>();
-
     private List<String> nickNames;
     private List<PlayerSkin> skins;
 
+    /**
+     *
+     * @param nickNames
+     * @param skins
+     */
     NickManager(List<String> nickNames, List<PlayerSkin> skins) {
         this.nickNames = nickNames;
         this.skins = skins;
@@ -61,6 +64,7 @@ class NickManager implements NickApi {
     @Override
     public void removeNick(Player player) {
         NickInfo info = this.nickedPlayers.get(player.getUniqueId());
+        player.setDisplayName(info.getRealGameProfile().getName());
         this.updatePlayerProfile(player, info.getRealGameProfile());
         Bukkit.getPluginManager().callEvent(new NickEvent(player, info, NickAction.REMOVE));
     }
@@ -69,6 +73,8 @@ class NickManager implements NickApi {
     public NickInfo nickPlayer(Player player) {
         String nickName = NickUtil.getUniqueNickName(this.nickNames, this.takenNickNames);
         PlayerSkin skin = this.skins.get(new Random().nextInt(this.skins.size()));
+
+        player.setDisplayName(nickName);
 
         WrappedGameProfile real = WrappedGameProfile.fromPlayer(player);
         WrappedGameProfile fake = new WrappedGameProfile(player.getUniqueId(), nickName);
@@ -79,7 +85,6 @@ class NickManager implements NickApi {
         NickInfo info = new NickInfo(real, skin, nickName);
         this.nickedPlayers.put(player.getUniqueId(), info);
         this.takenNickNames.add(info.getNickName());
-        this.takenSkins.add(info.getSkin());
         Bukkit.getPluginManager().callEvent(new NickEvent(player, info, NickAction.NICKED));
         return info;
     }
@@ -102,5 +107,4 @@ class NickManager implements NickApi {
 
         SpigotCommons.getInstance().getProtocolManager().broadcastServerPacket(WrapperPlayServerNamedEntitySpawn.fromPlayer(player));
     }
-
 }

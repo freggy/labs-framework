@@ -12,15 +12,43 @@ import java.util.Set;
  */
 public interface NickApi {
 
+    /**
+     *
+     * @param player
+     * @return
+     */
     boolean isNicked(Player player);
 
+    /**
+     *
+     * @param player
+     * @return
+     */
     String getRealName(Player player);
 
+    /**
+     *
+     * @return
+     */
     Set<NickInfo> getNickedPlayerInfos();
 
+    /**
+     *
+     * @param player
+     * @return
+     */
     NickInfo getNickInfo(Player player);
 
+    /**
+     *
+     * @param player
+     */
     void removeNick(Player player);
 
+    /**
+     *
+     * @param player
+     * @return
+     */
     NickInfo nickPlayer(Player player);
 }
