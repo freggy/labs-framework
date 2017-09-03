@@ -20,9 +20,12 @@ package de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.namedenti
 
 import java.util.UUID;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.injector.PacketConstructor;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.AbstractPacket;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import com.comphenix.protocol.PacketType;
@@ -31,7 +34,10 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 
 public class WrapperPlayServerNamedEntitySpawn extends AbstractPacket {
+
     public static final PacketType TYPE = PacketType.Play.Server.NAMED_ENTITY_SPAWN;
+
+    private static PacketConstructor entityConstructor;
 
     public WrapperPlayServerNamedEntitySpawn() {
         super(new PacketContainer(TYPE), TYPE);
@@ -42,6 +48,17 @@ public class WrapperPlayServerNamedEntitySpawn extends AbstractPacket {
     public WrapperPlayServerNamedEntitySpawn(PacketContainer packet) {
         super(packet, TYPE);
         handle.getIntegers().write(0, 0);
+    }
+
+    /**
+     *
+     * @param player
+     * @return
+     */
+    public static PacketContainer fromPlayer(Player player) {
+        if (entityConstructor == null)
+            entityConstructor = ProtocolLibrary.getProtocolManager().createPacketConstructor(TYPE, player);
+        return entityConstructor.createPacket(player);
     }
 
     /**
