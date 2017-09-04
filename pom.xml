@@ -14,6 +14,8 @@
         <module>labs-framework-commons</module>
         <module>schematic-service</module>
         <module>labs-nick-tool</module>
+        <module>labs-party-client</module>
+        <module>labs-party-server</module>
     </modules>
 
     <distributionManagement>

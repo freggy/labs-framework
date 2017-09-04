@@ -24,7 +24,6 @@ public class NickListCommand implements CommandExecutor {
 
                 Player player = (Player) commandSender;
                 player.sendMessage("§6>> §eNick §6❘ §7Liste aller zurzeit genickten Spieler:");
-
                 Set<NickInfo> nickInfos = LabsNickPlugin.getInstance().getNickApi().getNickedPlayerInfos();
 
                 if (nickInfos.size() != 0) {
@@ -33,7 +32,6 @@ public class NickListCommand implements CommandExecutor {
                     });
                 }
                 else player.sendMessage("§6>> §eNick §6❘ §cEs sind keine Spieler genickt.");
-
             }
             return true;
         }
