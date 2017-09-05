@@ -27,18 +27,19 @@ import java.util.stream.Collectors;
 /**
  * Created by Yannic Rieger on 03.09.2017.
  * <p>
+ * Main class for the nick plugin.
  *
  * @author Yannic Rieger
  */
 public class LabsNickPlugin extends JavaPlugin implements Listener {
 
     /**
-     *
+     * Gets the instance of the {@link LabsNickPlugin} object.
      */
     public static LabsNickPlugin getInstance() { return instance; }
 
     /**
-     *
+     * Gets the {@link NickApi}.
      */
     public NickApi getNickApi() { return this.manager; }
 

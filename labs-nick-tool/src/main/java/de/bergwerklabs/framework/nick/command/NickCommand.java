@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Yannic Rieger on 03.09.2017.
  * <p>
+ * Command which nicks a player.
  *
  * @author Yannic Rieger
  */

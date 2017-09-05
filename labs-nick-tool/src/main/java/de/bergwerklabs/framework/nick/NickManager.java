@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Yannic Rieger on 03.09.2017.
  * <p>
+ * Provides methods for nicking players.
  *
  * @author Yannic Rieger
  */
@@ -27,9 +28,8 @@ class NickManager implements NickApi {
     private List<PlayerSkin> skins;
 
     /**
-     *
-     * @param nickNames
-     * @param skins
+     * @param nickNames List of available nicknames.
+     * @param skins     List of available {@link PlayerSkin}s.
      */
     NickManager(List<String> nickNames, List<PlayerSkin> skins) {
         this.nickNames = nickNames;
@@ -92,8 +92,11 @@ class NickManager implements NickApi {
     }
 
     /**
+     * Re-sends PlayerInfo packet to update player name and skin.
+     * This method internally calls {@link Player#hidePlayer(Player)} and {@link Player#showPlayer(Player)}
+     * in that specific order.
      *
-     * @param player
+     * @param player Player that has been nicked.
      */
     private void resendPlayerInfo(Player player) {
         Bukkit.getScheduler().callSyncMethod(LabsNickPlugin.getInstance(), () -> {

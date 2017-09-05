@@ -12,6 +12,7 @@ import java.util.Set;
 /**
  * Created by Yannic Rieger on 03.09.2017.
  * <p>
+ * Lists all nicked players on the server.
  *
  * @author Yannic Rieger
  */
