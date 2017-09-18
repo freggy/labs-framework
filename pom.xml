@@ -14,7 +14,7 @@
         <module>labs-framework-commons</module>
         <module>schematic-service</module>
         <module>labs-party-client</module>
-        <module>labs-games-ervice</module>
+        <module>labs-game-service</module>
     </modules>
 
     <distributionManagement>
