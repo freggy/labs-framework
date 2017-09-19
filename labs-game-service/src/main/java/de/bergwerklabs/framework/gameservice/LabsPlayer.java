@@ -1,6 +1,6 @@
-package de.bergwerklabs.gameservice;
+package de.bergwerklabs.framework.gameservice;
 
-import de.bergwerklabs.gameservice.statistic.Statistic;
+import de.bergwerklabs.framework.gameservice.statistic.Statistic;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;

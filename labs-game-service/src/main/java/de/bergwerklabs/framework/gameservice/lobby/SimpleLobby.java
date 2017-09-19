@@ -1,6 +1,6 @@
-package de.bergwerklabs.gameservice.lobby;
+package de.bergwerklabs.framework.gameservice.lobby;
 
-import de.bergwerklabs.gameservice.LabsGame;
+import de.bergwerklabs.framework.gameservice.LabsGame;
 
 /**
  * Created by Yannic Rieger on 18.09.2017.

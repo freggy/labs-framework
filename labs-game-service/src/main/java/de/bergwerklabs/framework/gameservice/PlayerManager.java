@@ -1,4 +1,4 @@
-package de.bergwerklabs.gameservice;
+package de.bergwerklabs.framework.gameservice;
 
 import java.util.HashMap;
 import java.util.UUID;

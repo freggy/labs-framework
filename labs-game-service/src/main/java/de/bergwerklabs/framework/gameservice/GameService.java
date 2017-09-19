@@ -1,7 +1,7 @@
-package de.bergwerklabs.gameservice;
+package de.bergwerklabs.framework.gameservice;
 
-import de.bergwerklabs.gameservice.config.GameServiceConfig;
-import de.bergwerklabs.gameservice.statistic.StatisticsContext;
+import de.bergwerklabs.framework.gameservice.config.GameServiceConfig;
+import de.bergwerklabs.framework.gameservice.statistic.StatisticsContext;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

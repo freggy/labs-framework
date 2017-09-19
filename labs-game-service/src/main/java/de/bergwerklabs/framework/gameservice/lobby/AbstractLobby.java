@@ -1,7 +1,7 @@
-package de.bergwerklabs.gameservice.lobby;
+package de.bergwerklabs.framework.gameservice.lobby;
 
 import de.bergwerklabs.framework.commons.spigot.general.timer.LabsTimer;
-import de.bergwerklabs.gameservice.LabsGame;
+import de.bergwerklabs.framework.gameservice.LabsGame;
 import org.bukkit.event.Listener;
 
 /**

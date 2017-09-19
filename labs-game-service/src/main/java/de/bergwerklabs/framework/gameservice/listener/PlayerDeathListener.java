@@ -1,15 +1,12 @@
-package de.bergwerklabs.gameservice.listener;
+package de.bergwerklabs.framework.gameservice.listener;
 
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.v1_8.WrapperPlayClientClientCommand;
-import de.bergwerklabs.gameservice.GameService;
-import de.bergwerklabs.gameservice.LabsPlayer;
-import de.bergwerklabs.gameservice.PlayerManager;
-import de.bergwerklabs.gameservice.config.GameServiceConfig;
-import org.bukkit.Bukkit;
+import de.bergwerklabs.framework.gameservice.LabsPlayer;
+import de.bergwerklabs.framework.gameservice.PlayerManager;
+import de.bergwerklabs.framework.gameservice.config.GameServiceConfig;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 /**

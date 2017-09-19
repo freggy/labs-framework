@@ -1,4 +1,4 @@
-package de.bergwerklabs.gameservice.statistic;
+package de.bergwerklabs.framework.gameservice.statistic;
 
 import java.util.function.Function;
 

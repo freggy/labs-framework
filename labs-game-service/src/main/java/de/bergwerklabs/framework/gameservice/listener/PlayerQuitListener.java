@@ -1,7 +1,7 @@
-package de.bergwerklabs.gameservice.listener;
+package de.bergwerklabs.framework.gameservice.listener;
 
-import de.bergwerklabs.gameservice.LabsPlayer;
-import de.bergwerklabs.gameservice.PlayerManager;
+import de.bergwerklabs.framework.gameservice.LabsPlayer;
+import de.bergwerklabs.framework.gameservice.PlayerManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerQuitEvent;
 

@@ -1,11 +1,12 @@
 Module
 ======
 
-| Name                       | Package                                    | Artifact Id                 |
-|----------------------------|--------------------------------------------|-----------------------------| 
-| LabsFrameworkSpigotCommons | de.bergwerklabs.framework.commons.spigot   | labsframework-spigotcommons |
-| LabsFrameworkCommons       | de.bergwerklabs.framework.commons          | labsframework-commons       |
-| LabsSchematicService       | de.bergwerklabs.framework.schematicservice | schematic-service           |
+| Name                       | Package                                    | Artifact Id                  |
+|----------------------------|--------------------------------------------|------------------------------| 
+| LabsFrameworkSpigotCommons | de.bergwerklabs.framework.commons.spigot   | labs-framework-spigotcommons |
+| LabsFrameworkCommons       | de.bergwerklabs.framework.commons          | labs-framework-commons       |
+| LabsSchematicService       | de.bergwerklabs.framework.schematicservice | schematic-service            |
+| LabsGameService            | de.bergwerklabs.framework.gameservice      | game-service                 |
 
 
 Ein neues Modul hinzufügen

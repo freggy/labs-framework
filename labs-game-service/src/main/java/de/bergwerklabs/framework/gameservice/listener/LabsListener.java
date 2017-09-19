@@ -1,9 +1,8 @@
-package de.bergwerklabs.gameservice.listener;
+package de.bergwerklabs.framework.gameservice.listener;
 
-import de.bergwerklabs.gameservice.GameService;
-import de.bergwerklabs.gameservice.LabsPlayer;
-import de.bergwerklabs.gameservice.PlayerManager;
-import de.bergwerklabs.gameservice.config.GameServiceConfig;
+import de.bergwerklabs.framework.gameservice.LabsPlayer;
+import de.bergwerklabs.framework.gameservice.PlayerManager;
+import de.bergwerklabs.framework.gameservice.config.GameServiceConfig;
 import org.bukkit.event.Listener;
 
 /**

@@ -1,7 +1,7 @@
-package de.bergwerklabs.gameservice.event;
+package de.bergwerklabs.framework.gameservice.event;
 
-import de.bergwerklabs.gameservice.LabsGame;
-import de.bergwerklabs.gameservice.LabsPlayer;
+import de.bergwerklabs.framework.gameservice.LabsGame;
+import de.bergwerklabs.framework.gameservice.LabsPlayer;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 

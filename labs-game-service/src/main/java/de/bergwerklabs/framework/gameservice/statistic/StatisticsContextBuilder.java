@@ -1,4 +1,4 @@
-package de.bergwerklabs.gameservice.statistic;
+package de.bergwerklabs.framework.gameservice.statistic;
 
 /**
  * Created by Yannic Rieger on 19.09.2017.

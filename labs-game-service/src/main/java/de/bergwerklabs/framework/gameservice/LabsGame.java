@@ -1,7 +1,7 @@
-package de.bergwerklabs.gameservice;
+package de.bergwerklabs.framework.gameservice;
 
 import de.bergwerklabs.framework.commons.spigot.messenger.PluginMessenger;
-import de.bergwerklabs.gameservice.listener.LabsListener;
+import de.bergwerklabs.framework.gameservice.listener.LabsListener;
 import org.bukkit.Bukkit;
 
 /**
