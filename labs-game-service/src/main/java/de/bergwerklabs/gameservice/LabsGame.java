@@ -1,5 +1,6 @@
 package de.bergwerklabs.gameservice;
 
+import de.bergwerklabs.framework.commons.spigot.messenger.PluginMessenger;
 import de.bergwerklabs.gameservice.listener.LabsListener;
 import org.bukkit.Bukkit;
 
@@ -17,9 +18,11 @@ public abstract class LabsGame<T extends LabsPlayer> {
     public PlayerManager<T> getPlayerManager() { return this.playerManager; }
 
     protected PlayerManager<T> playerManager = new PlayerManager<>();
+    protected PluginMessenger messenger;
 
-    public LabsGame() {
+    public LabsGame(String name) {
         Bukkit.getPluginManager().registerEvents(new LabsListener<>(playerManager, GameService.getInstance().getServiceConfig()), GameService.getInstance());
+        this.messenger = new PluginMessenger(name);
     }
 
     /**
