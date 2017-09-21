@@ -6,6 +6,7 @@ import java.util.List;
 /**
  * Created by Yannic Rieger on 19.09.2017.
  * <p>
+ * Contains the statistics that will be loaded.
  *
  * @author Yannic Rieger
  */

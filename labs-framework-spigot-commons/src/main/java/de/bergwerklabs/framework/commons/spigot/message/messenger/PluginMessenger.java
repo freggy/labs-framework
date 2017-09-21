@@ -20,7 +20,7 @@ public class PluginMessenger {
      * @param name The name that will be used in the prefix.
      */
     public PluginMessenger(String name) {
-        this.prefix = "§6>> §e" + name + " §6|§7 "; // TODO: use utf8 symbol instead of '|', make configurable  in framework config.
+        this.prefix = "§6>> §e" + name + " §6❘§7 "; // TODO: use utf8 symbol instead of '|', make configurable  in framework config.
     }
 
     /**
