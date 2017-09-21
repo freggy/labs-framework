@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 
 /**
  * Created by Yannic Rieger on 07.07.2017.
- * <p>  </p>
+ * <p>
  *
  * @author Yannic Rieger
  */

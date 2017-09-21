@@ -10,18 +10,21 @@ import java.util.Collection;
 /**
  * Created by Yannic Rieger on 21.09.2017.
  * <p>
+ * Provides methods for text message handling in Minecraft using the Spigot API.
  *
  * @author Yannic Rieger
  */
 public class MessageUtil {
 
     private final static int CENTER_PX = 154;
-    private final static int MAX_PX = 250;
+    private final static int MAX_PX    = 250;
 
     /**
+     * Centers text and send it to the given player.
+     * <b>NOTE:</b> This may work with custom texture packs
      *
-     * @param player
-     * @param message
+     * @param player  Player to send the message to.
+     * @param message Message to be sent.
      */
     public static void sendCenteredMessage(Player player, String message) {
         message = ChatColor.translateAlternateColorCodes('&', message);
@@ -91,33 +94,42 @@ public class MessageUtil {
     }
 
     /**
+     * Centers text and send it to the given player.
+     * <b>NOTE:</b> This may work with custom texture packs
      *
-     *
-     * @param player
-     * @param messages
+     * @param player   Player to send the messages to.
+     * @param messages Messages to be sent.
      */
     public static void sendCenteredMessages(Player player, String... messages) {
         Arrays.stream(messages).forEach(message -> sendCenteredMessage(player, message));
     }
 
     /**
+     * Centers text and send it to the given player.
+     * <b>NOTE:</b> This may work with custom texture packs
      *
-     *
-     * @param player
-     * @param messages
+     * @param player   Player to send the messages to.
+     * @param messages Messages to be sent.
      */
     public static void sendCenteredMessages(Player player, Collection<String> messages) {
         messages.forEach(message -> sendCenteredMessage(player, message));
     }
 
     /**
+     * Send a message in the following format:
+     * <pre>
+     *     --------[HEADER]-------- <- always centered
+     *              [TEXT]          <- can be centered
+     *       ------[FOOTER]------   <- always centered
+     * </pre>
      *
+     * if the header or footer is null or empty only a line will be displayed.
      *
-     * @param player
-     * @param header
-     * @param footer
-     * @param textCentered
-     * @param text
+     * @param player Player to send the message to.
+     * @param header Header
+     * @param footer Footer
+     * @param textCentered Determines whether or not the text should be centerd.
+     * @param text Text to display.
      */
     public static void sendCenteredTextWithHeaderAndFooter(Player player, String header, String footer, boolean textCentered, String... text) {
         header = checkHeader(header);
@@ -132,13 +144,20 @@ public class MessageUtil {
     }
 
     /**
+     * Send a message in the following format:
+     * <pre>
+     *     --------[HEADER]-------- <- always centered
+     *              [TEXT]          <- can be centered
+     *       ------[FOOTER]------   <- always centered
+     * </pre>
      *
+     * if the header or footer is null or empty only a line will be displayed.
      *
-     * @param player
-     * @param header
-     * @param footer
-     * @param textCentered
-     * @param text
+     * @param player Player to send the message to.
+     * @param header Header
+     * @param footer Footer
+     * @param textCentered Determines whether or not the text should be centerd.
+     * @param text Text to display.
      */
     public static void sendCenteredTextWithHeaderAndFooter(Player player, String header, String footer, boolean textCentered, Collection<String> text) {
         header = checkHeader(header);
@@ -153,10 +172,10 @@ public class MessageUtil {
     }
 
     /**
+     * Checks if the footer is null or empty.
      *
-     *
-     * @param footer
-     * @return
+     * @param footer footer to check.
+     * @return a new string
      */
     private static String checkFooter(String footer) {
         if (Strings.isNullOrEmpty(footer)) return "&6&m------------"; // 12 '-'
@@ -164,10 +183,10 @@ public class MessageUtil {
     }
 
     /**
+     * Checks if the footer is null or empty.
      *
-     *
-     * @param header
-     * @return
+     * @param header header to check.
+     * @return a new string
      */
     private static String checkHeader(String header) {
         if (Strings.isNullOrEmpty(header)) return "&6&m------------------------"; // 24 '-'
