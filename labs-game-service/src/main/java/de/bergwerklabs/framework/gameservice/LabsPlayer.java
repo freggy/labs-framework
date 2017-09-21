@@ -10,37 +10,45 @@ import java.util.HashMap;
 
 /**
  * Created by Yannic Rieger on 01.05.2017.
- * <p>  </p>
+ * <p>
+ * Base class wrapper class for the {@link Player} interface. The use of this class is to provide more specific functionality.
  *
  * @author Yannic Rieger
  */
 public class LabsPlayer {
 
     /**
-     *
+     * Gets the {@link Player} object.
      */
     public Player getPlayer() { return  this.player; }
 
     /**
-     *
+     * Gets whether or not the player is a spectator.
      */
     public boolean isSpectator() {
         return this.isSpectator;
     }
 
     /**
-     *
+     * Gets whether or not the player is currently frozen.
+     */
+    public boolean isFrozen() { return this.isFrozen; }
+
+    /**
+     * Gets the game mode specific statistics of the player.
      */
     public HashMap<String, Statistic> getStatistics() {
         return statistics;
     }
 
     protected Player player;
-    private boolean isSpectator = false;
-    private HashMap<String, Statistic> statistics;
+    protected boolean isSpectator = false;
+    protected boolean isFrozen = false;
+    protected HashMap<String, Statistic> statistics;
 
     /**
      * @param player
+     * @param statistics
      */
     public LabsPlayer(Player player, HashMap<String, Statistic> statistics) {
         this.player = player;
@@ -59,6 +67,7 @@ public class LabsPlayer {
      * Freezes the player completely.
      */
     public void freeze() {
+        this.isFrozen = true;
         player.setWalkSpeed(0);
         PotionEffect effect = new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 128, false, false);
         effect.apply(this.player);
@@ -68,6 +77,7 @@ public class LabsPlayer {
      * Unfreezes the player.
      */
     public void unfreeze() {
+        this.isFrozen = false;
         if (this.player.hasPotionEffect(PotionEffectType.JUMP)) {
             this.player.removePotionEffect(PotionEffectType.JUMP);
         }

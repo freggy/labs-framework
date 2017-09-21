@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.commons.spigot.messenger;
+package de.bergwerklabs.framework.commons.spigot.message.messenger;
 
 import org.bukkit.entity.Player;
 
@@ -30,5 +30,4 @@ public class ConsumerInfo {
         this.prefix = prefix;
         this.player = player;
     }
-
 }
