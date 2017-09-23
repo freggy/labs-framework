@@ -1,11 +1,13 @@
-package de.bergwerklabs.framework.commons.spigot.achievement;
+package de.bergwerklabs.framework.gameservice.achievement;
 
-import de.bergwerklabs.framework.commons.spigot.game.LabsPlayer;
+import de.bergwerklabs.framework.gameservice.LabsPlayer;
 import org.bukkit.event.Listener;
 
 /**
  * Created by Yannic Rieger on 18.05.2017.
- * <p> Achievement that can be unlocked in a minigame. </p>
+ * <p>
+ * Achievement that can be unlocked in a minigame.
+ *
  * @author Yannic Rieger
  */
 public abstract class Achievement implements Listener {
@@ -22,19 +24,25 @@ public abstract class Achievement implements Listener {
 
     private String name;
     private String[] description;
+    private boolean isUnlocked = false;
 
     /**
      * Instructions that will be executed when the achievement is unlocked.
+     *
      * @param player Player that has unlocked the achievement.
      * @param achievement Achievement that has been unlocked.
      */
     public abstract void AchievementUnlockedAction(LabsPlayer player, Achievement achievement);
 
+    void saveState(LabsPlayer player) {
+
+    }
+
     /**
      * @param name Name of the achievement
      * @param description Description of the achievement.
      */
-    public Achievement(String name, String[] description) {
+    public Achievement(String name, String... description) {
         this.name = name;
         this.description = description;
     }

@@ -160,6 +160,4 @@ public class Title {
 
         return new Title(title, subtitle, fadeIn, fadeOut, stay);
     }
-
-
 }

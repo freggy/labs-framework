@@ -15,13 +15,17 @@ public abstract class AbstractLobby implements Listener {
     protected LabsGame game;
     protected LabsTimer timer;
 
+    /**
+     * @param waitingDuration
+     * @param game
+     */
     public AbstractLobby(int waitingDuration, LabsGame game) {
         this.game = game;
         this.timer = new LabsTimer(waitingDuration, null); // TODO: write start timer logic
     }
 
     /**
-     *
+     * Starts the associated {@link LabsGame}.
      */
     public abstract void startGame();
 }

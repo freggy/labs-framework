@@ -96,6 +96,7 @@ public class TaskManager {
             long current = ticks.getAndIncrement();
 
             for (Task task : tasks) {
+
                 if (task.getCreated() < 0) {
                     task.setCreated(current);
                 }

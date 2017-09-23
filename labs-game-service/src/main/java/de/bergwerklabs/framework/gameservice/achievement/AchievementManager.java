@@ -1,6 +1,6 @@
-package de.bergwerklabs.framework.commons.spigot.achievement;
+package de.bergwerklabs.framework.gameservice.achievement;
 
-import de.bergwerklabs.framework.commons.spigot.SpigotCommons;
+import de.bergwerklabs.framework.gameservice.LabsPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,6 +15,7 @@ import java.util.Map;
  * Provides functionality managing achievements and handling AchievementUnlocked events.
  * <p>
  * NOTE: This class follows the singleton pattern, which means that it can only be instantiated once.
+ *
  * @author Yannic Rieger
  */
 public class AchievementManager implements Listener {
@@ -28,12 +29,16 @@ public class AchievementManager implements Listener {
     private static AchievementManager instance;
 
     public AchievementManager() {
-        if (instance != null) Bukkit.getLogger().info(SpigotCommons.getInstance().CONSOLE_PREFIX + "AchievementManager can only be instantiated once.");
-            instance = this;
+        if (instance != null) {
+            Bukkit.getLogger().info("AchievementManager can only be instantiated once.");
+            return;
+        }
+        instance = this;
     }
 
     /**
      * Registers a new achievement to the manager.
+     *
      * @param achievement Achievement to register.
      */
     public void registerAchievement(Achievement achievement) {
@@ -42,6 +47,10 @@ public class AchievementManager implements Listener {
 
     @EventHandler
     public void onAchievementUnlocked(AchievementUnlockedEvent e) {
-        this.achievements.get(e.getAchievement().getName()).AchievementUnlockedAction(e.getPlayer(), e.getAchievement());
+        LabsPlayer player = e.getPlayer();
+        // TODO: check if player already unlocked the achievement
+        Achievement achievement = this.achievements.get(e.getAchievement().getName());
+        achievement.saveState(player);
+        achievement.AchievementUnlockedAction(player, e.getAchievement());
     }
 }

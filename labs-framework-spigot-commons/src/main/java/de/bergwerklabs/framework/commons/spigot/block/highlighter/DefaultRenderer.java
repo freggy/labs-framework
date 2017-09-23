@@ -54,7 +54,7 @@ public class DefaultRenderer extends BlockHighlightRenderer {
                     }
                 }
             }
-        }, 0, 1L);
+        }, 0, 10L);
     }
 
     /**

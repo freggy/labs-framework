@@ -9,7 +9,7 @@ import de.bergwerklabs.framework.commons.spigot.entity.Entity;
 import de.bergwerklabs.framework.commons.spigot.entity.EntityManager;
 import de.bergwerklabs.framework.commons.spigot.file.FileUtil;
 import de.bergwerklabs.framework.commons.spigot.general.LabsController;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.clientside.useentity.v1_8.WrapperPlayClientUseEntity;
+import de.bergwerklabs.framework.commons.spigot.nms.packet.clientside.v1_8.useentity.WrapperPlayClientUseEntity;
 import de.bergwerklabs.framework.commons.spigot.entity.npc.Npc;
 import de.bergwerklabs.framework.commons.spigot.npc.NpcManager;
 import de.bergwerklabs.framework.commons.spigot.entity.npc.event.Action;
@@ -23,7 +23,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashSet;
 import java.util.UUID;
-import java.util.concurrent.Callable;
 
 /**
  * Created by Yannic Rieger on 02.05.2017.

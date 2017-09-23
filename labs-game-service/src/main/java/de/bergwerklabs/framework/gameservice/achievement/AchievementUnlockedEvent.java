@@ -1,15 +1,16 @@
-package de.bergwerklabs.framework.commons.spigot.achievement;
+package de.bergwerklabs.framework.gameservice.achievement;
 
-import de.bergwerklabs.framework.commons.spigot.game.LabsPlayer;
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
+import de.bergwerklabs.framework.commons.spigot.general.LabsEvent;
+import de.bergwerklabs.framework.gameservice.LabsPlayer;
 
 /**
  * Created by Yannic Rieger on 18.05.2017.
- * <p> This event is called whenever a achievement ist unlocked. </p>
+ * <p>
+ * This event is called whenever a achievement ist unlocked.
+ *
  * @author Yannic Rieger
  */
-public class AchievementUnlockedEvent extends Event {
+public class AchievementUnlockedEvent extends LabsEvent {
 
     /**
      * Gets the player who unlocked the achievement.
@@ -25,16 +26,11 @@ public class AchievementUnlockedEvent extends Event {
         return achievement;
     }
 
-    @Override
-    public HandlerList getHandlers() {
-        return null;
-    }
-
     private LabsPlayer player;
     private Achievement achievement;
 
     /**
-     * @param player Player who unlocked the achievement.
+     * @param player      Player who unlocked the achievement.
      * @param achievement Achievement that has been unlocked.
      */
     public AchievementUnlockedEvent(LabsPlayer player, Achievement achievement) {
