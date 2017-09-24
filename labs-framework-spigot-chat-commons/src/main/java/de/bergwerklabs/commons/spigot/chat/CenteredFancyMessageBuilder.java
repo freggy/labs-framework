@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.commons.spigot.message;
+package de.bergwerklabs.commons.spigot.chat;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

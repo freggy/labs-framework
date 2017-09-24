@@ -11,9 +11,9 @@ import org.bukkit.util.Vector;
 
 import java.io.File;
 
-public class Util {
+class Util {
 
-    public static <T> void pasteSchematic(File schematicFile, String world, Vector to, LabsSchematic<T> schematic) {
+    static <T> void pasteSchematic(File schematicFile, String world, Vector to, LabsSchematic<T> schematic) {
         EditSession session = new EditSessionBuilder(FaweAPI.getWorld(world)).fastmode(true).checkMemory(true).build(); // Maybe turn fast mode off?
 
         try {

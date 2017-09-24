@@ -15,6 +15,7 @@
         <module>schematic-service</module>
         <module>labs-party-client</module>
         <module>labs-game-service</module>
+        <module>labs-framework-spigot-chat-commons</module>
     </modules>
 
     <distributionManagement>
