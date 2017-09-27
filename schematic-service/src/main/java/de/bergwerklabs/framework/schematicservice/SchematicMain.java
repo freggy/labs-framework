@@ -6,7 +6,8 @@ import java.util.stream.Stream;
 
 /**
  * Created by Yannic Rieger on 27.06.2017.
- * <p> Does literally nothing.
+ * <p>
+ * Does literally nothing.
  *
  * @author Yannic Rieger
  */
@@ -17,7 +18,6 @@ public class SchematicMain extends JavaPlugin {
     public static SchematicMain getInstance() { return instance; }
 
     private static SchematicMain instance;
-
 
     @Override
     public void onEnable() {

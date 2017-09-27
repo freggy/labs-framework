@@ -4,7 +4,8 @@ import com.flowpowered.nbt.CompoundTag;
 
 /**
  * Created by Yannic Rieger on 29.06.2017.
- * <p>  </p>
+ * <p>
+ *
  *
  * @author Yannic Rieger
  */

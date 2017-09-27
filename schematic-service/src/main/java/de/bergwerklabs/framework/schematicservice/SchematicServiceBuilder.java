@@ -5,7 +5,8 @@ import de.bergwerklabs.framework.schematicservice.metadata.MetadataSerializer;
 
 /**
  * Created by Yannic Rieger on 29.06.2017.
- * <p> Builder used for creating the {@link SchematicService}.
+ * <p>
+ * Builder used for creating the {@link SchematicService}.
  *
  * @author Yannic Rieger
  */

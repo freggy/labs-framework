@@ -2,7 +2,6 @@ package de.bergwerklabs.framework.schematicservice;
 
 import com.flowpowered.nbt.*;
 import com.flowpowered.nbt.stream.NBTInputStream;
-import com.flowpowered.nbt.stream.NBTOutputStream;
 import org.bukkit.util.Vector;
 
 import java.io.*;
@@ -10,7 +9,8 @@ import java.util.Arrays;
 
 /**
  * Created by Yannic Rieger on 28.06.2017.
- * <p> Contains useful utilities for reading and writing NBT data.
+ * <p>
+ * Contains useful utilities for reading and writing NBT data.
  *
  * @author Yannic Rieger
  */
@@ -39,20 +39,14 @@ public class NbtUtil {
      * @param distance Vector representing a distance between two points.
      * @param tagToWrite Compound tag to write to.
      * @param tagName Name of the tag e.g "WEOffset"
-     * @param file File File which contains the NBT data.
      */
-    public static void writeDistance(Vector distance, CompoundTag tagToWrite, String tagName, File file) throws IOException {
+    public static void writeDistance(Vector distance, CompoundTag tagToWrite, String tagName) {
         String x = tagName + "X";
         String y = tagName + "Y";
         String z = tagName + "Z";
-
-       try (NBTOutputStream out = new NBTOutputStream(new FileOutputStream(file))) {
-           tagToWrite.getValue().put(x, new IntTag(x, distance.getBlockX()));
-           tagToWrite.getValue().put(y, new IntTag(y, distance.getBlockY()));
-           tagToWrite.getValue().put(z, new IntTag(z, distance.getBlockZ()));
-           out.writeTag(tagToWrite);
-           out.flush();
-       }
+        tagToWrite.getValue().put(x, new IntTag(x, distance.getBlockX()));
+        tagToWrite.getValue().put(y, new IntTag(y, distance.getBlockY()));
+        tagToWrite.getValue().put(z, new IntTag(z, distance.getBlockZ()));
     }
 
     /**
@@ -71,14 +65,9 @@ public class NbtUtil {
      *
      * @param tag NBT tag
      * @param tagToWrite {@link CompoundTag} to write to.
-     * @param file {@link File} which contains the NBT data.
      */
-    public static void writeTag(Tag<?> tag, CompoundTag tagToWrite, File file) throws IOException {
-        try (NBTOutputStream out = new NBTOutputStream(new FileOutputStream(file))) {
-            tagToWrite.getValue().put(tag.getName(), tag);
-            out.writeTag(tagToWrite);
-            out.flush();
-        }
+    public static void writeTag(Tag<?> tag, CompoundTag tagToWrite) {
+        tagToWrite.getValue().put(tag.getName(), tag);
     }
 
     /**
@@ -134,12 +123,9 @@ public class NbtUtil {
      * @return a {@link Vector}
      */
     public static Vector vectorFromNbt(CompoundTag tag) {
-        Vector v = new Vector(new Double(tag.getValue().get("x").getValue().toString()),
+        return new Vector(new Double(tag.getValue().get("x").getValue().toString()),
                           new Double(tag.getValue().get("y").getValue().toString()),
                           new Double(tag.getValue().get("z").getValue().toString()));
-
-        System.out.println("NBT: " + v);
-        return v;
     }
 
 }

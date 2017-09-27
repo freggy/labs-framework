@@ -8,7 +8,8 @@ import java.io.File;
 
 /**
  * Created by Yannic Rieger on 05.05.2017.
- * <p> This class is used for pasting schematics asynchronously.
+ * <p>
+ * This class is used for pasting schematics asynchronously.
  *
  *  @author Yannic Rieger
  */
@@ -53,7 +54,7 @@ public class LabsSchematic<T> {
      * Pastes a WorldEdit schematic asynchronously in the specified world.
      *
      * @param world World where to paste the schematic in.
-     * @param to Vector which conains x, y and z coordinates representing the paste location.
+     * @param to    Vector which conains x, y and z coordinates representing the paste location.
      */
     public void pasteAsync(String world, Vector to) {
         TaskManager.IMP.async(() -> {
@@ -62,9 +63,10 @@ public class LabsSchematic<T> {
     }
 
     /**
+     * Pastes the {@link LabsSchematic} synchronously.
      *
-     * @param world
-     * @param to
+     * @param world World where to paste the schematic in.
+     * @param to    Vector which conains x, y and z coordinates representing the paste location.
      */
     public void pasteSync(String world, Vector to) {
         File file = this.schematicFile;

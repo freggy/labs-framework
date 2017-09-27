@@ -1,12 +1,14 @@
 package de.bergwerklabs.framework.schematicservice;
 
 import com.flowpowered.nbt.CompoundTag;
+import com.flowpowered.nbt.stream.NBTOutputStream;
 import de.bergwerklabs.framework.schematicservice.metadata.MetadataDeserializer;
 import de.bergwerklabs.framework.schematicservice.metadata.MetadataSerializer;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
@@ -38,9 +40,9 @@ public class SchematicService<T> {
      * Gets the {@link Location} defined by the given Vector.
      * This Vector contains the distance between the start point and the other point.
      *
-     * @param start {@link Location} where the schematic has been pasted to.
+     * @param start    {@link Location} where the schematic has been pasted to.
      * @param relative Contains the distance between the start point and the other point.
-     * @return the {@link Location} defined by the given Vector.
+     * @return         the {@link Location} defined by the given Vector.
      */
     public static Location getRelativeLocation(Location start, Vector relative) {
         return start.clone().subtract(relative);
@@ -50,7 +52,7 @@ public class SchematicService<T> {
      * Creates a {@link LabsSchematic<T>} while deserializing metadata.
      *
      * @param file File representing a schematic.
-     * @return a {@link LabsSchematic} with metadata.
+     * @return     a {@link LabsSchematic} with metadata.
      */
     public LabsSchematic<T> createSchematic(File file) {
         LabsSchematic<T> schematic = new LabsSchematic<>(file);
@@ -71,17 +73,49 @@ public class SchematicService<T> {
     /**
      * Writes metadata to the given schematic file.
      *
-     * @param file File write the metadata to.
+     * @param file     File write the metadata to.
      * @param metadata Metadata to write.
      */
     public void saveSchematic(File file, T metadata) {
+        CompoundTag metadataTag = this.serializer.serialize(metadata);
+        CompoundTag compoundTag = NbtUtil.readCompoundTag(file);
+
+        if (!metadataTag.getName().equals("Metadata"))
+            metadataTag = new CompoundTag("Metadata", metadataTag.getValue());
+
+        NbtUtil.writeTag(metadataTag, compoundTag);
+        this.writeToFile(compoundTag, file);
+    }
+
+
+    /**
+     * Writes metadata to the given schematic file.
+     *
+     * @param file     File write the metadata to.
+     * @param metadata Metadata to write.
+     */
+    public void saveSchematic(CompoundTag tag, File file, T metadata) {
         CompoundTag metadataTag = this.serializer.serialize(metadata);
 
         if (!metadataTag.getName().equals("Metadata"))
             metadataTag = new CompoundTag("Metadata", metadataTag.getValue());
 
+        NbtUtil.writeTag(metadataTag, tag);
+        this.writeToFile(tag, file);
+    }
+
+    /**
+     * Writes a {@link CompoundTag} to a given file.
+     *
+     * @param tag  {@link CompoundTag} to write.
+     * @param file {@link File} to write the tag to.
+     */
+    private void writeToFile(CompoundTag tag, File file) {
         try {
-            NbtUtil.writeTag(metadataTag, NbtUtil.readCompoundTag(file), file);
+            try (NBTOutputStream out = new NBTOutputStream(new FileOutputStream(file))) {
+                out.writeTag(tag);
+                out.flush();
+            }
         }
         catch (IOException e) {
             e.printStackTrace();
