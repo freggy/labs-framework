@@ -4,8 +4,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Yannic Rieger on 04.09.2017.
@@ -39,6 +41,7 @@ public abstract class ParentCommand implements CommandExecutor {
         this.command = command;
         this.executor = executor;
         this.addChildCommands(childCommands);
+        this.childCommands.entrySet().forEach(System.out::println);
     }
 
     @Override
@@ -47,10 +50,11 @@ public abstract class ParentCommand implements CommandExecutor {
             this.executor.onCommand(commandSender, command, s, strings);
         }
         else {
+            List<String> params = Arrays.asList(strings);
             this.childCommands.keySet().stream()
-                              .filter(key -> key.equalsIgnoreCase(s)).findFirst()
+                              .filter(key -> key.equalsIgnoreCase(strings[0])).findFirst()
                               .ifPresent(key -> {
-                                  this.childCommands.get(key).onCommand(commandSender, command, key, Arrays.copyOf(strings, Arrays.binarySearch(strings, key)));
+                                  this.childCommands.get(key).onCommand(commandSender, command, key, Arrays.copyOfRange(strings, params.indexOf("leave") + 1, strings.length));
                               });
         }
         return false;

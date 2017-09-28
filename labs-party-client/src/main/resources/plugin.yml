@@ -1,0 +1,7 @@
+name: LabsPartyClient
+author: Freggy
+version: 1.0
+main: de.bergwerklabs.framework.party.client.LabsPartyPlugin
+
+commands:
+    party:

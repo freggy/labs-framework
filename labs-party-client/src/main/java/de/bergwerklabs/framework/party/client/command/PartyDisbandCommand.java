@@ -14,11 +14,14 @@ public class PartyDisbandCommand implements ChildCommand {
 
     @Override
     public String getName() {
-        return null;
+        return "disband";
     }
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+        System.out.println("PartyDisbandCommand");
+        System.out.println(s);
+        System.out.println(strings.length);
         return false;
     }
 }

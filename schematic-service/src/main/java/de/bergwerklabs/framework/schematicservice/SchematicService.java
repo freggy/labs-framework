@@ -13,7 +13,8 @@ import java.io.IOException;
 
 /**
  * Created by Yannic Rieger on 29.06.2017.
- * <p> Class reading and writing metadata to schematic files.
+ * <p>
+ * Class reading and writing metadata to schematic files.
  *
  * @author Yannic Rieger
  */

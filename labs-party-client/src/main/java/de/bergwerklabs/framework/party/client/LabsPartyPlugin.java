@@ -1,6 +1,10 @@
 package de.bergwerklabs.framework.party.client;
 
+import de.bergwerklabs.framework.party.client.command.PartyDisbandCommand;
+import de.bergwerklabs.framework.party.client.command.PartyLeaveCommand;
 import de.bergwerklabs.framework.party.client.command.PartyParentCommand;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -13,8 +17,11 @@ public class LabsPartyPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        new PartyParentCommand("party");
+        this.getCommand("party").setExecutor(new PartyParentCommand("party", new PartyDisbandCommand(), new PartyLeaveCommand()));
+    }
 
-
+    @Override
+    public void onDisable() {
+        super.onDisable();
     }
 }

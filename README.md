@@ -1,3 +1,8 @@
+![alt-text](http://i.imgur.com/XoTikUf.png)
+
+bergwerkLABS Framework
+======================
+
 Module
 ======
 
