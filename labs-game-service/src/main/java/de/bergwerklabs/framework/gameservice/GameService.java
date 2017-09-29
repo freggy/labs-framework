@@ -39,7 +39,6 @@ public class GameService extends JavaPlugin {
         instance = this;
 
         // TODO: load config
-
         if (this.config.spectateOnDeath()) {
             Bukkit.getPluginManager().registerEvents(new Listener() {
                 @EventHandler

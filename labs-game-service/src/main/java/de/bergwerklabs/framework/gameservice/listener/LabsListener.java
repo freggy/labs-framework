@@ -1,7 +1,7 @@
 package de.bergwerklabs.framework.gameservice.listener;
 
 import de.bergwerklabs.framework.gameservice.LabsPlayer;
-import de.bergwerklabs.framework.gameservice.PlayerManager;
+import de.bergwerklabs.framework.gameservice.PlayerRegistry;
 import de.bergwerklabs.framework.gameservice.config.GameServiceConfig;
 import org.bukkit.event.Listener;
 
@@ -13,14 +13,14 @@ import org.bukkit.event.Listener;
  */
 public class LabsListener<T extends LabsPlayer> implements Listener {
 
-    protected PlayerManager<T> playerManager;
+    protected PlayerRegistry<T> playerRegistry;
     protected GameServiceConfig config;
 
     /**
-     * @param playerManager
+     * @param playerRegistry
      */
-    public LabsListener(PlayerManager<T> playerManager, GameServiceConfig config) {
-        this.playerManager = playerManager;
+    public LabsListener(PlayerRegistry<T> playerRegistry, GameServiceConfig config) {
+        this.playerRegistry = playerRegistry;
         this.config = config;
 
     }

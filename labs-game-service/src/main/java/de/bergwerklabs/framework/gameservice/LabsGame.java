@@ -12,15 +12,15 @@ import org.bukkit.Bukkit;
 public abstract class LabsGame<T extends LabsPlayer> {
 
     /**
-     * Gets the {@link PlayerManager} for this game.
+     * Gets the {@link PlayerRegistry} for this game.
      */
-    public PlayerManager<T> getPlayerManager() { return this.playerManager; }
+    public PlayerRegistry<T> getPlayerRegistry() { return this.playerRegistry; }
 
-    protected PlayerManager<T> playerManager = new PlayerManager<>();
+    protected PlayerRegistry<T> playerRegistry = new PlayerRegistry<>();
     protected PluginMessenger messenger;
 
     public LabsGame(String name) {
-        Bukkit.getPluginManager().registerEvents(new LabsListener<>(playerManager, GameService.getInstance().getServiceConfig()), GameService.getInstance());
+        Bukkit.getPluginManager().registerEvents(new LabsListener<>(playerRegistry, GameService.getInstance().getServiceConfig()), GameService.getInstance());
         this.messenger = new PluginMessenger(name);
     }
 

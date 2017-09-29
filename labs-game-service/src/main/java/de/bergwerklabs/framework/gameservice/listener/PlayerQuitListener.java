@@ -1,7 +1,7 @@
 package de.bergwerklabs.framework.gameservice.listener;
 
 import de.bergwerklabs.framework.gameservice.LabsPlayer;
-import de.bergwerklabs.framework.gameservice.PlayerManager;
+import de.bergwerklabs.framework.gameservice.PlayerRegistry;
 import de.bergwerklabs.framework.gameservice.config.GameServiceConfig;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -15,10 +15,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class PlayerQuitListener<T extends LabsPlayer> extends LabsListener<T> {
 
     /**
-     * @param playerManager
+     * @param playerRegistry
      */
-    public PlayerQuitListener(PlayerManager<T> playerManager, GameServiceConfig config) {
-        super(playerManager, config);
+    public PlayerQuitListener(PlayerRegistry<T> playerRegistry, GameServiceConfig config) {
+        super(playerRegistry, config);
     }
 
     @EventHandler

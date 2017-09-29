@@ -5,12 +5,13 @@ import java.util.UUID;
 
 /**
  * Created by Yannic Rieger on 01.05.2017.
- * <p> Class which keeps track of every player that will play the game.
- *     The {@code PlayerManager} is part of every {@link LabsGame}.
+ * <p>
+ * Class which keeps track of every player that will play the game.
+ * The {@code PlayerRegistry} is part of every {@link LabsGame}.
  *
  * @author Yannic Rieger
  */
-public class PlayerManager<T extends LabsPlayer> {
+public class PlayerRegistry<T extends LabsPlayer> {
 
     /**
      * Gets all {@link T} that play the {@link LabsGame}.
