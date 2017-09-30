@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.party.client.command.manager;
+package de.bergwerklabs.framework.commons.spigot.command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
