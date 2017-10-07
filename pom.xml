@@ -10,11 +10,11 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>labs-framework-spigot-commons</module>
-        <module>labs-framework-commons</module>
+        <module>spigot-commons</module>
+        <module>framework-commons</module>
         <module>schematic-service</module>
-        <module>labs-game-service</module>
-        <module>labs-framework-spigot-chat-commons</module>
+        <module>game-service</module>
+        <module>chat-commons</module>
     </modules>
 
     <distributionManagement>
