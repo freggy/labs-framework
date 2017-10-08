@@ -14,6 +14,11 @@ import org.bukkit.entity.Player;
  */
 public class PluginMessenger {
 
+    /**
+     * Gets the prefix.
+     */
+    public String getPrefix() { return this.prefix; }
+
     private String prefix;
 
     /**
