@@ -19,8 +19,8 @@
 
     <distributionManagement>
         <repository>
-            <id>ftp_bwueller</id>
-            <url>ftp://s89.goserver.host</url>
+            <id>labs_nexus</id>
+            <url>http://devs.bergwerklabs.de:8081/repository/maven-snapshots/</url>
         </repository>
     </distributionManagement>
 
