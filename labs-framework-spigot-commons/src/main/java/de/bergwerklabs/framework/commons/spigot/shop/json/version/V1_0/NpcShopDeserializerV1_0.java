@@ -15,9 +15,10 @@ public class NpcShopDeserializerV1_0 implements Deserializer<NPCShop> {
 
     @Override
     public NPCShop deserialize(JsonObject json) {
-        return new NPCShop(InventoryMenuManager.getInventoryMenus().get(json.get("inventory").getAsString()),
-                           json.get("version").getAsString(),
-                           json.get("id").getAsString(),
-                           NpcUtil.getNpcFromJson(json.get("npc").getAsJsonObject()));
+        return null;
+//        return new NPCShop(InventoryMenuManager.getInventoryMenus().get(json.get("inventory").getAsString()),
+//                           json.get("version").getAsString(),
+//                           json.get("id").getAsString(),
+//                           NpcUtil.getNpcFromJson(json.get("npc").getAsJsonObject()));
     }
 }

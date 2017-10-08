@@ -6,7 +6,6 @@ import de.bergwerklabs.framework.commons.spigot.entity.Entity;
 import de.bergwerklabs.framework.commons.spigot.entity.EntityManager;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.entitydestroy.WrapperPlayServerEntityDestroy;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.spawnentityliving.v1_8.WrapperPlayServerSpawnEntityLiving;
-import de.bergwerklabs.util.entity.EntityUtil;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;

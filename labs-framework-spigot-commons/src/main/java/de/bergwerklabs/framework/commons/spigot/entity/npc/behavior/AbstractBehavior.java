@@ -13,17 +13,17 @@ import java.util.HashSet;
  * @author Yannic Rieger
  */
 public abstract class AbstractBehavior implements Listener {
-
-    /**
-     *
-     */
-    public HashSet<BukkitTask> getTasks() { return this.tasks; }
-
-    protected Npc associated;
-
-    protected HashSet<BukkitTask> tasks = new HashSet<>();
-
-    public void setNpc(Npc npc) {
-        this.associated = npc;
-    }
+//
+//    /**
+//     *
+//     */
+//    public HashSet<BukkitTask> getTasks() { return this.tasks; }
+//
+//    protected Npc associated;
+//
+//    protected HashSet<BukkitTask> tasks = new HashSet<>();
+//
+//    public void setNpc(Npc npc) {
+//        this.associated = npc;
+//    }
 }

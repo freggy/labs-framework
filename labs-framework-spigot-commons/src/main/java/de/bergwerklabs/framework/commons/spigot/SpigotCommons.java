@@ -79,27 +79,27 @@ public class SpigotCommons extends JavaPlugin implements Listener, LabsControlle
                 if (EntityManager.getEntities().keySet().contains(id)) {
                     Entity entity = EntityManager.getEntities().get(id);
 
-                    if (entity instanceof Npc) {
-                        Npc npc = (Npc)entity;
-                        Action action = this.determineAction(useEntityPacket.getType());
-
-                        // Nasty hack to stop it from executing the event twice
-                        if (previous != action || previous == Action.HIT) {
-                            this.previous = action;
-                            if (action != Action.INTERACT_AT) {
-                                Bukkit.getScheduler().callSyncMethod(SpigotCommons.getInstance(), () -> {
-                                    Bukkit.getServer().getPluginManager().callEvent(new NpcInteractEvent(npc, event.getPlayer(), action));
-                                    return null;
-                                });
-                            }
-                            else {
-                                Bukkit.getScheduler().callSyncMethod(SpigotCommons.getInstance(), () -> {
-                                    Bukkit.getServer().getPluginManager().callEvent(new NpcInteractAtEvent(npc, event.getPlayer(), action, useEntityPacket.getTargetVector()));
-                                    return null;
-                                });
-                            }
-                        }
-                    }
+//                    if (entity instanceof Npc) {
+//                        Npc npc = (Npc)entity;
+//                        Action action = this.determineAction(useEntityPacket.getType());
+//
+//                        // Nasty hack to stop it from executing the event twice
+//                        if (previous != action || previous == Action.HIT) {
+//                            this.previous = action;
+//                            if (action != Action.INTERACT_AT) {
+//                                Bukkit.getScheduler().callSyncMethod(SpigotCommons.getInstance(), () -> {
+//                                    Bukkit.getServer().getPluginManager().callEvent(new NpcInteractEvent(npc, event.getPlayer(), action));
+//                                    return null;
+//                                });
+//                            }
+//                            else {
+//                                Bukkit.getScheduler().callSyncMethod(SpigotCommons.getInstance(), () -> {
+//                                    Bukkit.getServer().getPluginManager().callEvent(new NpcInteractAtEvent(npc, event.getPlayer(), action, useEntityPacket.getTargetVector()));
+//                                    return null;
+//                                });
+//                            }
+//                        }
+//                    }
                 }
             }
 

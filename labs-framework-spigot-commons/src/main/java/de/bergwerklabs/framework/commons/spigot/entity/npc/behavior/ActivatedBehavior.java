@@ -7,18 +7,18 @@ package de.bergwerklabs.framework.commons.spigot.entity.npc.behavior;
  * @author Yannic Rieger
  */
 public abstract class ActivatedBehavior extends AbstractBehavior {
-
-    /**
-     *
-     */
-    public boolean isActivated() { return this.isActivated; }
-
-    protected boolean isActivated = false;
-
-    /**
-     *
-     */
-    public abstract void activate();
-
-    public abstract void deactivate();
+//
+//    /**
+//     *
+//     */
+//    public boolean isActivated() { return this.isActivated; }
+//
+//    protected boolean isActivated = false;
+//
+//    /**
+//     *
+//     */
+//    public abstract void activate();
+//
+//    public abstract void deactivate();
 }

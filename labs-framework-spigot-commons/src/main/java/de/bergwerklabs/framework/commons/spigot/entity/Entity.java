@@ -1,7 +1,6 @@
 package de.bergwerklabs.framework.commons.spigot.entity;
 
 import de.bergwerklabs.framework.commons.spigot.general.reflection.LabsReflection;
-import de.bergwerklabs.util.entity.EntityUtil;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -36,12 +35,12 @@ public abstract class Entity {
     protected int entityId;
 
     protected Entity() {
-        try {
-            this.entityId = EntityUtil.getNewNMSID();
-        }
-        catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            this.entityId = EntityUtil.getNewNMSID();
+//        }
+//        catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public abstract void spawn();

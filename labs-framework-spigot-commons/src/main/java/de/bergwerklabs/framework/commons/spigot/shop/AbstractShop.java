@@ -36,9 +36,9 @@ abstract class AbstractShop implements Versionable, Identifiable {
      * @param version version of the shop.
      * @param id Id of the shop.
      */
-    AbstractShop(InventoryMenu inventoryMenu, String version, String id) {
-        this.inventoryMenu = inventoryMenu;
-        this.version       = version;
-        this.id            = id;
-    }
+//    AbstractShop(InventoryMenu inventoryMenu, String version, String id) {
+//        this.inventoryMenu = inventoryMenu;
+//        this.version       = version;
+//        this.id            = id;
+//    }
 }

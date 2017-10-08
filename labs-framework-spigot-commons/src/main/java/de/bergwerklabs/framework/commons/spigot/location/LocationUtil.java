@@ -1,7 +1,7 @@
 package de.bergwerklabs.framework.commons.spigot.location;
 
 import com.google.gson.JsonObject;
-import de.bergwerklabs.util.math.SQRT;
+import de.bergwerklabs.framework.commons.math.SQRT;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 

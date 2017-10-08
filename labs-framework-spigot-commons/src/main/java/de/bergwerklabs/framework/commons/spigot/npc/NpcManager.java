@@ -30,27 +30,27 @@ public class NpcManager implements Listener {
 
     @EventHandler
     private void onPlayerRespawn(PlayerRespawnEvent e) {
-        Bukkit.getScheduler().runTaskLaterAsynchronously(SpigotCommons.getInstance(), () -> {
-            npcs.values().forEach(npc -> npc.handleRespawn(e.getPlayer()));
-        }, 10);
+//        Bukkit.getScheduler().runTaskLaterAsynchronously(SpigotCommons.getInstance(), () -> {
+//            npcs.values().forEach(npc -> npc.handleRespawn(e.getPlayer()));
+//        }, 10);
     }
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent e) {
-        Bukkit.getScheduler().runTaskLaterAsynchronously(SpigotCommons.getInstance(), () -> {
-            npcs.values().stream().filter(Npc::isVisible).forEach(npc -> npc.handleJoin(e.getPlayer()));
-        }, 10);
+//        Bukkit.getScheduler().runTaskLaterAsynchronously(SpigotCommons.getInstance(), () -> {
+//            npcs.values().stream().filter(Npc::isVisible).forEach(npc -> npc.handleJoin(e.getPlayer()));
+//        }, 10);
     }
 
     @EventHandler
     private void onPlayerMove(PlayerMoveEvent e) {
-        npcs.values().stream().filter(Npc::isVisible).forEach(npc -> npc.handleMove(e.getPlayer(), e.getTo(), e.getFrom()));
+//        npcs.values().stream().filter(Npc::isVisible).forEach(npc -> npc.handleMove(e.getPlayer(), e.getTo(), e.getFrom()));
     }
 
     @EventHandler
     private void onPlayerTeleport(PlayerTeleportEvent e) {
-        Bukkit.getScheduler().runTaskLaterAsynchronously(SpigotCommons.getInstance(), () -> {
-            npcs.values().stream().filter(Npc::isVisible).forEach(npc -> npc.handleTeleport(e));
-        }, 10);
+//        Bukkit.getScheduler().runTaskLaterAsynchronously(SpigotCommons.getInstance(), () -> {
+//            npcs.values().stream().filter(Npc::isVisible).forEach(npc -> npc.handleTeleport(e));
+//        }, 10);
     }
 }
