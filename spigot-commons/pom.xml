@@ -7,18 +7,18 @@
         <groupId>de.bergwerklabs.framework</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>schematic-service</artifactId>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>spigot-commons</artifactId>
 
     <repositories>
         <repository>
-            <id>ftp_bwueller</id>
-            <url>https://bwueller.de/maven2</url>
+            <id>dmulloy2-repo</id>
+            <url>http://repo.dmulloy2.net/nexus/repository/public/</url>
         </repository>
         <repository>
-            <id>notepass_de_private</id>
-            <url>http://private.maven.notepass.de/maven2</url>
+            <id>stealthyone-repo</id>
+            <url>http://repo.stealthyone.com/content/groups/public</url>
         </repository>
     </repositories>
 
@@ -30,21 +30,21 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.boydti</groupId>
-            <artifactId>FastAsyncWorldEdit</artifactId>
-            <version>3.5.0</version>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-server</artifactId>
+            <version>1.8-R4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.flowpowered</groupId>
-            <artifactId>flow-nbt</artifactId>
-            <version>1.0.0</version>
+            <groupId>com.comphenix.protocol</groupId>
+            <artifactId>ProtocolLib</artifactId>
+            <version>4.3.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.sk89q</groupId>
-            <artifactId>worldedit</artifactId>
-            <version>6.0</version>
-            <scope>provided</scope>
+            <groupId>de.bergwerklabs.framework</groupId>
+            <artifactId>labs-framework-commons</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
@@ -101,13 +101,12 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>not.yet.existent</mainClass>
+                            <mainClass>not.yet.present</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-
                 </configuration>
                 <executions>
                     <execution>

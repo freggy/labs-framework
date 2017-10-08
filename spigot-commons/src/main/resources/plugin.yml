@@ -1,0 +1,6 @@
+name: SpigotCommons
+main: de.bergwerklabs.framework.commons.spigot.SpigotCommons
+website: http://www.bergwerklabs.de
+author: freggy
+version: 1.0
+depend: [LABS_Util, ProtocolLib]

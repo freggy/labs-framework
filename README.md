@@ -6,13 +6,13 @@ bergwerkLABS Framework
 Module
 ======
 
-| Name                           | Package                                       | Artifact Id                        |
-|--------------------------------|-----------------------------------------------|------------------------------------| 
-| LabsFrameworkSpigotCommons     | de.bergwerklabs.framework.commons.spigot      | labs-framework-spigotcommons       |
-| LabsFrameworkCommons           | de.bergwerklabs.framework.commons             | labs-framework-commons             |
-| LabsSchematicService           | de.bergwerklabs.framework.schematicservice    | schematic-service                  |
-| LabsGameService                | de.bergwerklabs.framework.gameservice         | game-service                       |
-| LabsFrameworkSpigotChatCommons | de.bergwerklabs.framework.commons.spigot.chat | labs-framework-spigot-chat-commons |
+| Name             | Package                                       | Artifact Id                        |
+|------------------|-----------------------------------------------|------------------------------------| 
+| SpigotCommons    | de.bergwerklabs.framework.commons.spigot      | labs-framework-spigotcommons       |
+| FrameworkCommons | de.bergwerklabs.framework.commons             | labs-framework-commons             |
+| SchematicService | de.bergwerklabs.framework.schematicservice    | schematic-service                  |
+| GameService      | de.bergwerklabs.framework.gameservice         | game-service                       |
+| ChatCommons      | de.bergwerklabs.framework.commons.spigot.chat | labs-framework-spigot-chat-commons |
 
 
 Ein neues Modul hinzufügen

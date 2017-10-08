@@ -9,44 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>schematic-service</artifactId>
-
-    <repositories>
-        <repository>
-            <id>ftp_bwueller</id>
-            <url>https://bwueller.de/maven2</url>
-        </repository>
-        <repository>
-            <id>notepass_de_private</id>
-            <url>http://private.maven.notepass.de/maven2</url>
-        </repository>
-    </repositories>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.8.8-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.boydti</groupId>
-            <artifactId>FastAsyncWorldEdit</artifactId>
-            <version>3.5.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.flowpowered</groupId>
-            <artifactId>flow-nbt</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sk89q</groupId>
-            <artifactId>worldedit</artifactId>
-            <version>6.0</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+    <artifactId>framework-commons</artifactId>
 
     <build>
         <extensions>
