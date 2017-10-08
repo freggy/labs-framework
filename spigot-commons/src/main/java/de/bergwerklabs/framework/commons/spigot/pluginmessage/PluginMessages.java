@@ -16,36 +16,32 @@ public class PluginMessages {
     /**
      *
      * @param plugin
-     * @param subchannel
      * @param option
      * @param args
      */
-    public static void sendPluginMessage(Plugin plugin, String subchannel, PluginMessageOption option, String... args) {
-        plugin.getServer().sendPluginMessage(plugin, "BungeeCord", writeData(subchannel, option, args));
+    public static void sendPluginMessage(Plugin plugin, PluginMessageOption option, String... args) {
+        plugin.getServer().sendPluginMessage(plugin, "BungeeCord", writeData(option, args));
     }
 
     /**
      *
      * @param player
      * @param plugin
-     * @param subchannel
      * @param option
      * @param args
      */
-    public static void sendPluginMessage(Player player, Plugin plugin, String subchannel, PluginMessageOption option, String... args) {
-        player.sendPluginMessage(plugin, "BungeeCord", writeData(subchannel, option, args));
+    public static void sendPluginMessage(Player player, Plugin plugin, PluginMessageOption option, String... args) {
+        player.sendPluginMessage(plugin, "BungeeCord", writeData(option, args));
     }
 
     /**
      *
-     * @param subchannel
      * @param option
      * @param args
      * @return
      */
-    private static byte[] writeData(String subchannel, PluginMessageOption option, String... args) {
+    private static byte[] writeData(PluginMessageOption option, String... args) {
         ByteArrayDataOutput output = ByteStreams.newDataOutput();
-        output.writeUTF(subchannel);
         output.writeUTF(option.getId());
         for (String argument : args) output.writeUTF(argument);
         return output.toByteArray();
