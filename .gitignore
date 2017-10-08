@@ -38,4 +38,3 @@ manifest.mf
 *.log*
 
 # Ignore config folder for local testing
-config/
