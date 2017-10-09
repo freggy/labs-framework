@@ -15,11 +15,14 @@ import de.bergwerklabs.framework.commons.spigot.npc.NpcManager;
 import de.bergwerklabs.framework.commons.spigot.entity.npc.event.Action;
 import de.bergwerklabs.framework.commons.spigot.entity.npc.event.NpcInteractAtEvent;
 import de.bergwerklabs.framework.commons.spigot.entity.npc.event.NpcInteractEvent;
+import de.bergwerklabs.framework.commons.spigot.pluginmessage.PluginMessages;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import java.util.HashSet;
 import java.util.UUID;
@@ -31,7 +34,7 @@ import java.util.UUID;
  *
  * @author Yannic Rieger
  */
-public class SpigotCommons extends JavaPlugin implements Listener, LabsController {
+public class SpigotCommons extends JavaPlugin implements Listener, LabsController, PluginMessageListener {
 
     /**
      * Gets a {@link ProtocolManager}.
@@ -126,4 +129,7 @@ public class SpigotCommons extends JavaPlugin implements Listener, LabsControlle
         this.joiningPlayers.add(uuid);
         Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> this.joiningPlayers.remove(uuid), 40);
     }
+
+    @Override
+    public void onPluginMessageReceived(String s, Player player, byte[] bytes) {}
 }

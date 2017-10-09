@@ -2,7 +2,6 @@ package de.bergwerklabs.framework.commons.spigot.pluginmessage;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -13,6 +12,8 @@ import org.bukkit.plugin.Plugin;
  */
 public class PluginMessages {
 
+    public static final String PLUGIN_CHANNEL = "BungeeCord";
+
     /**
      *
      * @param plugin
@@ -20,18 +21,7 @@ public class PluginMessages {
      * @param args
      */
     public static void sendPluginMessage(Plugin plugin, PluginMessageOption option, String... args) {
-        plugin.getServer().sendPluginMessage(plugin, "BungeeCord", writeData(option, args));
-    }
-
-    /**
-     *
-     * @param player
-     * @param plugin
-     * @param option
-     * @param args
-     */
-    public static void sendPluginMessage(Player player, Plugin plugin, PluginMessageOption option, String... args) {
-        player.sendPluginMessage(plugin, "BungeeCord", writeData(option, args));
+        plugin.getServer().sendPluginMessage(plugin, PLUGIN_CHANNEL, writeData(option, args));
     }
 
     /**
