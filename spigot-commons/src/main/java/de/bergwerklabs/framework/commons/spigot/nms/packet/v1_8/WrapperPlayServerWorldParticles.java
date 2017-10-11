@@ -41,7 +41,7 @@ public class WrapperPlayServerWorldParticles extends AbstractPacket {
      * @return The current Particle type
      */
     public Particle getParticleType() {
-        return handle.getParticles().read(0);
+        return Particle.getById(handle.getIntegers().read(0));
     }
 
     /**
@@ -50,7 +50,7 @@ public class WrapperPlayServerWorldParticles extends AbstractPacket {
      * @param value - new value.
      */
     public void setParticleType(Particle value) {
-        handle.getParticles().write(0, value);
+        handle.getIntegers().write(0, value.getId());
     }
 
     /**
