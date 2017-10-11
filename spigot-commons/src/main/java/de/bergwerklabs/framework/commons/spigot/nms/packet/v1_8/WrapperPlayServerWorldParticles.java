@@ -23,6 +23,8 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.EnumWrappers.Particle;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.AbstractPacket;
 
+// FIXME: 11.10.2017
+
 public class WrapperPlayServerWorldParticles extends AbstractPacket {
     public static final PacketType TYPE = PacketType.Play.Server.WORLD_PARTICLES;
 
@@ -41,7 +43,7 @@ public class WrapperPlayServerWorldParticles extends AbstractPacket {
      * @return The current Particle type
      */
     public Particle getParticleType() {
-        return Particle.getById(handle.getIntegers().read(0));
+        return handle.getParticles().read(0);
     }
 
     /**
@@ -50,7 +52,7 @@ public class WrapperPlayServerWorldParticles extends AbstractPacket {
      * @param value - new value.
      */
     public void setParticleType(Particle value) {
-        handle.getIntegers().write(0, value.getId());
+        handle.getParticles().write(0, value);
     }
 
     /**
@@ -213,7 +215,7 @@ public class WrapperPlayServerWorldParticles extends AbstractPacket {
      * @param value - new value.
      */
     public void setNumberOfParticles(int value) {
-        handle.getIntegers().write(0, value);
+            handle.getIntegers().write(0, value);
     }
 
     /**
