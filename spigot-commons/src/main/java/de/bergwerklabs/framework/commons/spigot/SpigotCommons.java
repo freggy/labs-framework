@@ -128,21 +128,6 @@ public class SpigotCommons extends JavaPlugin implements Listener, LabsControlle
         UUID uuid = e.getPlayer().getUniqueId();
         this.joiningPlayers.add(uuid);
         Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> this.joiningPlayers.remove(uuid), 40);
-
-
-        PacketContainer container = SpigotCommons.getInstance().getProtocolManager().createPacket(PacketType.Play.Server.WORLD_PARTICLES);
-
-        container.getParticles().write(0, EnumWrappers.Particle.CLOUD);
-        container.getFloat().write(0, ); // X
-        container.getFloat().write(1, ); // Y
-        container.getFloat().write(2, ); // Z
-        container.getFloat().write(3, ); // OFFSET X
-        container.getFloat().write(4, ); // OFFSET Y
-        container.getFloat().write(5, ); // OFFSET Z
-        container.getFloat().write(6, ); // DATA
-        container.getIntegers().write(0, 2); // COUNT
-        container.getBooleans().write(0, true); // LONG DISTANCE
-        SpigotCommons.getInstance().getProtocolManager().sendServerPacket(player, container);
     }
 
     @Override
