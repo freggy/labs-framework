@@ -1,5 +1,10 @@
 package de.bergwerklabs.framework.commons.misc.bitshifter;
 
+/**
+ * A class allowing low level bit operations with long values.
+ *
+ * @author Benedikt Wüller
+ */
 public class LongBitshifter extends Bitshifter<Long> {
 
     public LongBitshifter(Object... entries) {
