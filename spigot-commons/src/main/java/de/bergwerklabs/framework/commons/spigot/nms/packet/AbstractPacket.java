@@ -63,7 +63,7 @@ public abstract class AbstractPacket implements Packet {
      */
     public void sendPacket(Player receiver) {
         try {
-            ProtocolLibrary.getProtocolManager().sendServerPacket(receiver, getHandle());
+            ProtocolLibrary.getProtocolManager().sendServerPacket(receiver, this.handle);
         }
         catch (InvocationTargetException e) {
             throw new RuntimeException("Cannot send packet.", e);
