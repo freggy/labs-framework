@@ -3,6 +3,7 @@ package de.bergwerklabs.commons.spigot.chat;
 /**
  * Created by Yannic Rieger on 21.09.2017.
  * <p>
+ * Contains information about every letter.
  *
  * @author Yannic Rieger
  */

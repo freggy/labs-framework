@@ -94,6 +94,12 @@ public class MessageUtil {
         if(toSendAfter != null) sendCenteredMessage(player, toSendAfter);
     }
 
+    /**
+     * Returns the spaces needed to center a message.
+     *
+     * @param message message that should be centred.
+     * @return        the spaces needed to center a message.
+     */
     public static int getSpacesToCenter(String message) {
         message = ChatColor.translateAlternateColorCodes('&', message);
         boolean previousCode = false;

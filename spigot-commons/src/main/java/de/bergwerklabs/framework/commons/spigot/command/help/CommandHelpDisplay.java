@@ -8,6 +8,7 @@ import java.util.*;
 /**
  * Created by Yannic Rieger on 12.10.2017.
  * <p>
+ * Class responsible for displaying command help.
  *
  * @author Yannic Rieger
  */
@@ -17,10 +18,26 @@ public class CommandHelpDisplay {
 
     private List<HelpEntry> commands;
 
+    /**
+     * @param entries {@link HelpEntry}s that contain usage and description of a command.
+     */
     public CommandHelpDisplay(HelpEntry... entries) {
         commands = Arrays.asList(entries);
     }
 
+    /**
+     * Displays the help to a player.
+     * The following shows how commands would be displayed.
+     *
+     * <pre>
+     *     §bCommands:
+     *        §a■§b [usage] §7- [description]
+     *        §a■§b [usage] §7- [description]
+     *        §a■§b [usage] §7- [description]
+     * </pre>
+     *
+     * @param player player to display the commands to.
+     */
     public void displayHelp(Player player) {
         MESSENGER.message("§bCommands: ", player);
         commands.forEach(entry -> {

@@ -64,9 +64,6 @@ public abstract class ParentCommand implements CommandExecutor {
         this.addChildCommands(commands);
     }
 
-
-
-
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (s.equalsIgnoreCase(this.command) && this.executor != null && strings.length == 0) {
