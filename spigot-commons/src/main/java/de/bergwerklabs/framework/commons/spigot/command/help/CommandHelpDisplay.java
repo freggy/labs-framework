@@ -41,7 +41,7 @@ public class CommandHelpDisplay {
     public void displayHelp(Player player) {
         MESSENGER.message("§bCommands: ", player);
         commands.forEach(entry -> {
-            MESSENGER.message( "§a■§b " + entry.getUsage() + "§7 - " + entry.getDescription(), player);
+            MESSENGER.message( "§e■§b " + entry.getUsage() + "§7 - " + entry.getDescription(), player);
         });
     }
 }
