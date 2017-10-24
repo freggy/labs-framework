@@ -1,5 +1,6 @@
 package de.bergwerklabs.commons.spigot.chat;
 
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -9,4 +10,6 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  * @author Yannic Rieger
  */
-public class ChatCommons extends JavaPlugin {}
+public class ChatCommons extends JavaPlugin implements Listener {
+
+}
