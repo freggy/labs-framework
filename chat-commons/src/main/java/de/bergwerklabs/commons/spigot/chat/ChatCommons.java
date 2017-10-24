@@ -5,9 +5,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 /**
  * Created by Yannic Rieger on 25.09.2017.
  * <p>
+ * Main class for the chat commons.
  *
  * @author Yannic Rieger
  */
-public class ChatCommons extends JavaPlugin {
-    // TODO: static getIntance()
-}
+public class ChatCommons extends JavaPlugin {}
