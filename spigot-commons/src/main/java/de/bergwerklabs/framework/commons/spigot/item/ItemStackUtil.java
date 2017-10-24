@@ -203,7 +203,8 @@ public class ItemStackUtil {
      * @return whether the two ItemStacks are equal.
      */
     public static boolean equals(ItemStack a, ItemStack b) {
-        return a.getType() == b.getType()
+        return a != null && b != null
+                && a.getType() == b.getType()
                 && a.getData().equals(b.getData())
                 && a.getItemMeta().getDisplayName().equals(b.getItemMeta().getDisplayName());
     }
