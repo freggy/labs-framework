@@ -1,0 +1,4 @@
+name: BedrockSessionService
+author: freggy
+version: 1.0
+main: de.bergwerklabs.framework.gameservice.BedrockSessionServiceionService
