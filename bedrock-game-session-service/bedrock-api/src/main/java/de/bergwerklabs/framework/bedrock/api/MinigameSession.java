@@ -1,6 +1,6 @@
 package de.bergwerklabs.framework.bedrock.api;
 
-import de.bergwerklabs.framework.bedrock.api.event.SessionInitializedEvent;
+import de.bergwerklabs.framework.bedrock.api.event.session.SessionInitializedEvent;
 import de.bergwerklabs.framework.bedrock.api.lobby.AbstractLobby;
 import de.bergwerklabs.framework.bedrock.api.lobby.SimpleLobby;
 import org.bukkit.Bukkit;

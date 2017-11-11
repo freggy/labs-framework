@@ -1,7 +1,10 @@
 package de.bergwerklabs.framework.bedrock.service;
 
+import de.bergwerklabs.atlantis.client.bukkit.GamestateManager;
+import de.bergwerklabs.atlantis.columbia.packages.gameserver.spigot.gamestate.Gamestate;
 import de.bergwerklabs.framework.bedrock.api.GameSession;
-import de.bergwerklabs.framework.bedrock.api.event.SessionInitializedEvent;
+import de.bergwerklabs.framework.bedrock.api.event.session.SessionDonePreparationEvent;
+import de.bergwerklabs.framework.bedrock.api.event.session.SessionInitializedEvent;
 import de.bergwerklabs.framework.bedrock.service.config.GameServiceConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -34,6 +37,7 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
     private static BedrockSessionService instance;
     private GameServiceConfig config;
     private GameSession session;
+    private boolean finishedPreparing = false;
 
     @Override
     public void onEnable() {
@@ -54,13 +58,22 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
     private void onSessionInitialized(SessionInitializedEvent event) {
         this.session = event.getSession();
         Bukkit.getServer().getServicesManager().register(GameSession.class, this.session, this, ServicePriority.Normal);
-        this.session.getLobby().startWaitingPhase();
+        GamestateManager.setGamestate(Gamestate.PREPARING);
+        this.session.prepare();
     }
 
     @EventHandler
     private void onPlayerJoin(PlayerLoginEvent event) {
-        if (session == null) {
+        if (!finishedPreparing) {
             event.disallow(PlayerLoginEvent.Result.KICK_OTHER, "§6>> §eBedrock Session Service §6| §bGame session has not been initialized yet.");
         }
+    }
+
+    @EventHandler
+    private void onPreparationDone(SessionDonePreparationEvent event) {
+        this.finishedPreparing = true;
+        GamestateManager.setGamestate(Gamestate.WAITING);
+        event.getSession().getLobby().startWaitingPhase();
+
     }
 }

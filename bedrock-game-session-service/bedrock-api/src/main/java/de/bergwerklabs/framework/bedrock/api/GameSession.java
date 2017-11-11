@@ -15,4 +15,6 @@ public interface GameSession {
     AbstractLobby getLobby();
 
     String getId();
+
+    void prepare();
 }
