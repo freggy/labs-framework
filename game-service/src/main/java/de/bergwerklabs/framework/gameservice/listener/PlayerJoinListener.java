@@ -1,6 +1,6 @@
 package de.bergwerklabs.framework.gameservice.listener;
 
-import de.bergwerklabs.framework.gameservice.LabsPlayer;
+import de.bergwerklabs.framework.gameservice.api.LabsPlayer;
 import de.bergwerklabs.framework.gameservice.PlayerRegistry;
 import de.bergwerklabs.framework.gameservice.config.GameServiceConfig;
 import org.bukkit.event.EventHandler;

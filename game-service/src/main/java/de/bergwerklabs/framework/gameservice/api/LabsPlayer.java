@@ -1,12 +1,9 @@
-package de.bergwerklabs.framework.gameservice;
+package de.bergwerklabs.framework.gameservice.api;
 
-import de.bergwerklabs.framework.gameservice.statistic.Statistic;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
-import java.util.HashMap;
 
 /**
  * Created by Yannic Rieger on 01.05.2017.
@@ -34,25 +31,15 @@ public class LabsPlayer {
      */
     public boolean isFrozen() { return this.isFrozen; }
 
-    /**
-     * Gets the game mode specific statistics of the player.
-     */
-    public HashMap<String, Statistic> getStatistics() {
-        return statistics;
-    }
-
     protected Player player;
     protected boolean isSpectator = false;
     protected boolean isFrozen = false;
-    protected HashMap<String, Statistic> statistics;
 
     /**
      * @param player
-     * @param statistics
      */
-    public LabsPlayer(Player player, HashMap<String, Statistic> statistics) {
+    public LabsPlayer(Player player) {
         this.player = player;
-        this.statistics = statistics;
     }
 
     /**

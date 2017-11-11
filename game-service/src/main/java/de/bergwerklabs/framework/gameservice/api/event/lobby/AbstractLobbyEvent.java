@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.gameservice.event.lobby;
+package de.bergwerklabs.framework.gameservice.api.event.lobby;
 
 import de.bergwerklabs.framework.commons.spigot.general.LabsEvent;
 import de.bergwerklabs.framework.gameservice.lobby.AbstractLobby;

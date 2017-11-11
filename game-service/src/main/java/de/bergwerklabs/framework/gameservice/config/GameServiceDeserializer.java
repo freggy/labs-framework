@@ -1,7 +1,7 @@
 package de.bergwerklabs.framework.gameservice.config;
 
 import com.google.gson.*;
-import de.bergwerklabs.framework.gameservice.LabsGame;
+import de.bergwerklabs.framework.gameservice.api.LabsGame;
 import de.bergwerklabs.framework.gameservice.lobby.AbstractLobby;
 
 import java.lang.reflect.Type;

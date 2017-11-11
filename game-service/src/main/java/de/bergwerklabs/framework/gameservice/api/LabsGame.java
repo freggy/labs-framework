@@ -1,6 +1,8 @@
-package de.bergwerklabs.framework.gameservice;
+package de.bergwerklabs.framework.gameservice.api;
 
 import de.bergwerklabs.commons.spigot.chat.messenger.PluginMessenger;
+import de.bergwerklabs.framework.gameservice.GameService;
+import de.bergwerklabs.framework.gameservice.PlayerRegistry;
 import de.bergwerklabs.framework.gameservice.listener.LabsListener;
 import org.bukkit.Bukkit;
 
@@ -24,14 +26,4 @@ public abstract class LabsGame<T extends LabsPlayer> {
         Bukkit.getPluginManager().registerEvents(new LabsListener<>(playerRegistry, GameService.getInstance().getServiceConfig()), GameService.getInstance());
         this.messenger = new PluginMessenger(name);
     }
-
-    /**
-     * Starts the game.
-     */
-    public abstract void start();
-
-    /**
-     * Stops the game.
-     */
-    public abstract void stop();
 }

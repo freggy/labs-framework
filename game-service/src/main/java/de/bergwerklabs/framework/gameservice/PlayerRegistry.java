@@ -1,5 +1,8 @@
 package de.bergwerklabs.framework.gameservice;
 
+import de.bergwerklabs.framework.gameservice.api.LabsGame;
+import de.bergwerklabs.framework.gameservice.api.LabsPlayer;
+
 import java.util.HashMap;
 import java.util.UUID;
 

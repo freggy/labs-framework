@@ -1,7 +1,7 @@
 package de.bergwerklabs.framework.gameservice.achievement;
 
 import de.bergwerklabs.framework.commons.spigot.general.LabsEvent;
-import de.bergwerklabs.framework.gameservice.LabsPlayer;
+import de.bergwerklabs.framework.gameservice.api.LabsPlayer;
 
 /**
  * Created by Yannic Rieger on 18.05.2017.

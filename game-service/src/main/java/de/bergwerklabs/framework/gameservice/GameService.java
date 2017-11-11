@@ -1,11 +1,13 @@
 package de.bergwerklabs.framework.gameservice;
 
+import de.bergwerklabs.framework.gameservice.api.GameSession;
+import de.bergwerklabs.framework.gameservice.api.event.SessionInitializedEvent;
 import de.bergwerklabs.framework.gameservice.config.GameServiceConfig;
-import de.bergwerklabs.framework.gameservice.statistic.StatisticsContext;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockCanBuildEvent;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -14,7 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  * @author Yannic Rieger
  */
-public class GameService extends JavaPlugin {
+public class GameService extends JavaPlugin implements Listener {
 
     public static GameService getInstance() { return instance; }
 
@@ -22,20 +24,13 @@ public class GameService extends JavaPlugin {
         return config;
     }
 
-    public StatisticsContext getContext() {
-        return context;
-    }
-
-    public void setContext(StatisticsContext context) {
-        this.context = context;
-    }
-
     private static GameService instance;
     private GameServiceConfig config;
-    private StatisticsContext context;
+    private GameSession session;
 
     @Override
     public void onEnable() {
+        Bukkit.getServer().getPluginManager().registerEvents(this, this);
         instance = this;
         // TODO: load config
         if (this.config.spectateOnDeath()) {
@@ -47,4 +42,11 @@ public class GameService extends JavaPlugin {
             }, this);
         }
     }
+
+    @EventHandler
+    private void onSessionInitialized(SessionInitializedEvent event) {
+        this.session = event.getSession();
+        Bukkit.getServer().getServicesManager().register(GameSession.class, this.session, this, ServicePriority.Normal);
+    }
+
 }

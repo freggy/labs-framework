@@ -2,7 +2,7 @@ package de.bergwerklabs.framework.gameservice.listener;
 
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.v1_8.WrapperPlayClientClientCommand;
-import de.bergwerklabs.framework.gameservice.LabsPlayer;
+import de.bergwerklabs.framework.gameservice.api.LabsPlayer;
 import de.bergwerklabs.framework.gameservice.PlayerRegistry;
 import de.bergwerklabs.framework.gameservice.config.GameServiceConfig;
 import org.bukkit.entity.Player;

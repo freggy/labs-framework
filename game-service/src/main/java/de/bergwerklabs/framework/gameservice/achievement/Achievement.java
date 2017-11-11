@@ -1,6 +1,6 @@
 package de.bergwerklabs.framework.gameservice.achievement;
 
-import de.bergwerklabs.framework.gameservice.LabsPlayer;
+import de.bergwerklabs.framework.gameservice.api.LabsPlayer;
 import org.bukkit.event.Listener;
 
 /**

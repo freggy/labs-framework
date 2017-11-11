@@ -19,7 +19,7 @@ public class ChatCommons extends JavaPlugin implements Listener {
      * Gets the fitting {@link ChatColor} by the given color code. Valid color codes are: e.g {@code §e} or {@code &e}
      *
      * @param colorCode can be {@code §e} or {@code &e} where {@code e} is the char specifying the color.
-     * @return          optional that can contains the {@link ChatColor}.
+     * @return          {@link Optional} that can contains the {@link ChatColor}.
      */
     public static Optional<ChatColor> chatColorFromColorCode(String colorCode) {
         for (ChatColor color : ChatColor.values()) {

@@ -1,7 +1,7 @@
-package de.bergwerklabs.framework.gameservice.event.game;
+package de.bergwerklabs.framework.gameservice.api.event.game;
 
-import de.bergwerklabs.framework.gameservice.LabsGame;
-import de.bergwerklabs.framework.gameservice.LabsPlayer;
+import de.bergwerklabs.framework.gameservice.api.LabsGame;
+import de.bergwerklabs.framework.gameservice.api.LabsPlayer;
 
 /**
  * Created by Yannic Rieger on 21.09.2017.
