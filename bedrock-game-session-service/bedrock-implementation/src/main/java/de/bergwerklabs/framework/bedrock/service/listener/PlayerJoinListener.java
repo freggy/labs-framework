@@ -10,9 +10,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 /**
  * Created by Yannic Rieger on 01.08.2017.
  * <p>  </p>
@@ -20,8 +17,6 @@ import java.util.concurrent.Executors;
  * @author Yannic Rieger
  */
 public class PlayerJoinListener extends LabsListener {
-
-    private final ExecutorService service = Executors.newSingleThreadExecutor();
 
     /**
      * @param playerRegistry
@@ -38,6 +33,7 @@ public class PlayerJoinListener extends LabsListener {
                 PlayerdataSet set = new PlayerdataSet(event.getPlayer().getUniqueId());
                 set.loadAndWait();
                 player.setDataSet(set);
+                BedrockSessionService.getInstance().getRanking().displayRankingToPlayer(player);
             });
         }
     }

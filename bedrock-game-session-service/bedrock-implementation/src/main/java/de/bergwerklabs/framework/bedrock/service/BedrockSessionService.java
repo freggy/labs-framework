@@ -1,5 +1,6 @@
 package de.bergwerklabs.framework.bedrock.service;
 
+import de.bergwerklabs.atlantis.client.base.util.AtlantisPackageService;
 import de.bergwerklabs.atlantis.client.bukkit.GamestateManager;
 import de.bergwerklabs.atlantis.columbia.packages.gameserver.spigot.gamestate.Gamestate;
 import de.bergwerklabs.framework.bedrock.api.GameSession;
@@ -32,12 +33,23 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
      *
      */
     public SessionServiceConfig getServiceConfig() {
-        return config;
+        return this.config;
+    }
+
+    public Ranking getRanking() {
+        return this.ranking;
+    }
+
+    public AtlantisPackageService getPacketService() {
+        return service;
     }
 
     private static BedrockSessionService instance;
     private SessionServiceConfig config;
     private GameSession session;
+    private Ranking ranking;
+    private AtlantisPackageService service = new AtlantisPackageService();
+
     private boolean finishedPreparing = false;
 
     @Override
@@ -61,6 +73,7 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
         Bukkit.getServer().getServicesManager().register(GameSession.class, this.session, this, ServicePriority.Normal);
         GamestateManager.setGamestate(Gamestate.PREPARING);
         this.session.prepare();
+        // TODO: load ranking
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

@@ -4,6 +4,7 @@ import de.bergwerklabs.framework.bedrock.api.LabsPlayer;
 import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
 import de.bergwerklabs.framework.bedrock.service.config.SessionServiceConfig;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
@@ -12,17 +13,17 @@ import org.bukkit.event.player.PlayerQuitEvent;
  *
  * @author Yannic Rieger
  */
-public class PlayerQuitListener<T extends LabsPlayer> extends LabsListener<T> {
+public class PlayerQuitListener extends LabsListener {
 
     /**
      * @param playerRegistry
      */
-    public PlayerQuitListener(PlayerRegistry<T> playerRegistry, SessionServiceConfig config) {
+    public PlayerQuitListener(PlayerRegistry playerRegistry, SessionServiceConfig config) {
         super(playerRegistry, config);
     }
 
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent e) {
-        // TODO: load statistics.
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        // TODO: save stats.
     }
 }
