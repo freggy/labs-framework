@@ -33,12 +33,12 @@ public class PlayerJoinListener extends LabsListener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        playerRegistry.registerPlayer(new LabsPlayer(event.getPlayer()));
-
+        LabsPlayer player = playerRegistry.registerPlayer(new LabsPlayer(event.getPlayer()));
         if (this.config.loadStatisticsOnJoin()) {
             Bukkit.getScheduler().runTaskAsynchronously(BedrockSessionService.getInstance(), () -> {
                 PlayerdataSet set = new PlayerdataSet(event.getPlayer().getUniqueId());
                 set.loadAndWait();
+                player.setDataSet(set);
             });
         }
     }

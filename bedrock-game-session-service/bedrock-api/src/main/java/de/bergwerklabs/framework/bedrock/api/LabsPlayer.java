@@ -1,5 +1,6 @@
 package de.bergwerklabs.framework.bedrock.api;
 
+import de.bergwerklabs.atlantis.client.base.playerdata.PlayerdataSet;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -31,10 +32,25 @@ public class LabsPlayer {
      */
     public boolean isFrozen() { return this.isFrozen; }
 
+    /**
+     *
+     */
+    public PlayerdataSet getDataSet() {
+        return dataSet;
+    }
+
+    /**
+     *
+     * @param dataSet
+     */
+    public void setDataSet(PlayerdataSet dataSet) {
+        this.dataSet = dataSet;
+    }
+
     protected Player player;
     protected boolean isSpectator = false;
     protected boolean isFrozen = false;
-    protected Map<String, >
+    protected PlayerdataSet dataSet;
 
     /**
      * @param player

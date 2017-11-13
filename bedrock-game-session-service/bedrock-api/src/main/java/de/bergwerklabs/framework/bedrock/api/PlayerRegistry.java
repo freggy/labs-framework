@@ -29,20 +29,20 @@ public class PlayerRegistry {
     private Map<UUID, LabsPlayer> spectators = new HashMap<>();
 
 
-    public void registerSpectator(LabsPlayer spectator) {
-        this.spectators.putIfAbsent(spectator.getPlayer().getUniqueId(), spectator);
+    public LabsPlayer registerSpectator(LabsPlayer spectator) {
+        return this.spectators.putIfAbsent(spectator.getPlayer().getUniqueId(), spectator);
     }
 
-    public void registerPlayer(LabsPlayer player) {
-        this.players.putIfAbsent(player.getPlayer().getUniqueId(), player);
+    public LabsPlayer registerPlayer(LabsPlayer player) {
+        return this.players.putIfAbsent(player.getPlayer().getUniqueId(), player);
     }
 
-    public void unregisterPlayer(LabsPlayer player) {
-        this.players.remove(player);
+    public LabsPlayer unregisterPlayer(LabsPlayer player) {
+        return this.players.remove(player);
     }
 
-    public void unregisterSpectator(LabsPlayer spectator) {
-        this.spectators.remove(spectator);
+    public LabsPlayer unregisterSpectator(LabsPlayer spectator) {
+        return this.spectators.remove(spectator);
     }
 
 }
