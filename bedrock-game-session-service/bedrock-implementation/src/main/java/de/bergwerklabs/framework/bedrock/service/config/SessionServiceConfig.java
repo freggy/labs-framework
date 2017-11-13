@@ -9,7 +9,6 @@ package de.bergwerklabs.framework.bedrock.service.config;
 public class SessionServiceConfig {
 
     private boolean useAutoRespawn, spectateOnDeath, incrementDeathsOnDeath, incrementGamesPlayedOnDeath, loadStatisticsOnJoin, spectatorsEnabled;
-    private StatisticContext statsContext;
 
     /**
      *
@@ -52,10 +51,4 @@ public class SessionServiceConfig {
     public boolean spectatorsEnabled() {
         return spectatorsEnabled;
     }
-
-    /**
-     *
-     */
-    public StatisticContext getStatsContext() { return this.statsContext; }
-
 }

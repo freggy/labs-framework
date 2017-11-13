@@ -12,7 +12,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by Yannic Rieger on 01.08.2017.
