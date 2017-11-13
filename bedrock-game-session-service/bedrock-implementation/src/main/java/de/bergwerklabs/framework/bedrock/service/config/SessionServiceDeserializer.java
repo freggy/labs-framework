@@ -10,10 +10,10 @@ import java.lang.reflect.Type;
  *
  * @author Yannic Rieger
  */
-public class GameServiceDeserializer implements JsonDeserializer<GameServiceConfig> {
+public class SessionServiceDeserializer implements JsonDeserializer<SessionServiceConfig> {
 
     @Override
-    public GameServiceConfig deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
+    public SessionServiceConfig deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
         JsonObject obj = json.getAsJsonObject();
         boolean loadStatsOnJoin       = obj.get("load-stats-on-join").getAsBoolean();
         boolean useAutoRespawn        = obj.get("use-auto-respawn").getAsBoolean();

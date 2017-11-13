@@ -4,9 +4,10 @@ import com.comphenix.protocol.wrappers.EnumWrappers;
 import de.bergwerklabs.framework.bedrock.api.LabsPlayer;
 import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.v1_8.WrapperPlayClientClientCommand;
-import de.bergwerklabs.framework.bedrock.service.config.GameServiceConfig;
+import de.bergwerklabs.framework.bedrock.service.config.SessionServiceConfig;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 /**
@@ -15,16 +16,16 @@ import org.bukkit.event.entity.PlayerDeathEvent;
  *
  * @author Yannic Rieger
  */
-public class PlayerDeathListener<T extends LabsPlayer> extends LabsListener<T> {
+public class PlayerDeathListener extends LabsListener {
 
     /**
      * @param playerRegistry
      */
-    public PlayerDeathListener(PlayerRegistry<T> playerRegistry, GameServiceConfig config) {
+    public PlayerDeathListener(PlayerRegistry playerRegistry, SessionServiceConfig config) {
         super(playerRegistry, config);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDeath(PlayerDeathEvent e) {
         Player player = e.getEntity();
         this.playerRegistry.getPlayers().remove(player.getUniqueId());
@@ -44,9 +45,9 @@ public class PlayerDeathListener<T extends LabsPlayer> extends LabsListener<T> {
         }
 
         if (this.config.spectateOnDeath()) {
-            T playerObj = this.playerRegistry.getPlayers().get(player.getUniqueId());
+            LabsPlayer playerObj = this.playerRegistry.getPlayers().get(player.getUniqueId());
             playerObj.setSpectator();
-            this.playerRegistry.getSpectators().put(player.getUniqueId(), playerObj);
+            this.playerRegistry.registerSpectator(playerObj);
         }
     }
 }

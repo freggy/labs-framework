@@ -2,7 +2,7 @@ package de.bergwerklabs.framework.bedrock.service.listener;
 
 import de.bergwerklabs.framework.bedrock.api.LabsPlayer;
 import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
-import de.bergwerklabs.framework.bedrock.service.config.GameServiceConfig;
+import de.bergwerklabs.framework.bedrock.service.config.SessionServiceConfig;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -17,7 +17,7 @@ public class PlayerQuitListener<T extends LabsPlayer> extends LabsListener<T> {
     /**
      * @param playerRegistry
      */
-    public PlayerQuitListener(PlayerRegistry<T> playerRegistry, GameServiceConfig config) {
+    public PlayerQuitListener(PlayerRegistry<T> playerRegistry, SessionServiceConfig config) {
         super(playerRegistry, config);
     }
 

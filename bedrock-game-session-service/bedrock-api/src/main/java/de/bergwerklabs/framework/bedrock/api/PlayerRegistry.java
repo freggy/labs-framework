@@ -1,6 +1,8 @@
 package de.bergwerklabs.framework.bedrock.api;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -11,18 +13,36 @@ import java.util.UUID;
  *
  * @author Yannic Rieger
  */
-public class PlayerRegistry<T extends LabsPlayer> {
+public class PlayerRegistry {
 
     /**
-     * Gets all {@link T} that play the {@link LabsGame}.
+     * Gets all {@link LabsPlayer} that play the {@link LabsGame}.
      */
-    public HashMap<UUID, T> getPlayers() { return players; }
+    public Map<UUID, LabsPlayer> getPlayers() { return Collections.unmodifiableMap(players); }
 
     /**
      * Gets all the Spectators in a {@link LabsGame}.
      */
-    public HashMap<UUID, T> getSpectators() { return spectators; }
+    public Map<UUID, LabsPlayer> getSpectators() { return Collections.unmodifiableMap(spectators); }
 
-    private HashMap<UUID, T> players    = new HashMap<>();
-    private HashMap<UUID, T> spectators = new HashMap<>();
+    private Map<UUID, LabsPlayer> players    = new HashMap<>();
+    private Map<UUID, LabsPlayer> spectators = new HashMap<>();
+
+
+    public void registerSpectator(LabsPlayer spectator) {
+        this.spectators.putIfAbsent(spectator.getPlayer().getUniqueId(), spectator);
+    }
+
+    public void registerPlayer(LabsPlayer player) {
+        this.players.putIfAbsent(player.getPlayer().getUniqueId(), player);
+    }
+
+    public void unregisterPlayer(LabsPlayer player) {
+        this.players.remove(player);
+    }
+
+    public void unregisterSpectator(LabsPlayer spectator) {
+        this.spectators.remove(spectator);
+    }
+
 }

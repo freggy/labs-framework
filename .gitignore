@@ -34,6 +34,8 @@ manifest.mf
 *.iws
 .idea/
 
+*.exe.stackdump
+
 # other files
 *.log*
 

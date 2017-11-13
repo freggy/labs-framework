@@ -1,8 +1,7 @@
 package de.bergwerklabs.framework.bedrock.service.listener;
 
-import de.bergwerklabs.framework.bedrock.api.LabsPlayer;
 import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
-import de.bergwerklabs.framework.bedrock.service.config.GameServiceConfig;
+import de.bergwerklabs.framework.bedrock.service.config.SessionServiceConfig;
 import org.bukkit.event.Listener;
 
 /**
@@ -11,15 +10,15 @@ import org.bukkit.event.Listener;
  *
  * @author Yannic Rieger
  */
-public class LabsListener<T extends LabsPlayer> implements Listener {
+public class LabsListener implements Listener {
 
-    protected PlayerRegistry<T> playerRegistry;
-    protected GameServiceConfig config;
+    protected PlayerRegistry playerRegistry;
+    protected SessionServiceConfig config;
 
     /**
      * @param playerRegistry
      */
-    public LabsListener(PlayerRegistry<T> playerRegistry, GameServiceConfig config) {
+    public LabsListener(PlayerRegistry playerRegistry, SessionServiceConfig config) {
         this.playerRegistry = playerRegistry;
         this.config = config;
 

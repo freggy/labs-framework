@@ -22,9 +22,15 @@ public abstract class MinigameSession extends JavaPlugin implements GameSession 
     @Override
     public AbstractLobby getLobby() { return this.lobby; }
 
+    public static MinigameSession getInstance() {
+        return instance;
+    }
+
+    protected static MinigameSession instance;
     protected SimpleLobby lobby;
 
     public MinigameSession() {
+        instance = this;
         this.lobby = new SimpleLobby(20, this);
         Bukkit.getServer().getPluginManager().callEvent(new SessionInitializedEvent(this));
     }

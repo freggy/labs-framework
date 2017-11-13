@@ -1,10 +1,18 @@
 package de.bergwerklabs.framework.bedrock.service.listener;
 
+import de.bergwerklabs.atlantis.client.base.playerdata.PlayerdataSet;
 import de.bergwerklabs.framework.bedrock.api.LabsPlayer;
 import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
-import de.bergwerklabs.framework.bedrock.service.config.GameServiceConfig;
+import de.bergwerklabs.framework.bedrock.service.BedrockSessionService;
+import de.bergwerklabs.framework.bedrock.service.config.SessionServiceConfig;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by Yannic Rieger on 01.08.2017.
@@ -12,19 +20,26 @@ import org.bukkit.event.player.PlayerJoinEvent;
  *
  * @author Yannic Rieger
  */
-public class PlayerJoinListener<T extends LabsPlayer> extends LabsListener<T> {
+public class PlayerJoinListener extends LabsListener {
+
+    private final ExecutorService service = Executors.newSingleThreadExecutor();
 
     /**
      * @param playerRegistry
      */
-    public PlayerJoinListener(PlayerRegistry<T> playerRegistry, GameServiceConfig config) {
+    public PlayerJoinListener(PlayerRegistry playerRegistry, SessionServiceConfig config) {
         super(playerRegistry, config);
     }
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent e) {
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        playerRegistry.registerPlayer(new LabsPlayer(event.getPlayer()));
+
         if (this.config.loadStatisticsOnJoin()) {
-            // TODO: load statistics using context
+            Bukkit.getScheduler().runTaskAsynchronously(BedrockSessionService.getInstance(), () -> {
+                PlayerdataSet set = new PlayerdataSet(event.getPlayer().getUniqueId());
+                set.loadAndWait();
+            });
         }
     }
 }

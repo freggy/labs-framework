@@ -34,6 +34,7 @@ public class LabsPlayer {
     protected Player player;
     protected boolean isSpectator = false;
     protected boolean isFrozen = false;
+    protected Map<String, >
 
     /**
      * @param player

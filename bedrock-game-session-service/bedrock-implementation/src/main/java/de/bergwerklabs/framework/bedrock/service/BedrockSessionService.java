@@ -5,9 +5,10 @@ import de.bergwerklabs.atlantis.columbia.packages.gameserver.spigot.gamestate.Ga
 import de.bergwerklabs.framework.bedrock.api.GameSession;
 import de.bergwerklabs.framework.bedrock.api.event.session.SessionDonePreparationEvent;
 import de.bergwerklabs.framework.bedrock.api.event.session.SessionInitializedEvent;
-import de.bergwerklabs.framework.bedrock.service.config.GameServiceConfig;
+import de.bergwerklabs.framework.bedrock.service.config.SessionServiceConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockCanBuildEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
@@ -30,12 +31,12 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
     /**
      *
      */
-    public GameServiceConfig getServiceConfig() {
+    public SessionServiceConfig getServiceConfig() {
         return config;
     }
 
     private static BedrockSessionService instance;
-    private GameServiceConfig config;
+    private SessionServiceConfig config;
     private GameSession session;
     private boolean finishedPreparing = false;
 
@@ -62,7 +63,7 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
         this.session.prepare();
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     private void onPlayerJoin(PlayerLoginEvent event) {
         if (!finishedPreparing) {
             event.disallow(PlayerLoginEvent.Result.KICK_OTHER, "§6>> §eBedrock Session Service §6| §bGame session has not been initialized yet.");
@@ -74,6 +75,5 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
         this.finishedPreparing = true;
         GamestateManager.setGamestate(Gamestate.WAITING);
         event.getSession().getLobby().startWaitingPhase();
-
     }
 }
