@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Yannic Rieger on 13.11.2017.
  * <p>
+ * Class responsible for loading the ranking and displaying it to other players.
  *
  * @author Yannic Rieger
  */
@@ -46,7 +47,7 @@ public class Ranking {
     }
 
     /**
-     *
+     * Retrieves the top players if they have not been retrieved already.
      */
     private void retrieveTopPlayers() {
         if (this.topPlayers == null) {

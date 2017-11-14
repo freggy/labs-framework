@@ -13,35 +13,35 @@ import java.util.UUID;
  *
  * @author Yannic Rieger
  */
-public class PlayerRegistry {
+public class PlayerRegistry<T extends LabsPlayer> {
 
     /**
      * Gets all {@link LabsPlayer} that play the {@link LabsGame}.
      */
-    public Map<UUID, LabsPlayer> getPlayers() { return Collections.unmodifiableMap(players); }
+    public Map<UUID, T> getPlayers() { return Collections.unmodifiableMap(players); }
 
     /**
      * Gets all the Spectators in a {@link LabsGame}.
      */
-    public Map<UUID, LabsPlayer> getSpectators() { return Collections.unmodifiableMap(spectators); }
+    public Map<UUID, T> getSpectators() { return Collections.unmodifiableMap(spectators); }
 
-    private Map<UUID, LabsPlayer> players    = new HashMap<>();
-    private Map<UUID, LabsPlayer> spectators = new HashMap<>();
+    private Map<UUID, T> players    = new HashMap<>();
+    private Map<UUID, T> spectators = new HashMap<>();
 
 
-    public LabsPlayer registerSpectator(LabsPlayer spectator) {
+    public T registerSpectator(T spectator) {
         return this.spectators.putIfAbsent(spectator.getPlayer().getUniqueId(), spectator);
     }
 
-    public LabsPlayer registerPlayer(LabsPlayer player) {
+    public T registerPlayer(T player) {
         return this.players.putIfAbsent(player.getPlayer().getUniqueId(), player);
     }
 
-    public LabsPlayer unregisterPlayer(LabsPlayer player) {
+    public T unregisterPlayer(LabsPlayer player) {
         return this.players.remove(player);
     }
 
-    public LabsPlayer unregisterSpectator(LabsPlayer spectator) {
+    public T unregisterSpectator(LabsPlayer spectator) {
         return this.spectators.remove(spectator);
     }
 

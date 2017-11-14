@@ -4,17 +4,26 @@ import de.bergwerklabs.atlantis.client.base.util.AtlantisPackageService;
 import de.bergwerklabs.atlantis.client.bukkit.GamestateManager;
 import de.bergwerklabs.atlantis.columbia.packages.gameserver.spigot.gamestate.Gamestate;
 import de.bergwerklabs.framework.bedrock.api.GameSession;
+import de.bergwerklabs.framework.bedrock.api.PlayerFactory;
+import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
 import de.bergwerklabs.framework.bedrock.api.event.session.SessionDonePreparationEvent;
 import de.bergwerklabs.framework.bedrock.api.event.session.SessionInitializedEvent;
 import de.bergwerklabs.framework.bedrock.service.config.SessionServiceConfig;
+import de.bergwerklabs.framework.bedrock.service.listener.LabsListener;
+import de.bergwerklabs.framework.bedrock.service.listener.PlayerDeathListener;
+import de.bergwerklabs.framework.bedrock.service.listener.PlayerJoinListener;
+import de.bergwerklabs.framework.bedrock.service.listener.PlayerQuitListener;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockCanBuildEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Optional;
 
 /**
  * Created by Yannic Rieger on 18.09.2017.
@@ -36,27 +45,55 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
         return this.config;
     }
 
+    /**
+     *
+     */
     public Ranking getRanking() {
         return this.ranking;
     }
 
+    /**
+     *
+     */
     public AtlantisPackageService getPacketService() {
         return service;
+    }
+
+    /**
+     *
+     */
+    public PlayerFactory getPlayerFactory() {
+        return factory;
     }
 
     private static BedrockSessionService instance;
     private SessionServiceConfig config;
     private GameSession session;
+    private PlayerFactory factory;
     private Ranking ranking;
     private AtlantisPackageService service = new AtlantisPackageService();
-
     private boolean finishedPreparing = false;
 
     @Override
     public void onEnable() {
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
         instance = this;
+
         // TODO: load config
+
+        this.ranking = new Ranking(this.config.getTopThreeLocation(),
+                                   this.config.getPlayerStatsLocation(),
+                                   this.config.getGameDataCompund());
+
+        Optional<PlayerFactory> optional = ReflectionUtil.getClassInstance(PlayerFactory.class, this.config.getPlayerFactoryClass());
+
+        if (!optional.isPresent()) {
+            this.getLogger().warning("No valid PlayerFactory could be found. Disabling the plugin...");
+            this.getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+        else this.factory = optional.get();
+
         if (this.config.spectateOnDeath()) {
             Bukkit.getPluginManager().registerEvents(new Listener() {
                 @EventHandler
@@ -71,9 +108,9 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
     private void onSessionInitialized(SessionInitializedEvent event) {
         this.session = event.getSession();
         Bukkit.getServer().getServicesManager().register(GameSession.class, this.session, this, ServicePriority.Normal);
+        this.registerEvents(this.session.getGame().getPlayerRegistry());
         GamestateManager.setGamestate(Gamestate.PREPARING);
         this.session.prepare();
-        // TODO: load ranking
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -89,4 +126,16 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
         GamestateManager.setGamestate(Gamestate.WAITING);
         event.getSession().getLobby().startWaitingPhase();
     }
+
+    /**
+     *
+     * @param playerRegistry
+     */
+    private void registerEvents(PlayerRegistry playerRegistry) {
+        PluginManager manager = Bukkit.getPluginManager();
+        manager.registerEvents(new PlayerJoinListener(playerRegistry, this.config), this);
+        manager.registerEvents(new PlayerQuitListener(playerRegistry, this.config), this);
+        manager.registerEvents(new PlayerDeathListener(playerRegistry, this.config), this);
+    }
+
 }

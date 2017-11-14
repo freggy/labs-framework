@@ -15,6 +15,7 @@ public class SessionServiceConfig {
     private boolean useAutoRespawn, spectateOnDeath, incrementDeathsOnDeath, incrementGamesPlayedOnDeath, loadStatisticsOnJoin, spectatorsEnabled;
     private Set<Location> topThreeLocation;
     private Location playerStatsLocation;
+    private String gameDataCompund, playerFactoryClass;
 
 
     /**
@@ -65,5 +66,13 @@ public class SessionServiceConfig {
 
     public Location getPlayerStatsLocation() {
         return playerStatsLocation;
+    }
+
+    public String getGameDataCompund() {
+        return gameDataCompund;
+    }
+
+    public String getPlayerFactoryClass() {
+        return playerFactoryClass;
     }
 }
