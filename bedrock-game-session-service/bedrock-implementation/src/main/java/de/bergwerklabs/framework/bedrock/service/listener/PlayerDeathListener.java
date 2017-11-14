@@ -45,7 +45,7 @@ public class PlayerDeathListener extends LabsListener {
         }
 
         if (this.config.spectateOnDeath()) {
-            LabsPlayer playerObj = this.playerRegistry.getPlayers().get(player.getUniqueId());
+            LabsPlayer playerObj = (LabsPlayer) this.playerRegistry.getPlayers().get(player.getUniqueId());
             playerObj.setSpectator();
             this.playerRegistry.registerSpectator(playerObj);
         }

@@ -7,4 +7,9 @@ package de.bergwerklabs.framework.commons.spigot.title;
  * @author Yannic Rieger
  */
 public class ActionbarTitle {
+
+    public static void broadcastTitle(String text) {
+
+    }
+
 }

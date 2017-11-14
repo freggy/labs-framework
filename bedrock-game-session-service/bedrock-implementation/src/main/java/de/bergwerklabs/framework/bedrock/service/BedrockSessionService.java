@@ -9,7 +9,6 @@ import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
 import de.bergwerklabs.framework.bedrock.api.event.session.SessionDonePreparationEvent;
 import de.bergwerklabs.framework.bedrock.api.event.session.SessionInitializedEvent;
 import de.bergwerklabs.framework.bedrock.service.config.SessionServiceConfig;
-import de.bergwerklabs.framework.bedrock.service.listener.LabsListener;
 import de.bergwerklabs.framework.bedrock.service.listener.PlayerDeathListener;
 import de.bergwerklabs.framework.bedrock.service.listener.PlayerJoinListener;
 import de.bergwerklabs.framework.bedrock.service.listener.PlayerQuitListener;
@@ -108,6 +107,7 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
     private void onSessionInitialized(SessionInitializedEvent event) {
         this.session = event.getSession();
         Bukkit.getServer().getServicesManager().register(GameSession.class, this.session, this, ServicePriority.Normal);
+        Bukkit.getServer().getPluginManager().registerEvents(this.session.getLobby(), this);
         this.registerEvents(this.session.getGame().getPlayerRegistry());
         GamestateManager.setGamestate(Gamestate.PREPARING);
         this.session.prepare();

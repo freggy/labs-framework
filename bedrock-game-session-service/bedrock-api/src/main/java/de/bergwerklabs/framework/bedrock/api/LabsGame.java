@@ -15,8 +15,17 @@ public abstract class LabsGame<T extends LabsPlayer> {
      */
     public PlayerRegistry<T> getPlayerRegistry() { return this.playerRegistry; }
 
+    public String getName() {
+        return name;
+    }
+
+    public PluginMessenger getMessenger() {
+        return messenger;
+    }
+
     protected PlayerRegistry<T> playerRegistry = new PlayerRegistry<>();
     protected PluginMessenger messenger;
+    protected String name;
 
     public LabsGame(String name) {
         this.messenger = new PluginMessenger(name);
