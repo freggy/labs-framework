@@ -26,7 +26,7 @@ public class SessionServiceDeserializer implements JsonDeserializer<SessionServi
         boolean useAutoRespawn        = obj.get("use-auto-respawn").getAsBoolean();
         boolean spectateOnDeath       = obj.get("spectate-on-death").getAsBoolean();
         boolean incDeathStatOnDeath   = obj.get("increment-games-played-on-game-start").getAsBoolean();
-        boolean incGamesPlayedOnStart = obj.get("increment-games-played-on-death").getAsBoolean();
+        boolean incGamesPlayedOnStart = obj.get("increment-deaths-on-death").getAsBoolean();
         boolean spectatorsEnabled     = obj.get("spectators-enabled").getAsBoolean();
 
         String lobbyClass   = obj.get("lobby-class").getAsString();
@@ -42,7 +42,7 @@ public class SessionServiceDeserializer implements JsonDeserializer<SessionServi
         options.put("load-stats-on-join", loadStatsOnJoin);
         options.put("use-auto-respawn", useAutoRespawn);
         options.put("spectate-on-death", spectateOnDeath);
-        options.put("increment-deaths-statistic-on-death", incDeathStatOnDeath);
+        options.put("increment-deaths-on-death", incDeathStatOnDeath);
         options.put("increment-games-played-on-game-start", incGamesPlayedOnStart);
         options.put("spectators-enabled", spectatorsEnabled);
 
@@ -55,6 +55,11 @@ public class SessionServiceDeserializer implements JsonDeserializer<SessionServi
         rankingSettings.put("top-locations", topLocations);
         rankingSettings.put("player-location", playerStatsLocation);
 
-        return new SessionServiceConfig(options, gameSettings, rankingSettings);
+        Map<String, Integer> lobbySettings = new HashMap<>();
+        lobbySettings.put("max-players", obj.get("max-players").getAsInt());
+        lobbySettings.put("min-players", obj.get("min-players").getAsInt());
+        lobbySettings.put("waiting-duration",obj.get("waiting-duration").getAsInt() );
+
+        return new SessionServiceConfig(options, gameSettings, rankingSettings, lobbySettings);
     }
 }

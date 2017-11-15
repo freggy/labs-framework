@@ -19,8 +19,6 @@ public abstract class AbstractLobby implements Listener {
     protected LabsTimer timer;
     protected int waitingDuration, maxPlayers, minPlayers;
 
-    public AbstractLobby() { }
-
     /**
      * @param waitingDuration
      * @param session

@@ -23,7 +23,8 @@ public abstract class MinigameSession extends JavaPlugin implements GameSession 
 
     protected static MinigameSession instance;
 
-    public MinigameSession() {
+    @Override
+    public void onEnable() {
         instance = this;
         Bukkit.getServer().getPluginManager().callEvent(new SessionInitializedEvent(this));
     }

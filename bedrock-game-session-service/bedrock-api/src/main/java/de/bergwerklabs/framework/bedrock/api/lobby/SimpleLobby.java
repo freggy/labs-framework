@@ -7,6 +7,7 @@ import de.bergwerklabs.framework.commons.spigot.general.timer.event.LabsTimerSto
 import de.bergwerklabs.framework.commons.spigot.general.update.TaskManager;
 import de.bergwerklabs.framework.commons.spigot.title.ActionbarTitle;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 
 /**
@@ -33,12 +34,13 @@ public class SimpleLobby extends AbstractLobby {
     @Override
     public void startWaitingPhase() {
         Bukkit.getServer().getPluginManager().callEvent(new LobbyWaitingPhaseStartEvent(this.session));
-
+        System.out.println("gekkii");
         TaskManager.registerAsyncRepeatingTask(() -> {
             int currentPlayers = Bukkit.getOnlinePlayers().size();
+            System.out.println("dudu");
             if (currentPlayers < this.minPlayers) {
                 this.timer.stop();
-                ActionbarTitle.broadcastTitle("§6» §cWarte auf §4" + (this.minPlayers - currentPlayers) + " andere Spieler... §6«");
+                ActionbarTitle.broadcastTitle("§6» §cWarte auf §4" + (this.minPlayers - currentPlayers) + "§c andere Spieler... §6«");
             }
             else if (currentPlayers >= minPlayers) {
                 if (!this.timer.isRunning()) {

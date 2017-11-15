@@ -1,4 +1,5 @@
 name: BedrockSessionService
 author: freggy
 version: 1.0
-main: de.bergwerklabs.framework.gameservice.BedrockSessionServiceionService
+main: de.bergwerklabs.framework.bedrock.service.BedrockSessionService
+depend: [SpigotCommons]

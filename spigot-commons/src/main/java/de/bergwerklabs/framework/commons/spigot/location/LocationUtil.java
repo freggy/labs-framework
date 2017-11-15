@@ -20,6 +20,7 @@ public class LocationUtil {
      * @return Location created from JSON.
      */
     public static Location locationFromJson(JsonObject json) {
+        // TODO: check if below parameters are present
         Double x = json.get("x").getAsDouble();
         Double y = json.get("y").getAsDouble();
         Double z = json.get("z").getAsDouble();

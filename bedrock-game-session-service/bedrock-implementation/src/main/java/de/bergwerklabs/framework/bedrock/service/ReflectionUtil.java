@@ -5,6 +5,7 @@ import de.bergwerklabs.framework.bedrock.api.lobby.AbstractLobby;
 import de.bergwerklabs.framework.bedrock.api.session.GameSession;
 
 import java.lang.reflect.Constructor;
+import java.util.Arrays;
 import java.util.Optional;
 
 /**
@@ -33,7 +34,7 @@ public class ReflectionUtil {
     public static Optional<AbstractLobby> getLobbyInstance(String clazz, int waitingDuration, int maxPlayers, int minPlayers, GameSession session) {
         try {
             Class<?> c = Class.forName(clazz);
-            Constructor<?> constructor = c.getConstructor(Integer.class, Integer.class, Integer.class, GameSession.class);
+            Constructor<?> constructor = c.getConstructor(int.class, int.class, int.class, GameSession.class);
             return Optional.of((AbstractLobby)constructor.newInstance(waitingDuration, maxPlayers, minPlayers, session));
         }
         catch (Exception e) {

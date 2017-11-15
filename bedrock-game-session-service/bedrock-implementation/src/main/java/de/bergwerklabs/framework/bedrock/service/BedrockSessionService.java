@@ -1,6 +1,7 @@
 package de.bergwerklabs.framework.bedrock.service;
 
 import com.google.gson.GsonBuilder;
+import de.bergwerklabs.atlantis.api.logging.AtlantisLogger;
 import de.bergwerklabs.atlantis.client.base.util.AtlantisPackageService;
 import de.bergwerklabs.atlantis.client.bukkit.GamestateManager;
 import de.bergwerklabs.atlantis.columbia.packages.gameserver.spigot.gamestate.Gamestate;
@@ -15,6 +16,7 @@ import de.bergwerklabs.framework.bedrock.service.config.SessionServiceDeserializ
 import de.bergwerklabs.framework.bedrock.service.listener.PlayerDeathListener;
 import de.bergwerklabs.framework.bedrock.service.listener.PlayerJoinListener;
 import de.bergwerklabs.framework.bedrock.service.listener.PlayerQuitListener;
+import de.bergwerklabs.framework.commons.spigot.general.update.TaskManager;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -25,7 +27,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Optional;
@@ -71,6 +72,7 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
         return factory;
     }
 
+    private AtlantisLogger logger = AtlantisLogger.getLogger(getClass());
     private static BedrockSessionService instance;
     private SessionServiceConfig config;
     private GameSession session;
@@ -82,18 +84,19 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        TaskManager.startTimers(this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
         instance = this;
 
-
         try {
+            this.logger.info("Reading config...");
             this.getDataFolder().mkdirs();
             this.config = new GsonBuilder().registerTypeAdapter(SessionServiceConfig.class, new SessionServiceDeserializer())
                                            .create().fromJson(new FileReader(this.getDataFolder() + "/config.json"), SessionServiceConfig.class);
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
-            this.getLogger().warning("No config file found. Stopping the server...");
+            this.logger.warn("No config file found. Stopping the server...");
             this.getServer().shutdown();
         }
 
@@ -117,9 +120,17 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
     @EventHandler
     private void onSessionInitialized(SessionInitializedEvent event) {
         this.session = event.getSession();
+        this.logger.info("Session has been initialized.");
+        this.logger.info("Game is " + this.session.getGame().getName());
+        this.logger.info("Session ID is " + this.session.getId());
+
         Bukkit.getServer().getServicesManager().register(GameSession.class, this.session, this, ServicePriority.Normal);
 
-        Optional<AbstractLobby> lobbyOptional = ReflectionUtil.getLobbyInstance(this.config.getLobbyClass(), 0, 0, 0, this.session);
+        Optional<AbstractLobby> lobbyOptional = ReflectionUtil.getLobbyInstance(this.config.getLobbyClass(),
+                                                                                this.config.getWaitingDuration(),
+                                                                                this.config.getMaxPlayers(),
+                                                                                this.config.getMinPlayers(),
+                                                                                this.session);
         this.lobby = this.checkOptional(lobbyOptional);
 
         Bukkit.getServer().getPluginManager().registerEvents(this.lobby, this);
@@ -137,6 +148,8 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
 
     @EventHandler
     private void onPreparationDone(SessionDonePreparationEvent event) {
+        this.logger.info("Preparation done.");
+        this.logger.info("Starting lobby waiting phase...");
         this.finishedPreparing = true;
         GamestateManager.setGamestate(Gamestate.WAITING);
         this.lobby.startWaitingPhase();

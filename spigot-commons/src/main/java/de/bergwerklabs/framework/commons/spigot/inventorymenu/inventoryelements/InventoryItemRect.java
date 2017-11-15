@@ -42,9 +42,6 @@ public class InventoryItemRect extends InventoryMenuElement {
         return fillItem;
     }
 
-    @Override
-    public boolean isUpdated() { return updated; }
-
     private int topLeftSlot, bottomRightSlot;
     private InventoryItem borderItem, fillItem;
     private boolean borderOnly = false, full = false, updated = false;
