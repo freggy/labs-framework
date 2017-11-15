@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.bedrock.api;
+package de.bergwerklabs.framework.bedrock.api.session;
 
 import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;

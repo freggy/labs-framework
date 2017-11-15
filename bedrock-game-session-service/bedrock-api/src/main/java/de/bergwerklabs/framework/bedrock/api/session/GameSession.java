@@ -1,5 +1,6 @@
-package de.bergwerklabs.framework.bedrock.api;
+package de.bergwerklabs.framework.bedrock.api.session;
 
+import de.bergwerklabs.framework.bedrock.api.LabsGame;
 import de.bergwerklabs.framework.bedrock.api.lobby.AbstractLobby;
 
 /**
@@ -11,8 +12,6 @@ import de.bergwerklabs.framework.bedrock.api.lobby.AbstractLobby;
 public interface GameSession {
 
     LabsGame getGame();
-
-    AbstractLobby getLobby();
 
     String getId();
 

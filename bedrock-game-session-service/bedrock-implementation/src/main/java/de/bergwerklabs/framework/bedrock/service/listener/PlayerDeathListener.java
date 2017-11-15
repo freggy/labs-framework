@@ -40,7 +40,7 @@ public class PlayerDeathListener extends LabsListener {
             // TODO: increase died statistic on death
         }
 
-        if (this.config.incrementGamesPlayedOnDeath()) {
+        if (this.config.incrementGamesPlayedOnGameStart()) {
             // TODO: increment games played statistic on death
         }
 

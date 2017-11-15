@@ -1,6 +1,6 @@
 package de.bergwerklabs.framework.bedrock.api.lobby;
 
-import de.bergwerklabs.framework.bedrock.api.GameSession;
+import de.bergwerklabs.framework.bedrock.api.session.GameSession;
 import de.bergwerklabs.framework.commons.spigot.general.timer.LabsTimer;
 import de.bergwerklabs.framework.commons.spigot.title.ActionbarTitle;
 import org.bukkit.Bukkit;
@@ -18,6 +18,8 @@ public abstract class AbstractLobby implements Listener {
     protected GameSession session;
     protected LabsTimer timer;
     protected int waitingDuration, maxPlayers, minPlayers;
+
+    public AbstractLobby() { }
 
     /**
      * @param waitingDuration

@@ -1,8 +1,6 @@
-package de.bergwerklabs.framework.bedrock.api;
+package de.bergwerklabs.framework.bedrock.api.session;
 
 import de.bergwerklabs.framework.bedrock.api.event.session.SessionInitializedEvent;
-import de.bergwerklabs.framework.bedrock.api.lobby.AbstractLobby;
-import de.bergwerklabs.framework.bedrock.api.lobby.SimpleLobby;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,19 +17,14 @@ public abstract class MinigameSession extends JavaPlugin implements GameSession 
         return GameId.create();
     }
 
-    @Override
-    public AbstractLobby getLobby() { return this.lobby; }
-
     public static MinigameSession getInstance() {
         return instance;
     }
 
     protected static MinigameSession instance;
-    protected SimpleLobby lobby;
 
     public MinigameSession() {
         instance = this;
-        this.lobby = new SimpleLobby(20, this);
         Bukkit.getServer().getPluginManager().callEvent(new SessionInitializedEvent(this));
     }
 }

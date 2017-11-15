@@ -1,14 +1,17 @@
 package de.bergwerklabs.framework.bedrock.service;
 
+import com.google.gson.GsonBuilder;
 import de.bergwerklabs.atlantis.client.base.util.AtlantisPackageService;
 import de.bergwerklabs.atlantis.client.bukkit.GamestateManager;
 import de.bergwerklabs.atlantis.columbia.packages.gameserver.spigot.gamestate.Gamestate;
-import de.bergwerklabs.framework.bedrock.api.GameSession;
+import de.bergwerklabs.framework.bedrock.api.lobby.AbstractLobby;
+import de.bergwerklabs.framework.bedrock.api.session.GameSession;
 import de.bergwerklabs.framework.bedrock.api.PlayerFactory;
 import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
 import de.bergwerklabs.framework.bedrock.api.event.session.SessionDonePreparationEvent;
 import de.bergwerklabs.framework.bedrock.api.event.session.SessionInitializedEvent;
 import de.bergwerklabs.framework.bedrock.service.config.SessionServiceConfig;
+import de.bergwerklabs.framework.bedrock.service.config.SessionServiceDeserializer;
 import de.bergwerklabs.framework.bedrock.service.listener.PlayerDeathListener;
 import de.bergwerklabs.framework.bedrock.service.listener.PlayerJoinListener;
 import de.bergwerklabs.framework.bedrock.service.listener.PlayerQuitListener;
@@ -22,6 +25,9 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Optional;
 
 /**
@@ -68,6 +74,7 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
     private static BedrockSessionService instance;
     private SessionServiceConfig config;
     private GameSession session;
+    private AbstractLobby lobby;
     private PlayerFactory factory;
     private Ranking ranking;
     private AtlantisPackageService service = new AtlantisPackageService();
@@ -78,20 +85,24 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
         instance = this;
 
-        // TODO: load config
+
+        try {
+            this.getDataFolder().mkdirs();
+            this.config = new GsonBuilder().registerTypeAdapter(SessionServiceConfig.class, new SessionServiceDeserializer())
+                                           .create().fromJson(new FileReader(this.getDataFolder() + "/config.json"), SessionServiceConfig.class);
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+            this.getLogger().warning("No config file found. Stopping the server...");
+            this.getServer().shutdown();
+        }
 
         this.ranking = new Ranking(this.config.getTopThreeLocation(),
                                    this.config.getPlayerStatsLocation(),
                                    this.config.getGameDataCompund());
 
-        Optional<PlayerFactory> optional = ReflectionUtil.getClassInstance(PlayerFactory.class, this.config.getPlayerFactoryClass());
-
-        if (!optional.isPresent()) {
-            this.getLogger().warning("No valid PlayerFactory could be found. Disabling the plugin...");
-            this.getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
-        else this.factory = optional.get();
+        Optional<PlayerFactory> factoryOptional = ReflectionUtil.getFactoryClassInstance(this.config.getPlayerFactoryClass());
+        this.factory = this.checkOptional(factoryOptional);
 
         if (this.config.spectateOnDeath()) {
             Bukkit.getPluginManager().registerEvents(new Listener() {
@@ -107,7 +118,11 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
     private void onSessionInitialized(SessionInitializedEvent event) {
         this.session = event.getSession();
         Bukkit.getServer().getServicesManager().register(GameSession.class, this.session, this, ServicePriority.Normal);
-        Bukkit.getServer().getPluginManager().registerEvents(this.session.getLobby(), this);
+
+        Optional<AbstractLobby> lobbyOptional = ReflectionUtil.getLobbyInstance(this.config.getLobbyClass(), 0, 0, 0, this.session);
+        this.lobby = this.checkOptional(lobbyOptional);
+
+        Bukkit.getServer().getPluginManager().registerEvents(this.lobby, this);
         this.registerEvents(this.session.getGame().getPlayerRegistry());
         GamestateManager.setGamestate(Gamestate.PREPARING);
         this.session.prepare();
@@ -124,8 +139,18 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
     private void onPreparationDone(SessionDonePreparationEvent event) {
         this.finishedPreparing = true;
         GamestateManager.setGamestate(Gamestate.WAITING);
-        event.getSession().getLobby().startWaitingPhase();
+        this.lobby.startWaitingPhase();
     }
+
+    private <T> T checkOptional(Optional<T> optional) {
+        if (!optional.isPresent()) {
+            this.getLogger().warning("No valid Class could be found. Shutting down server...");
+            this.getServer().shutdown();
+            return null;
+        }
+        else return optional.get();
+    }
+
 
     /**
      *
@@ -137,5 +162,4 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
         manager.registerEvents(new PlayerQuitListener(playerRegistry, this.config), this);
         manager.registerEvents(new PlayerDeathListener(playerRegistry, this.config), this);
     }
-
 }

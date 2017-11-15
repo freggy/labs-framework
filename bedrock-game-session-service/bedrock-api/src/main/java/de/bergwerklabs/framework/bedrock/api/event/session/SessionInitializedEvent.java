@@ -1,6 +1,6 @@
 package de.bergwerklabs.framework.bedrock.api.event.session;
 
-import de.bergwerklabs.framework.bedrock.api.GameSession;
+import de.bergwerklabs.framework.bedrock.api.session.GameSession;
 
 /**
  * Created by Yannic Rieger on 11.11.2017.
