@@ -5,7 +5,6 @@ import de.bergwerklabs.framework.bedrock.api.lobby.AbstractLobby;
 import de.bergwerklabs.framework.bedrock.api.session.GameSession;
 
 import java.lang.reflect.Constructor;
-import java.util.Arrays;
 import java.util.Optional;
 
 /**

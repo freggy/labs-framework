@@ -4,6 +4,7 @@ import de.bergwerklabs.framework.bedrock.api.session.GameSession;
 import de.bergwerklabs.framework.bedrock.api.event.lobby.LobbyWaitingPhaseStartEvent;
 import de.bergwerklabs.framework.commons.spigot.general.timer.LabsTimerStopCause;
 import de.bergwerklabs.framework.commons.spigot.general.timer.event.LabsTimerStopEvent;
+import de.bergwerklabs.framework.commons.spigot.general.update.Task;
 import de.bergwerklabs.framework.commons.spigot.general.update.TaskManager;
 import de.bergwerklabs.framework.commons.spigot.title.ActionbarTitle;
 import org.bukkit.Bukkit;
@@ -20,6 +21,7 @@ import org.bukkit.event.EventHandler;
 public class SimpleLobby extends AbstractLobby {
 
     private boolean timerShortened = false;
+    private Task task;
 
     /**
      * @param waitingDuration
@@ -34,13 +36,15 @@ public class SimpleLobby extends AbstractLobby {
     @Override
     public void startWaitingPhase() {
         Bukkit.getServer().getPluginManager().callEvent(new LobbyWaitingPhaseStartEvent(this.session));
-        System.out.println("gekkii");
-        TaskManager.registerAsyncRepeatingTask(() -> {
+         task = TaskManager.registerAsyncRepeatingTask(() -> {
             int currentPlayers = Bukkit.getOnlinePlayers().size();
-            System.out.println("dudu");
             if (currentPlayers < this.minPlayers) {
                 this.timer.stop();
-                ActionbarTitle.broadcastTitle("§6» §cWarte auf §4" + (this.minPlayers - currentPlayers) + "§c andere Spieler... §6«");
+                int needed = (this.minPlayers - currentPlayers);
+                if (needed == 1) {
+                    ActionbarTitle.broadcastTitle("§6» §cWarte auf §4einen §canderen Spieler... §6«");
+                }
+                else ActionbarTitle.broadcastTitle("§6» §cWarte auf §4" + needed + "§c andere Spieler... §6«");
             }
             else if (currentPlayers >= minPlayers) {
                 if (!this.timer.isRunning()) {
@@ -51,7 +55,7 @@ public class SimpleLobby extends AbstractLobby {
                 if (!timerShortened) {
                     this.timer.setTimeLeft(15);
                     timerShortened = true;
-                    this.session.getGame().getMessenger().messageAll("§bMaximal Anzahl erreicht. Timer wird auf 15 Sekunden verkürzt.");
+                    this.session.getGame().getMessenger().messageAll("§bMaximale Anzahl erreicht. Timer wird auf 15 Sekunden verkürzt.");
                 }
             }
         }, 20, 10);
@@ -59,11 +63,11 @@ public class SimpleLobby extends AbstractLobby {
 
     @EventHandler
     private void onTimerStopped(LabsTimerStopEvent event) {
+        Bukkit.getOnlinePlayers().forEach(player -> player.setLevel(0));
         if (event.getCause() == LabsTimerStopCause.TIMES_UP) {
             // clear chat.
-            for (int i = 0; i < 30; i++) {
-                this.session.getGame().getMessenger().messageAll(" ");
-            }
+            for (int i = 0; i < 30; i++) Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(" "));
+            TaskManager.stopTask(task);
             this.session.getGame().start();
         }
     }

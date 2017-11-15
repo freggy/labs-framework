@@ -30,13 +30,14 @@ public abstract class AbstractLobby implements Listener {
         this.minPlayers = minPlayers;
         this.timer = new LabsTimer(waitingDuration, timeLeft -> {
             int currentPlayers = Bukkit.getOnlinePlayers().size();
-            if (timeLeft >= 6) {
+            if (timeLeft <= 6) {
                 ActionbarTitle.broadcastTitle("§6» §aSpiel startet in §b" + timeLeft + " §6«");
                 Bukkit.getOnlinePlayers().forEach(player -> player.playSound(player.getEyeLocation(), Sound.NOTE_BASS, 1.0F, 1.0F));
             }
             else {
                 ActionbarTitle.broadcastTitle("§6» §eSpieler: §b" + currentPlayers + "/" + this.maxPlayers +" §6| §aMindestens: §b" + this.minPlayers + " §6«");
             }
+            Bukkit.getOnlinePlayers().forEach(player -> player.setLevel(timeLeft));
         });
     }
 
