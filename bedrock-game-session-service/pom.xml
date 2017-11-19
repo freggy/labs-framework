@@ -14,7 +14,7 @@
 
     <modules>
         <module>bedrock-api</module>
-        <module>bedrock-implementation</module>
+        <module>bedrock-core</module>
     </modules>
 
     <dependencies>

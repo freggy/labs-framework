@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.bedrock.service.config;
+package de.bergwerklabs.framework.bedrock.core.config;
 
 import com.google.gson.*;
 import de.bergwerklabs.framework.commons.spigot.json.JsonUtil;

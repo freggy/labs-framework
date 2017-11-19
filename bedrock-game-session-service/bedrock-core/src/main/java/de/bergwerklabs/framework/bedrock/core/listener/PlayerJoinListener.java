@@ -1,10 +1,10 @@
-package de.bergwerklabs.framework.bedrock.service.listener;
+package de.bergwerklabs.framework.bedrock.core.listener;
 
 import de.bergwerklabs.atlantis.client.base.playerdata.PlayerdataSet;
 import de.bergwerklabs.framework.bedrock.api.LabsPlayer;
 import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
-import de.bergwerklabs.framework.bedrock.service.BedrockSessionService;
-import de.bergwerklabs.framework.bedrock.service.config.SessionServiceConfig;
+import de.bergwerklabs.framework.bedrock.core.BedrockSessionService;
+import de.bergwerklabs.framework.bedrock.core.config.SessionServiceConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

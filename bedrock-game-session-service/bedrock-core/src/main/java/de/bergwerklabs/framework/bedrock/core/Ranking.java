@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.bedrock.service;
+package de.bergwerklabs.framework.bedrock.core;
 
 import de.bergwerklabs.api.cache.pojo.PlayerdataEntry;
 import de.bergwerklabs.api.cache.pojo.RankingCacheEntry;

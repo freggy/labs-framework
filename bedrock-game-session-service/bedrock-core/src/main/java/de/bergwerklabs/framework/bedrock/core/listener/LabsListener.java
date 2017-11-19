@@ -1,7 +1,7 @@
-package de.bergwerklabs.framework.bedrock.service.listener;
+package de.bergwerklabs.framework.bedrock.core.listener;
 
 import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
-import de.bergwerklabs.framework.bedrock.service.config.SessionServiceConfig;
+import de.bergwerklabs.framework.bedrock.core.config.SessionServiceConfig;
 import org.bukkit.event.Listener;
 
 /**

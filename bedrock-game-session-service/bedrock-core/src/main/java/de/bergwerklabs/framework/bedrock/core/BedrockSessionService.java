@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.bedrock.service;
+package de.bergwerklabs.framework.bedrock.core;
 
 import com.google.gson.GsonBuilder;
 import de.bergwerklabs.atlantis.api.logging.AtlantisLogger;
@@ -11,11 +11,11 @@ import de.bergwerklabs.framework.bedrock.api.PlayerFactory;
 import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
 import de.bergwerklabs.framework.bedrock.api.event.session.SessionDonePreparationEvent;
 import de.bergwerklabs.framework.bedrock.api.event.session.SessionInitializedEvent;
-import de.bergwerklabs.framework.bedrock.service.config.SessionServiceConfig;
-import de.bergwerklabs.framework.bedrock.service.config.SessionServiceDeserializer;
-import de.bergwerklabs.framework.bedrock.service.listener.PlayerDeathListener;
-import de.bergwerklabs.framework.bedrock.service.listener.PlayerJoinListener;
-import de.bergwerklabs.framework.bedrock.service.listener.PlayerQuitListener;
+import de.bergwerklabs.framework.bedrock.core.config.SessionServiceConfig;
+import de.bergwerklabs.framework.bedrock.core.config.SessionServiceDeserializer;
+import de.bergwerklabs.framework.bedrock.core.listener.PlayerDeathListener;
+import de.bergwerklabs.framework.bedrock.core.listener.PlayerJoinListener;
+import de.bergwerklabs.framework.bedrock.core.listener.PlayerQuitListener;
 import de.bergwerklabs.framework.commons.spigot.general.update.TaskManager;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;

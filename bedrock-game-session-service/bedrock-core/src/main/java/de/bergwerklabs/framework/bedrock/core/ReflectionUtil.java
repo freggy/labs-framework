@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.bedrock.service;
+package de.bergwerklabs.framework.bedrock.core;
 
 import de.bergwerklabs.framework.bedrock.api.PlayerFactory;
 import de.bergwerklabs.framework.bedrock.api.lobby.AbstractLobby;
@@ -17,10 +17,11 @@ public class ReflectionUtil {
 
     /**
      *
+     *
      * @param clazz
      * @return
      */
-    public static Optional<PlayerFactory> getFactoryClassInstance(String clazz) {
+    static Optional<PlayerFactory> getFactoryClassInstance(String clazz) {
         try {
             return Optional.of((PlayerFactory) Class.forName(clazz).newInstance());
         }
@@ -30,7 +31,7 @@ public class ReflectionUtil {
         return Optional.empty();
     }
 
-    public static Optional<AbstractLobby> getLobbyInstance(String clazz, int waitingDuration, int maxPlayers, int minPlayers, GameSession session) {
+    static Optional<AbstractLobby> getLobbyInstance(String clazz, int waitingDuration, int maxPlayers, int minPlayers, GameSession session) {
         try {
             Class<?> c = Class.forName(clazz);
             Constructor<?> constructor = c.getConstructor(int.class, int.class, int.class, GameSession.class);

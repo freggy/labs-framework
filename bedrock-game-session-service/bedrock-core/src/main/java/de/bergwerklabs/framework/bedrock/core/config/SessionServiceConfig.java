@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.bedrock.service.config;
+package de.bergwerklabs.framework.bedrock.core.config;
 
 import de.bergwerklabs.atlantis.api.logging.AtlantisLogger;
 import org.bukkit.Location;
@@ -36,10 +36,10 @@ public class SessionServiceConfig {
         this.waitingDuration = lobbySettings.get("waiting-duration");
 
         this.logger.info("============= [Bedrock Session Config] =============");
-        options.forEach((key, value) -> this.logger.info(key +  ": " + value));
-        gameSettings.forEach((key, value) -> this.logger.info(key +  ": " + value));
-        lobbySettings.forEach((key, value) -> this.logger.info(key +  ": " + value));
-        rankingSettings.forEach((key, value) -> this.logger.info(key +  ": " + value));
+        options.forEach((key, value) -> this.logger.info(key + ": " + value));
+        gameSettings.forEach((key, value) -> this.logger.info(key + ": " + value));
+        lobbySettings.forEach((key, value) -> this.logger.info(key + ": " + value));
+        rankingSettings.forEach((key, value) -> this.logger.info(key + ": " + value));
         this.logger.info("====================================================");
     }
 
