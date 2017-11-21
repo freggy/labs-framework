@@ -28,21 +28,44 @@ public class PlayerRegistry<T extends LabsPlayer> {
     private Map<UUID, T> players    = new HashMap<>();
     private Map<UUID, T> spectators = new HashMap<>();
 
-
+    /**
+     * Registers a spectator.
+     *
+     * @param spectator {@link LabsPlayer} to be registered as an spectator.
+     * @return          instance of {@link LabsPlayer}
+     */
     public T registerSpectator(T spectator) {
         return this.spectators.putIfAbsent(spectator.getPlayer().getUniqueId(), spectator);
     }
 
+    /**
+     * Registers a player.
+     *
+     * @param player {@link LabsPlayer} to be registered.
+     * @return       instance of {@link LabsPlayer}.
+     */
     public T registerPlayer(T player) {
         return this.players.putIfAbsent(player.getPlayer().getUniqueId(), player);
     }
 
-    public T unregisterPlayer(LabsPlayer player) {
-        return this.players.remove(player);
+    /**
+     * Unregisters a spectator
+     *
+     * @param spectator {@link LabsPlayer} to be unregistered as an spectator.
+     * @return          instance of {@link LabsPlayer}
+     */
+    public T unregisterSpectator(T spectator) {
+        return this.spectators.remove(spectator);
     }
 
-    public T unregisterSpectator(LabsPlayer spectator) {
-        return this.spectators.remove(spectator);
+    /**
+     * Unregisters a player.
+     *
+     * @param player {@link LabsPlayer} to be unregistered.
+     * @return       instance of {@link LabsPlayer}
+     */
+    public T unregisterPlayer(T player) {
+        return this.players.remove(player);
     }
 
 }

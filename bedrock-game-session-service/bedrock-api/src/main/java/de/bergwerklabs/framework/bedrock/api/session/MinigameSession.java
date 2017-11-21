@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 /**
  * Created by Yannic Rieger on 11.11.2017.
  * <p>
+ * This class has to be extended by a main class for a mini game.
  *
  * @author Yannic Rieger
  */

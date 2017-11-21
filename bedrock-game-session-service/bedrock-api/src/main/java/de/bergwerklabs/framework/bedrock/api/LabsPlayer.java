@@ -10,6 +10,8 @@ import org.bukkit.potion.PotionEffectType;
  * Created by Yannic Rieger on 01.05.2017.
  * <p>
  * Base class wrapper class for the {@link Player} interface. The use of this class is to provide more specific functionality.
+ * Every player specific operation that is not covered by the {@link Player} interface should be contained in a class that extends
+ * this one.
  *
  * @author Yannic Rieger
  */
@@ -33,15 +35,16 @@ public class LabsPlayer {
     public boolean isFrozen() { return this.isFrozen; }
 
     /**
-     *
+     * Gets the {@link PlayerdataSet} for this player.
      */
     public PlayerdataSet getDataSet() {
         return dataSet;
     }
 
     /**
+     * Sets the {@link PlayerdataSet} for this player.
      *
-     * @param dataSet
+     * @param dataSet data set to be set.
      */
     public void setDataSet(PlayerdataSet dataSet) {
         this.dataSet = dataSet;
@@ -53,7 +56,7 @@ public class LabsPlayer {
     protected PlayerdataSet dataSet;
 
     /**
-     * @param player
+     * @param player {@link Player} to be wrapped.
      */
     public LabsPlayer(Player player) {
         this.player = player;

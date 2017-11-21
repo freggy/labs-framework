@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 /**
  * Created by Yannic Rieger on 18.09.2017.
  * <p>
+ * Abstract lobby class. If custom lobby behavior is wanted, you have to extend this class.
  *
  * @author Yannic Rieger
  */
@@ -20,8 +21,10 @@ public abstract class AbstractLobby implements Listener {
     protected int waitingDuration, maxPlayers, minPlayers;
 
     /**
-     * @param waitingDuration
-     * @param session
+     * @param waitingDuration duration the players have to wait.
+     * @param maxPlayers      maximum amount of player that can play the game.
+     * @param minPlayers      minimum amount of players needed to start the game.
+     * @param session         {@link GameSession} associated with this lobby.
      */
     public AbstractLobby(int waitingDuration, int maxPlayers, int minPlayers, GameSession session) {
         this.session = session;
@@ -41,5 +44,8 @@ public abstract class AbstractLobby implements Listener {
         });
     }
 
+    /**
+     * Starts the waiting phase.
+     */
     public abstract void startWaitingPhase();
 }

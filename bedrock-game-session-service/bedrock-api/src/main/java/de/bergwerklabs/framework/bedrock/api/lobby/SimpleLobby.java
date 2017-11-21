@@ -24,10 +24,10 @@ public class SimpleLobby extends AbstractLobby {
     private Task task;
 
     /**
-     * @param waitingDuration
-     * @param maxPlayers
-     * @param minPlayers
-     * @param session
+     * @param waitingDuration duration the players have to wait.
+     * @param maxPlayers      maximum amount of player that can play the game.
+     * @param minPlayers      minimum amount of players needed to start the game.
+     * @param session         {@link GameSession} associated with this lobby.
      */
     public SimpleLobby(int waitingDuration, int maxPlayers, int minPlayers, GameSession session) {
         super(waitingDuration, maxPlayers, minPlayers, session);

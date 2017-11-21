@@ -12,6 +12,9 @@ import de.bergwerklabs.framework.bedrock.api.LabsPlayer;
  */
 public class GameStartEvent<T extends LabsPlayer> extends AbstractGameEvent<T> {
 
+    /**
+     * @param game Instance of a {@link LabsGame}.
+     */
     public GameStartEvent(LabsGame<T> game) {
         super(game);
     }
