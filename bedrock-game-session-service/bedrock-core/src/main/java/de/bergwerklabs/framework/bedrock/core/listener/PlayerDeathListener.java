@@ -12,14 +12,14 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 /**
  * Created by Yannic Rieger on 01.08.2017.
- * <p>  </p>
  *
  * @author Yannic Rieger
  */
 public class PlayerDeathListener extends LabsListener {
 
     /**
-     * @param playerRegistry
+     * @param playerRegistry registry where all players ares registered.
+     * @param config         config of the current session.
      */
     public PlayerDeathListener(PlayerRegistry playerRegistry, SessionServiceConfig config) {
         super(playerRegistry, config);

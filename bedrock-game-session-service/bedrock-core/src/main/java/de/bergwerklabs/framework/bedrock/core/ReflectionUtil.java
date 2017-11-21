@@ -10,16 +10,17 @@ import java.util.Optional;
 /**
  * Created by Yannic Rieger on 14.11.2017.
  * <p>
+ * Mainly used for getting instances of {@link PlayerFactory} and {@link AbstractLobby}.
  *
  * @author Yannic Rieger
  */
 public class ReflectionUtil {
 
     /**
+     * Gets the {@link PlayerFactory} that will be used for the plugin.
      *
-     *
-     * @param clazz
-     * @return
+     * @param clazz fully qualified name of the class. e.g  {@code java.lang.Object}.
+     * @return      {@link Optional} containing the {@link PlayerFactory} instance or just an empty one.
      */
     static Optional<PlayerFactory> getFactoryClassInstance(String clazz) {
         try {
@@ -31,6 +32,16 @@ public class ReflectionUtil {
         return Optional.empty();
     }
 
+    /**
+     * Gets the {@link AbstractLobby} that will be used for the plugin. If standard config is used it's {@link de.bergwerklabs.framework.bedrock.api.lobby.SimpleLobby}.
+     *
+     * @param clazz           fully qualified name of the class. e.g  {@code java.lang.Object}.
+     * @param waitingDuration duration the players have to wait until the game starts.
+     * @param maxPlayers      maximum amount of players.
+     * @param minPlayers      minimal amount of players.
+     * @param session         corresponding Bedrock Session
+     * @return                {@link Optional} containing the {@link AbstractLobby} instance or just an empty one.
+     */
     static Optional<AbstractLobby> getLobbyInstance(String clazz, int waitingDuration, int maxPlayers, int minPlayers, GameSession session) {
         try {
             Class<?> c = Class.forName(clazz);

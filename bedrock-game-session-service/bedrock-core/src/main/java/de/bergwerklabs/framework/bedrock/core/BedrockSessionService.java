@@ -40,33 +40,33 @@ import java.util.Optional;
 public class BedrockSessionService extends JavaPlugin implements Listener {
 
     /**
-     *
+     * Gets an instance of the service.
      */
     public static BedrockSessionService getInstance() { return instance; }
 
     /**
-     *
+     * Gets the {@link SessionServiceConfig}.
      */
     public SessionServiceConfig getServiceConfig() {
         return this.config;
     }
 
     /**
-     *
+     * Gets the {@link Ranking} for this session.
      */
     public Ranking getRanking() {
         return this.ranking;
     }
 
     /**
-     *
+     * Gets the {@link AtlantisPackageService} for this plugin.
      */
     public AtlantisPackageService getPacketService() {
         return service;
     }
 
     /**
-     *
+     * Gets the {@link PlayerFactory} of this session.
      */
     public PlayerFactory getPlayerFactory() {
         return factory;
@@ -166,8 +166,9 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
 
 
     /**
+     * Registers all events.
      *
-     * @param playerRegistry
+     * @param playerRegistry registry where all player are registered.
      */
     private void registerEvents(PlayerRegistry playerRegistry) {
         PluginManager manager = Bukkit.getPluginManager();

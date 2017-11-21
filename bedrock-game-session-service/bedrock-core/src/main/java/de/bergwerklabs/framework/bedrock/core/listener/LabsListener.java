@@ -7,18 +7,21 @@ import org.bukkit.event.Listener;
 /**
  * Created by Yannic Rieger on 07.07.2017.
  * <p>
+ * Base class for listeners in the Bedrock Session Service plugin.
+ * This class provides some extras like the {@link PlayerRegistry} and the {@link SessionServiceConfig} of the session.
  *
  * @author Yannic Rieger
  */
-public class LabsListener implements Listener {
+class LabsListener implements Listener {
 
     protected PlayerRegistry playerRegistry;
     protected SessionServiceConfig config;
 
     /**
-     * @param playerRegistry
+     * @param playerRegistry registry where all players ares registered.
+     * @param config         config of the current session.
      */
-    public LabsListener(PlayerRegistry playerRegistry, SessionServiceConfig config) {
+    LabsListener(PlayerRegistry playerRegistry, SessionServiceConfig config) {
         this.playerRegistry = playerRegistry;
         this.config = config;
 

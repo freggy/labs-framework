@@ -26,20 +26,22 @@ public class Ranking {
     private PlayerdataEntry[] topPlayers;
 
     /**
-     *
-     * @param topThree
-     * @param playerStats
-     * @param game
+     * @param topThree    {@link Set} containing the {@link Location} of the top three players.
+     *                    <b>NOTE:</b> The order of the places will be determined by the order
+     *                    the {@link Location}s contained in the set.
+     * @param playerStats this is the place where the players own NPC will be spawned.
+     * @param game        name of the mini game that will be played.
      */
-    public Ranking(Set<Location> topThree, Location playerStats, String game) {
+    Ranking(Set<Location> topThree, Location playerStats, String game) {
         this.topThree = topThree;
         this.playerStats = playerStats;
         this.game = game;
     }
 
     /**
+     * Displays the NPCs to the player.
      *
-     * @param player
+     * @param player {@link LabsPlayer} to display the NPCs to.
      */
     public void displayRankingToPlayer(LabsPlayer player) {
         retrieveTopPlayers();

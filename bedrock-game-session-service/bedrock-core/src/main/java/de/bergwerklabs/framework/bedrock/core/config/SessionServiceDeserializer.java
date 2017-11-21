@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Yannic Rieger on 18.09.2017.
  * <p>
+ * Deserializer for the {@link SessionServiceConfig}.
  *
  * @author Yannic Rieger
  */
