@@ -15,6 +15,7 @@
     <modules>
         <module>bedrock-api</module>
         <module>bedrock-core</module>
+        <module>bedrock-game-server-management</module>
     </modules>
 
     <dependencies>
