@@ -1,6 +1,8 @@
 package de.bergwerklabs.framework.bedrock.gameserver;
 
-import de.bergwerklabs.framework.bedrock.gameserver.logging.ActionLogger;
+import de.bergwerklabs.framework.bedrock.api.Management;
+import de.bergwerklabs.framework.bedrock.api.history.RoundHistoryLogger;
+import de.bergwerklabs.framework.bedrock.gameserver.history.ActionLogger;
 import de.bergwerklabs.nick.api.NickApi;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,7 +14,6 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author Yannic Rieger
  */
 public class GameserverManagement extends JavaPlugin implements Management {
-
 
     private static GameserverManagement instance;
     private NickApi nickApi;
@@ -26,7 +27,7 @@ public class GameserverManagement extends JavaPlugin implements Management {
         return nickApi;
     }
 
-    public ActionLogger getActionLogger() {
+    public RoundHistoryLogger getHistoryLogger() {
         return actionLogger;
     }
 

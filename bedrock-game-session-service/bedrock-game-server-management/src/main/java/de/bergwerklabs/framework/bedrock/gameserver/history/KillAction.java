@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.bedrock.gameserver.logging;
+package de.bergwerklabs.framework.bedrock.gameserver.history;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;

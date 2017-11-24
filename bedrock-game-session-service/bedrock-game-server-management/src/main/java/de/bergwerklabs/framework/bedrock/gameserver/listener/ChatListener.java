@@ -2,8 +2,8 @@ package de.bergwerklabs.framework.bedrock.gameserver.listener;
 
 import de.bergwerklabs.chat.client.gameserver.LabsAsyncChatEvent;
 import de.bergwerklabs.framework.bedrock.gameserver.GameserverManagement;
-import de.bergwerklabs.framework.bedrock.gameserver.logging.ActionType;
-import de.bergwerklabs.framework.bedrock.gameserver.logging.ChatAction;
+import de.bergwerklabs.framework.bedrock.gameserver.history.ActionType;
+import de.bergwerklabs.framework.bedrock.gameserver.history.ChatAction;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

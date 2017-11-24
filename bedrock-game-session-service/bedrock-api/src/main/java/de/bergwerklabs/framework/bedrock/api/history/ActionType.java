@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.bedrock.gameserver.logging;
+package de.bergwerklabs.framework.bedrock.api.history;
 
 /**
  * Created by Yannic Rieger on 24.11.2017.

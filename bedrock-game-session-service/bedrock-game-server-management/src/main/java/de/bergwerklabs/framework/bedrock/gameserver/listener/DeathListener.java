@@ -1,9 +1,9 @@
 package de.bergwerklabs.framework.bedrock.gameserver.listener;
 
 import de.bergwerklabs.framework.bedrock.gameserver.GameserverManagement;
-import de.bergwerklabs.framework.bedrock.gameserver.logging.ActionType;
-import de.bergwerklabs.framework.bedrock.gameserver.logging.DeathAction;
-import de.bergwerklabs.framework.bedrock.gameserver.logging.KillAction;
+import de.bergwerklabs.framework.bedrock.gameserver.history.ActionType;
+import de.bergwerklabs.framework.bedrock.gameserver.history.DeathAction;
+import de.bergwerklabs.framework.bedrock.gameserver.history.KillAction;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

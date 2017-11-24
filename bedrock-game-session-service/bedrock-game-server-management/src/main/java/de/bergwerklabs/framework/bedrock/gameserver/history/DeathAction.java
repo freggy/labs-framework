@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.bedrock.gameserver.logging;
+package de.bergwerklabs.framework.bedrock.gameserver.history;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -10,16 +10,13 @@ import org.bukkit.entity.Player;
  *
  * @author Yannic Rieger
  */
-public class ChatAction extends Action {
+public class DeathAction extends Action {
 
-    private String message;
-    private Player player;
+    private Player died;
 
-
-    public ChatAction(ActionType type, long time, Player player, String message) {
+    public DeathAction(ActionType type, long time, Player died) {
         super(type, time);
-        this.message = message;
-        this.player = player;
+        this.died = died;
     }
 
     @Override
@@ -27,8 +24,7 @@ public class ChatAction extends Action {
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("type", new JsonPrimitive(this.type.name()));
         jsonObject.add("timestamp", new JsonPrimitive(this.timestamp));
-        jsonObject.add("message", new JsonPrimitive(message));
-        jsonObject.add("player", JsonUtil.playerToJson(this.player));
+        jsonObject.add("died", JsonUtil.playerToJson(this.died));
         return jsonObject;
     }
 }
