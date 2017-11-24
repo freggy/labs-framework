@@ -13,9 +13,9 @@ import org.bukkit.entity.Player;
  *
  * @author Yannic Rieger
  */
-public class JsonUtil {
+class JsonUtil {
 
-    public static JsonObject playerToJson(Player player) {
+    static JsonObject playerToJson(Player player) {
         NickApi api = GameserverManagement.getInstance().getNickApi();
         NickInfo info = api.getNickInfo(player);
         String name, nick = "null";
@@ -28,7 +28,7 @@ public class JsonUtil {
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("uuid", new JsonPrimitive(player.getUniqueId().toString()));
-        jsonObject.add("name-at-that-time", new JsonPrimitive(name));
+        jsonObject.add("name-at-that-timestamp", new JsonPrimitive(name));
         jsonObject.add("nickname", new JsonPrimitive(nick));
         return jsonObject;
     }

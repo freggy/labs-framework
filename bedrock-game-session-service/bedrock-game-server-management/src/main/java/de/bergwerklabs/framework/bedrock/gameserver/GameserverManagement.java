@@ -2,7 +2,7 @@ package de.bergwerklabs.framework.bedrock.gameserver;
 
 import de.bergwerklabs.framework.bedrock.gameserver.logging.ActionLogger;
 import de.bergwerklabs.nick.api.NickApi;
-import org.bukkit.event.EventHandler;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -11,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  * @author Yannic Rieger
  */
-public class GameserverManagement extends JavaPlugin {
+public class GameserverManagement extends JavaPlugin implements Management {
 
 
     private static GameserverManagement instance;
@@ -22,6 +22,14 @@ public class GameserverManagement extends JavaPlugin {
         return instance;
     }
 
+    public NickApi getNickApi() {
+        return nickApi;
+    }
+
+    public ActionLogger getActionLogger() {
+        return actionLogger;
+    }
+
     @Override
     public void onEnable() {
         // TODO register listeners
@@ -29,13 +37,6 @@ public class GameserverManagement extends JavaPlugin {
         // TODO: check if registerd.
         this.nickApi = this.getServer().getServicesManager().load(NickApi.class);
         this.actionLogger = new ActionLogger();
-    }
-
-    public NickApi getNickApi() {
-        return nickApi;
-    }
-
-    public ActionLogger getActionLogger() {
-        return actionLogger;
+        this.getServer().getServicesManager().register(Management.class, this, this, ServicePriority.Normal);
     }
 }

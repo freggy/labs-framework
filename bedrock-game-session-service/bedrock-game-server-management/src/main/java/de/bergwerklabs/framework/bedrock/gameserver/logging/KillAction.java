@@ -14,8 +14,8 @@ public class KillAction extends Action {
 
     private Player killer, killed;
 
-    public KillAction(ActionType type, Player killer, Player killed) {
-        super(type);
+    public KillAction(ActionType type, long time, Player killer, Player killed) {
+        super(type, time);
         this.killer = killer;
         this.killed = killed;
     }
@@ -24,6 +24,7 @@ public class KillAction extends Action {
     public JsonObject toJson() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("type", new JsonPrimitive(this.type.name()));
+        jsonObject.add("timestamp", new JsonPrimitive(this.timestamp));
         jsonObject.add("killer", JsonUtil.playerToJson(this.killer));
         jsonObject.add("killed", JsonUtil.playerToJson(this.killed));
         return jsonObject;

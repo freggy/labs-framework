@@ -14,10 +14,16 @@ public abstract class Action {
         return type;
     }
 
-    protected ActionType type;
+    public long getTimestamp() {
+        return timestamp;
+    }
 
-    Action(ActionType type) {
+    protected ActionType type;
+    protected long timestamp;
+
+    Action(ActionType type, long timestamp) {
         this.type = type;
+        this.timestamp = timestamp;
     }
 
     public abstract JsonObject toJson();

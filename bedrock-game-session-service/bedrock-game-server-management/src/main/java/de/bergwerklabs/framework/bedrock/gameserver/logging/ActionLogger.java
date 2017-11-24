@@ -2,7 +2,6 @@ package de.bergwerklabs.framework.bedrock.gameserver.logging;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +16,6 @@ public class ActionLogger {
 
     private Set<Action> actions = new HashSet<>();
 
-
     public void log(Action action) {
         this.actions.add(action);
     }
@@ -27,5 +25,4 @@ public class ActionLogger {
         this.actions.forEach(action -> jsonElements.add(action.toJson()));
         return jsonElements;
     }
-
 }

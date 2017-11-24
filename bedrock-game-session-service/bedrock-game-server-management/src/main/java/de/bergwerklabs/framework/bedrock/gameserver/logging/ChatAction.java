@@ -16,8 +16,8 @@ public class ChatAction extends Action {
     private Player player;
 
 
-    public ChatAction(ActionType type, Player player, String message) {
-        super(type);
+    public ChatAction(ActionType type, long time, Player player, String message) {
+        super(type, time);
         this.message = message;
         this.player = player;
     }
@@ -26,6 +26,7 @@ public class ChatAction extends Action {
     public JsonObject toJson() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("type", new JsonPrimitive(this.type.name()));
+        jsonObject.add("timestamp", new JsonPrimitive(this.timestamp));
         jsonObject.add("message", new JsonPrimitive(message));
         jsonObject.add("player", JsonUtil.playerToJson(this.player));
         return jsonObject;
