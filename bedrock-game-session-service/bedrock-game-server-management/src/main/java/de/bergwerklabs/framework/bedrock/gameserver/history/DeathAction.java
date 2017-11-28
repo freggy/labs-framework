@@ -2,6 +2,8 @@ package de.bergwerklabs.framework.bedrock.gameserver.history;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import de.bergwerklabs.framework.bedrock.api.history.Action;
+import de.bergwerklabs.framework.bedrock.api.history.ActionType;
 import org.bukkit.entity.Player;
 
 /**

@@ -1,0 +1,4 @@
+name: BungeeCommons
+main: de.bergwerklabs.framework.commons.bungee.BungeeCommons
+version: 1.0
+author: freggy

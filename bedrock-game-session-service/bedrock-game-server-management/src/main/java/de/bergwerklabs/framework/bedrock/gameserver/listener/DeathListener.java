@@ -1,7 +1,7 @@
 package de.bergwerklabs.framework.bedrock.gameserver.listener;
 
+import de.bergwerklabs.framework.bedrock.api.history.ActionType;
 import de.bergwerklabs.framework.bedrock.gameserver.GameserverManagement;
-import de.bergwerklabs.framework.bedrock.gameserver.history.ActionType;
 import de.bergwerklabs.framework.bedrock.gameserver.history.DeathAction;
 import de.bergwerklabs.framework.bedrock.gameserver.history.KillAction;
 import org.bukkit.entity.Entity;
@@ -28,13 +28,13 @@ public class DeathListener implements Listener {
             Player killedPlayer = (Player) killed;
             if (killedPlayer.getHealth() <= 0) {
                 Player playerKiller = (Player) killer;
-                GameserverManagement.getInstance().getActionLogger().log(new KillAction(ActionType.KILL, playerKiller, killedPlayer));
+                GameserverManagement.getInstance().getHistoryLogger().log(new KillAction(ActionType.KILL, System.currentTimeMillis(), playerKiller, killedPlayer));
             }
         }
     }
 
     @EventHandler
     private void onPlayerDeath(PlayerDeathEvent event) {
-        GameserverManagement.getInstance().getActionLogger().log(new DeathAction(ActionType.DEATH, event.getEntity()));
+        GameserverManagement.getInstance().getHistoryLogger().log(new DeathAction(ActionType.DEATH, System.currentTimeMillis(), event.getEntity()));
     }
 }

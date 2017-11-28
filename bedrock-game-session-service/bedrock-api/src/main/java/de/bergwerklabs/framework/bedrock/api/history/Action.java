@@ -21,7 +21,7 @@ public abstract class Action {
     protected ActionType type;
     protected long timestamp;
 
-    Action(ActionType type, long timestamp) {
+    public Action(ActionType type, long timestamp) {
         this.type = type;
         this.timestamp = timestamp;
     }
