@@ -23,7 +23,7 @@ class PermissionDao {
     private Map<UUID, RankInfo> rankInfoCache = new HashMap<>();
     private Database database;
 
-    PermissionDao(String hostname, String user, String password) throws SQLException {
+    PermissionDao(String user, String password) throws SQLException {
         this.database = new Database(DatabaseType.MySQL, "sql.bergwerklabs.de", "zPermissions", user, password);
     }
 

@@ -15,9 +15,9 @@ public class ZBridge {
 
     private PermissionDao dao;
 
-    public ZBridge(String hostname, String user, String password) {
+    public ZBridge(String user, String password) {
         try {
-            this.dao = new PermissionDao(hostname, user, password);
+            this.dao = new PermissionDao(user, password);
         }
         catch (SQLException e) {
             e.printStackTrace();
