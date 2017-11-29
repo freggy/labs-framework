@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.commons.spigot.general;
+package de.bergwerklabs.framework.commons.misc;
 
 import java.util.Objects;
 
