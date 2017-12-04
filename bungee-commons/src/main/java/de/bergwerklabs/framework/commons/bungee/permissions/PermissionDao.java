@@ -6,9 +6,7 @@ import de.bergwerklabs.framework.commons.database.tablebuilder.statement.Row;
 import de.bergwerklabs.framework.commons.database.tablebuilder.statement.Statement;
 import de.bergwerklabs.framework.commons.database.tablebuilder.statement.StatementResult;
 import de.bergwerklabs.framework.commons.misc.Tuple;
-import net.md_5.bungee.api.ChatColor;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.*;
 
@@ -36,15 +34,15 @@ class PermissionDao {
     }
 
     private int getGroupId(UUID player) {
-        Statement statement = this.database.prepareStatement("SELECT * FROM zPermissions.memberships WHERE member = ?");
+        Statement statement = this.database.prepareStatement("SELECT * FROM memberships WHERE member = ?");
         StatementResult result = statement.execute(player.toString().replace("-", ""));
         Row[] rows = result.getRows();
         if (rows.length < 1) return 1;
-        return rows[0].getInteger("group_id");
+        return rows[0].getLong("group_id").intValue();
     }
 
     private Tuple<String, String> getRankDisplayInfo(int groupId) {
-        Statement statement = this.database.prepareStatement("SELECT * FROM zPermissions.metadata WHERE entity_id = ? AND (name = ? OR name = ?)");
+        Statement statement = this.database.prepareStatement("SELECT * FROM metadata WHERE entity_id = ? AND (name = ? OR name = ?)");
         StatementResult result = statement.execute(groupId, "suffix", "prefix");
         Row[] rows = result.getRows();
         if (rows.length < 2) return new Tuple<>("Spieler", "§a");

@@ -22,6 +22,8 @@ public class BungeeParentCommand extends Command implements BungeeCommand {
         return this.usage;
     }
 
+    public Collection<BungeeCommand> getSubCommands() { return this.childCommandsMap.values(); }
+
     private Map<String, BungeeCommand> childCommandsMap = new HashMap<>();
     private String usage, description;
     private BungeeCommand defaultCommand;
