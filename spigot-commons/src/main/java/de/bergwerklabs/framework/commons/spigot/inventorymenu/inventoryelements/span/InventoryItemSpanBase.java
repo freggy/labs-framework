@@ -34,9 +34,6 @@ public abstract class InventoryItemSpanBase extends InventoryMenuElement {
         return endSlot;
     }
 
-    @Override
-    public boolean isUpdated() { return updated; }
-
     private int startSlot, endSlot;
     private InventoryItem item;
     private boolean updated = false;

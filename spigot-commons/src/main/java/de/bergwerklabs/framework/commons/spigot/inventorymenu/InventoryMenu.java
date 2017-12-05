@@ -161,11 +161,12 @@ public class InventoryMenu implements Listener, Versionable, Identifiable {
      * Only adds the updated ones.
      */
     private void addItemsToList() {
+        // TODO: rework
         // Add every item to list, in order to find the clicked item
-        if (!rects.isEmpty())        rects.stream().filter(rect -> rect.isUpdated()).forEach(rect -> this.allItems.addAll(rect.getItems()));
-        if (!rowSpans.isEmpty())     rowSpans.stream().filter(rowSpan -> rowSpan.isUpdated()).forEach(rownSpan -> this.allItems.addAll(rownSpan.getItems()));
-        if (!columnSpans.isEmpty())  columnSpans.stream().filter(columnSpan -> columnSpan.isUpdated()).forEach(columnSpan -> this.allItems.addAll(columnSpan.getItems()));
-        if (!items.isEmpty())        items.stream().filter(item -> item.isUpdated()).forEach(invItem -> Collections.addAll(items, invItem) );
+        //if (!rects.isEmpty())        rects.stream().filter(rect -> rect.isUpdated()).forEach(rect -> this.allItems.addAll(rect.getItems()));
+        //if (!rowSpans.isEmpty())     rowSpans.stream().filter(rowSpan -> rowSpan.isUpdated()).forEach(rownSpan -> this.allItems.addAll(rownSpan.getItems()));
+        //if (!columnSpans.isEmpty())  columnSpans.stream().filter(columnSpan -> columnSpan.isUpdated()).forEach(columnSpan -> this.allItems.addAll(columnSpan.getItems()));
+        //if (!items.isEmpty())        items.stream().filter(item -> item.isUpdated()).forEach(invItem -> Collections.addAll(items, invItem) );
     }
 
     /**

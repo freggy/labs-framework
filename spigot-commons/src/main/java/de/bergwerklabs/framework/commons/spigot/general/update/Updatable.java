@@ -11,10 +11,4 @@ public interface Updatable {
      * Method used for updating the object.
      */
     void update();
-
-    /**
-     * Returns a value that indicates whether or not the object has been updated.
-     */
-    boolean isUpdated();
-
 }

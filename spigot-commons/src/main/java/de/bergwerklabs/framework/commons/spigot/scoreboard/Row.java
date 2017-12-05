@@ -27,11 +27,6 @@ public class Row implements Comparable<Row>, Updatable {
         return index;
     }
 
-    @Override
-    public boolean isUpdated() {
-        return updated;
-    }
-
     /**
      * Gets the score.
      */
