@@ -47,7 +47,7 @@ public class FancyNameGenerator {
     public static String generate(long seed) {
         tryInitialize();
 
-        Random random = new Random(seed);
+        Random random = new Random(Math.abs(seed));
 
         String[] articles = NOUNS.keySet().toArray(new String[0]);
         String article = articles[random.nextInt(articles.length)];
