@@ -19,7 +19,7 @@ public class FancyNameGenerator {
     private static final Map<String, List<String>> NOUNS = new LinkedHashMap<>();
 
     private static void tryInitialize() {
-        if (!initialized) tryInitialize();
+        if (initialized) return;
         initialized = true;
 
         ADJECTIVES.clear();
