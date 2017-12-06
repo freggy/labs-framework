@@ -1,6 +1,7 @@
 package de.bergwerklabs.framework.commons.spigot.location;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import de.bergwerklabs.framework.commons.math.SQRT;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
@@ -20,7 +21,11 @@ public class LocationUtil {
      * @return Location created from JSON.
      */
     public static Location locationFromJson(JsonObject json) {
-        // TODO: check if below parameters are present
+        if (!json.has("x"))     throw new IllegalStateException("Parameter x is not present");
+        if (!json.has("y"))     throw new IllegalStateException("Parameter y is not present");
+        if (!json.has("z"))     throw new IllegalStateException("Parameter z is not present");
+        if (!json.has("world")) throw new IllegalStateException("Parameter world is not present");
+
         Double x = json.get("x").getAsDouble();
         Double y = json.get("y").getAsDouble();
         Double z = json.get("z").getAsDouble();
@@ -41,12 +46,46 @@ public class LocationUtil {
     }
 
     /**
+     *
+     * @param location
+     * @return
+     */
+    public static JsonObject locationToJson(Location location) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.add("x",  new JsonPrimitive(location.getX()));
+        jsonObject.add("y",  new JsonPrimitive(location.getY()));
+        jsonObject.add("z",  new JsonPrimitive(location.getZ()));
+        jsonObject.add("world", new JsonPrimitive(location.getWorld().getName()));
+        jsonObject.add("pitch",  new JsonPrimitive(location.getPitch()));
+        jsonObject.add("yaw",  new JsonPrimitive(location.getYaw()));
+        jsonObject.add("direction", vectorToJson(location.getDirection()));
+        return jsonObject;
+    }
+
+    /**
+     *
+     * @param vector
+     * @return
+     */
+    public static JsonObject vectorToJson(Vector vector) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.add("x",  new JsonPrimitive(vector.getX()));
+        jsonObject.add("y",  new JsonPrimitive(vector.getY()));
+        jsonObject.add("z",  new JsonPrimitive(vector.getZ()));
+        return jsonObject;
+    }
+
+
+    /**
      * Creates a vector from JSON
      *
      * @param json JsonObject representing the vector.
      * @return vector created from JSON.
      */
     public static Vector vectorFromJson(JsonObject json) {
+        if (!json.has("x")) throw new IllegalStateException("Parameter x is not present");
+        if (!json.has("y")) throw new IllegalStateException("Parameter y is not present");
+        if (!json.has("z")) throw new IllegalStateException("Parameter z is not present");
         return new Vector(json.get("x").getAsDouble(), json.get("y").getAsDouble(), json.get("z").getAsDouble());
     }
 

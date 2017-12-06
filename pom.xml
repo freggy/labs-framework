@@ -15,6 +15,7 @@
         <module>schematic-service</module>
         <module>chat-commons</module>
         <module>bedrock-game-session-service</module>
+        <module>bungee-commons</module>
     </modules>
 
     <distributionManagement>

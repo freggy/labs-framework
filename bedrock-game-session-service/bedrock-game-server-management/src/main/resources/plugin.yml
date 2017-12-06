@@ -1,0 +1,5 @@
+name: BedrockGameserverManagement
+author: freggy
+version: 1.0
+main: de.bergwerklabs.framework.bedrock.gameserver.GameserverManagement
+depend: [SpigotCommons]

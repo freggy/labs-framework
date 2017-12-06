@@ -1,5 +1,6 @@
 package de.bergwerklabs.framework.commons.spigot.command.help;
 
+import com.google.common.collect.Sets;
 import de.bergwerklabs.commons.spigot.chat.messenger.PluginMessenger;
 import org.bukkit.entity.Player;
 
@@ -16,13 +17,13 @@ public class CommandHelpDisplay {
 
     private static final PluginMessenger MESSENGER = new PluginMessenger("Help");
 
-    private List<HelpEntry> commands;
+    private Set<HelpEntry> commands;
 
     /**
      * @param entries {@link HelpEntry}s that contain usage and description of a command.
      */
     public CommandHelpDisplay(HelpEntry... entries) {
-        commands = Arrays.asList(entries);
+        commands = Sets.newHashSet(entries);
     }
 
     /**
