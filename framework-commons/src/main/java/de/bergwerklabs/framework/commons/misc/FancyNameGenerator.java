@@ -25,7 +25,7 @@ public class FancyNameGenerator {
         ADJECTIVES.clear();
         NOUNS.clear();
 
-        InputStream nounStream = FancyNameGenerator.class.getClassLoader().getResourceAsStream("fancy-name-generator/nouns.json");
+        InputStream nounStream = FancyNameGenerator.class.getResourceAsStream("/fancy-name-generator/nouns.json");
         JsonObject nounData = ((JsonElement) GSON.fromJson(new JsonReader(new InputStreamReader(nounStream)), JsonElement.class)).getAsJsonObject();
 
         nounData.entrySet().forEach(entry -> {
@@ -36,7 +36,7 @@ public class FancyNameGenerator {
             NOUNS.put(entry.getKey(), nouns);
         });
 
-        InputStream adjectiveStream = FancyNameGenerator.class.getClassLoader().getResourceAsStream("fancy-name-generator/adjectives.json");
+        InputStream adjectiveStream = FancyNameGenerator.class.getResourceAsStream("/fancy-name-generator/adjectives.json");
         JsonArray adjectiveData = ((JsonElement) GSON.fromJson(new JsonReader(new InputStreamReader(adjectiveStream)), JsonElement.class)).getAsJsonArray();
 
         for (JsonElement element : adjectiveData) {
