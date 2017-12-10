@@ -2,7 +2,6 @@ package de.bergwerklabs.framework.commons.bungee.permissions;
 
 import net.md_5.bungee.api.ChatColor;
 
-import java.sql.SQLException;
 import java.util.UUID;
 
 /**
@@ -16,12 +15,7 @@ public class ZBridge {
     private PermissionDao dao;
 
     public ZBridge(String user, String password) {
-        try {
-            this.dao = new PermissionDao(user, password);
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
+        this.dao = new PermissionDao(user, password);
     }
 
     public String getRankName(UUID player) {
