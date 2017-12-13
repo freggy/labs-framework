@@ -1,6 +1,5 @@
 package de.bergwerklabs.framework.commons.bungee.command;
 
-import com.google.common.collect.Sets;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 
@@ -38,17 +37,15 @@ public class BungeeParentCommand extends Command implements BungeeCommand {
 
     public void execute(CommandSender commandSender, String[] args) {
         List<String> params = Arrays.asList(args);
-        String nextCommand = args[0];
-        String[] nextArgs = Arrays.copyOfRange(args, params.indexOf(nextCommand) + 1, args.length);
 
-        if (nextCommand.equalsIgnoreCase(this.getName()) && this.defaultCommand != null && nextArgs.length == 0) {
+        if (this.defaultCommand != null && args.length == 0) {
             this.defaultCommand.execute(commandSender, args);
         }
         else {
             this.childCommandsMap.keySet().stream()
                               .filter(key -> key.equalsIgnoreCase(args[0])).findFirst()
                               .ifPresent(key -> {
-                                  this.childCommandsMap.get(key).execute(commandSender, nextArgs);
+                                  this.childCommandsMap.get(key).execute(commandSender, Arrays.copyOfRange(args, params.indexOf(args[0]) + 1, args.length));
                               });
         }
     }

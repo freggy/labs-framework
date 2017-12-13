@@ -9,7 +9,6 @@ import de.bergwerklabs.framework.commons.database.tablebuilder.statement.Stateme
 import de.bergwerklabs.framework.commons.database.tablebuilder.statement.StatementResult;
 import de.bergwerklabs.framework.commons.misc.Tuple;
 
-import java.sql.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -21,14 +20,17 @@ import java.util.concurrent.TimeUnit;
  */
 class PermissionDao {
 
+    private Statement groupIdStatement, displayInfoStatement;
+
     private Cache<UUID, RankInfo> rankInfoCache = CacheBuilder.newBuilder()
                                                               .expireAfterAccess(5, TimeUnit.MINUTES)
                                                               .expireAfterWrite(5, TimeUnit.MINUTES)
                                                               .build();
-    private Database database;
 
     PermissionDao(String user, String password) {
-        this.database = new Database(DatabaseType.MySQL, "sql.bergwerklabs.de", "zPermissions", user, password);
+        Database database = new Database(DatabaseType.MySQL, "sql.bergwerklabs.de", "zPermissions", user, password);
+        this.groupIdStatement = database.prepareStatement("SELECT * FROM memberships WHERE member = ?");
+        this.displayInfoStatement = database.prepareStatement("SELECT * FROM metadata WHERE entity_id = ? AND (name = ? OR name = ?)");
     }
 
     RankInfo getRankInfo(UUID uuid) {
@@ -41,16 +43,14 @@ class PermissionDao {
     }
 
     private int getGroupId(UUID player) {
-        Statement statement = this.database.prepareStatement("SELECT * FROM memberships WHERE member = ?");
-        StatementResult result = statement.execute(player.toString().replace("-", ""));
+        StatementResult result = this.groupIdStatement.execute(player.toString().replace("-", ""));
         Row[] rows = result.getRows();
         if (rows.length < 1) return 1;
         return rows[0].getLong("group_id").intValue();
     }
 
     private Tuple<String, String> getRankDisplayInfo(int groupId) {
-        Statement statement = this.database.prepareStatement("SELECT * FROM metadata WHERE entity_id = ? AND (name = ? OR name = ?)");
-        StatementResult result = statement.execute(groupId, "suffix", "prefix");
+        StatementResult result = this.displayInfoStatement.execute(groupId, "suffix", "prefix");
         Row[] rows = result.getRows();
         if (rows.length < 2) return new Tuple<>("Spieler", "§a");
 

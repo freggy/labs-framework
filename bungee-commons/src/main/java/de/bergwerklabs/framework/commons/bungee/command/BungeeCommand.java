@@ -2,6 +2,8 @@ package de.bergwerklabs.framework.commons.bungee.command;
 
 import net.md_5.bungee.api.CommandSender;
 
+import java.util.Set;
+
 /**
  * Created by Yannic Rieger on 28.11.2017.
  * <p>
