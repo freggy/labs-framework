@@ -1,63 +1,64 @@
 package de.bergwerklabs.framework.commons.misc;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
+import de.bergwerklabs.framework.commons.database.tablebuilder.Database;
+import de.bergwerklabs.framework.commons.database.tablebuilder.DatabaseType;
+import de.bergwerklabs.framework.commons.database.tablebuilder.statement.Row;
+import de.bergwerklabs.framework.commons.database.tablebuilder.statement.Statement;
+import de.bergwerklabs.framework.commons.database.tablebuilder.statement.StatementResult;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.*;
 
 public class FancyNameGenerator {
 
-    private static boolean initialized = false;
-    private static final Gson GSON = new Gson();
+    private static class Noun {
+        public final String noun;
+        public final String article;
+
+        Noun(String noun, String article) {
+            this.noun = noun;
+            this.article = article;
+        }
+    }
+
+    private static final Database DATABASE = new Database(DatabaseType.MySQL, "sql.bergwerklabs.de", "fancy_name_generator", "fancy-name-generator", "XCVPg5CyiNGKSSh1ZFG1lLW4Br8kg1Ci");
 
     private static final List<String> ADJECTIVES = new ArrayList<>();
-    private static final Map<String, List<String>> NOUNS = new LinkedHashMap<>();
+    private static final List<Noun> NOUNS = new ArrayList<>();
 
-    private static void tryInitialize() {
-        if (initialized) return;
-        initialized = true;
+    static {
+        Statement nounStatement = DATABASE.prepareStatement("SELECT noun, gender FROM nouns WHERE active = 1");
+        StatementResult nounResult = nounStatement.execute();
+        nounStatement.close();
 
-        ADJECTIVES.clear();
-        NOUNS.clear();
+        for (Row row : nounResult.getRows()) {
+            NOUNS.add(new Noun(
+                    row.getString("noun"),
+                    getArticle(row.getString("gender"))
+            ));
+        }
 
-        InputStream nounStream = FancyNameGenerator.class.getResourceAsStream("/fancy-name-generator/nouns.json");
-        JsonObject nounData = ((JsonElement) GSON.fromJson(new JsonReader(new InputStreamReader(nounStream)), JsonElement.class)).getAsJsonObject();
+        Statement adjectiveStatement = DATABASE.prepareStatement("SELECT adjective FROM adjectives WHERE active = 1");
+        StatementResult adjectiveResult = adjectiveStatement.execute();
+        adjectiveStatement.close();
 
-        nounData.entrySet().forEach(entry -> {
-            List<String> nouns = new ArrayList<>();
-            for (JsonElement element : entry.getValue().getAsJsonArray()) {
-                nouns.add(element.getAsString());
-            }
-            NOUNS.put(entry.getKey(), nouns);
-        });
+        for (Row row : adjectiveResult.getRows()) {
+            ADJECTIVES.add(row.getString("adjective"));
+        }
+    }
 
-        InputStream adjectiveStream = FancyNameGenerator.class.getResourceAsStream("/fancy-name-generator/adjectives.json");
-        JsonArray adjectiveData = ((JsonElement) GSON.fromJson(new JsonReader(new InputStreamReader(adjectiveStream)), JsonElement.class)).getAsJsonArray();
-
-        for (JsonElement element : adjectiveData) {
-            ADJECTIVES.add(element.getAsString());
+    private static String getArticle(String gender) {
+        switch (gender) {
+            case "MASCULINE": return "der";
+            case "FEMININE": return "die";
+            default: return "das";
         }
     }
 
     public static String generate(long seed) {
-        tryInitialize();
-
         Random random = new Random(Math.abs(seed));
-
-        String[] articles = NOUNS.keySet().toArray(new String[0]);
-        String article = articles[random.nextInt(articles.length)];
-
+        Noun noun = NOUNS.get(random.nextInt(NOUNS.size()));
         String adjective = ADJECTIVES.get(random.nextInt(ADJECTIVES.size()));
-
-        List<String> nouns = NOUNS.get(article);
-        String noun = nouns.get(random.nextInt(nouns.size()));
-
-        return (article + "_" + adjective + "_" + noun).toLowerCase();
+        return noun.article.toLowerCase() + "_" + adjective.toLowerCase() + "_" + noun.noun.toLowerCase();
     }
 
     public static String generate(String value) {
