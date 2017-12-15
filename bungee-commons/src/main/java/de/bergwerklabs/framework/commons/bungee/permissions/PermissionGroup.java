@@ -10,10 +10,10 @@ import java.util.Optional;
  * @author Yannic Rieger
  */
 public enum PermissionGroup {
-    ADMIN(9),
+    ADMIN(42),
     SR_DEV(37),
     SR_BULDER(7),
-    SR_MOD(6),
+    SR_MOD(5),
     DEV(8),
     BULDER(6),
     MOD(4),
