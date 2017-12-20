@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Yannic Rieger on 20.12.2017.
  * <p>
+ * Contains all valid game states.
  *
  * @author Yannic Rieger
  */
