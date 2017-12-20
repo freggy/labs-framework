@@ -1,5 +1,6 @@
 package de.bergwerklabs.framework.bedrock.gameserver.listener;
 
+import de.bergwerklabs.chat.client.gameserver.LabsAsyncChatEvent;
 import de.bergwerklabs.framework.bedrock.api.history.ActionType;
 import de.bergwerklabs.framework.bedrock.gameserver.GameserverManagement;
 import de.bergwerklabs.framework.bedrock.gameserver.history.ChatAction;

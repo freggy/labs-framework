@@ -75,7 +75,6 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
     private AtlantisLogger logger = AtlantisLogger.getLogger(getClass());
     private static BedrockSessionService instance;
     private SessionServiceConfig config;
-    private GameSession session;
     private AbstractLobby lobby;
     private PlayerFactory factory;
     private Ranking ranking;
@@ -119,24 +118,23 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
 
     @EventHandler
     private void onSessionInitialized(SessionInitializedEvent event) {
-        this.session = event.getSession();
+        GameSession session = event.getSession();
         this.logger.info("Session has been initialized.");
-        this.logger.info("Game is " + this.session.getGame().getName());
-        this.logger.info("Session ID is " + this.session.getId());
+        this.logger.info("Game is " + session.getGame().getName());
+        this.logger.info("Session ID is " + session.getId());
 
-        Bukkit.getServer().getServicesManager().register(GameSession.class, this.session, this, ServicePriority.Normal);
+        Bukkit.getServer().getServicesManager().register(GameSession.class, session, this, ServicePriority.Normal);
 
         Optional<AbstractLobby> lobbyOptional = ReflectionUtil.getLobbyInstance(this.config.getLobbyClass(),
                                                                                 this.config.getWaitingDuration(),
                                                                                 this.config.getMaxPlayers(),
-                                                                                this.config.getMinPlayers(),
-                                                                                this.session);
+                                                                                this.config.getMinPlayers(), session);
         this.lobby = this.checkOptional(lobbyOptional);
 
         Bukkit.getServer().getPluginManager().registerEvents(this.lobby, this);
-        this.registerEvents(this.session.getGame().getPlayerRegistry());
+        this.registerEvents(session.getGame().getPlayerRegistry());
         GamestateManager.setGamestate(Gamestate.PREPARING);
-        this.session.prepare();
+        session.prepare();
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
