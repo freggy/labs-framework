@@ -3,6 +3,7 @@ package de.bergwerklabs.framework.bedrock.core.config;
 import de.bergwerklabs.atlantis.api.logging.AtlantisLogger;
 import org.bukkit.Location;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,7 +26,11 @@ public class SessionServiceConfig {
      * @param rankingSettings contains all ranking settings.
      * @param lobbySettings   contains all lobby settings
      */
-    SessionServiceConfig(Map<String, Boolean> options, Map<String, String> gameSettings, Map<String, Object> rankingSettings, Map<String, Integer> lobbySettings) {
+    SessionServiceConfig(Map<String, Boolean> options,
+                         Map<String, String> gameSettings,
+                         Map<String, Object> rankingSettings,
+                         Map<String, Integer> lobbySettings,
+                         Map<String, List<String>> configuredStatistics) {
         this.useAutoRespawn                  = options.get("use-auto-respawn");
         this.spectateOnDeath                 = options.get("spectate-on-death");
         this.incrementDeathsOnDeath          = options.get("increment-deaths-on-death");
@@ -44,6 +49,8 @@ public class SessionServiceConfig {
         this.minPlayers      = lobbySettings.get("min-players");
         this.waitingDuration = lobbySettings.get("waiting-duration");
 
+        this.configuredStatistics = configuredStatistics;
+
         this.logger.info("============= [Bedrock Session Config] =============");
         options.forEach((key, value) -> this.logger.info(key + ": " + value));
         gameSettings.forEach((key, value) -> this.logger.info(key + ": " + value));
@@ -57,6 +64,7 @@ public class SessionServiceConfig {
     private Location playerStatsLocation;
     private int maxPlayers, minPlayers, waitingDuration;
     private String gameDataCompund, playerFactoryClass, lobbyClass;
+    private Map<String, List<String>> configuredStatistics;
 
     /**
      * Gets a value indicating whether or not auto respawn is enabled.

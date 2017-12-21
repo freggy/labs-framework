@@ -6,6 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.Map;
+
 /**
  * Created by Yannic Rieger on 01.05.2017.
  * <p>
@@ -37,7 +39,7 @@ public class LabsPlayer {
     /**
      * Gets the {@link PlayerdataSet} for this player.
      */
-    public PlayerdataSet getDataSet() {
+    public Map<String, Statistic> getStatistics() {
         return dataSet;
     }
 
@@ -46,14 +48,14 @@ public class LabsPlayer {
      *
      * @param dataSet data set to be set.
      */
-    public void setDataSet(PlayerdataSet dataSet) {
+    public void setDataSet(Map<String, Statistic> dataSet) {
         this.dataSet = dataSet;
     }
 
     protected Player player;
     protected boolean isSpectator = false;
     protected boolean isFrozen = false;
-    protected PlayerdataSet dataSet;
+    protected Map<String, Statistic> dataSet;
 
     /**
      * @param player {@link Player} to be wrapped.

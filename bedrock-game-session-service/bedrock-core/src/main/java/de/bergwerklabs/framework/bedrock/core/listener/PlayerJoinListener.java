@@ -32,7 +32,6 @@ public class PlayerJoinListener extends LabsListener {
             Bukkit.getScheduler().runTaskAsynchronously(BedrockSessionService.getInstance(), () -> {
                 PlayerdataSet set = new PlayerdataSet(event.getPlayer().getUniqueId());
                 set.loadAndWait();
-                player.setDataSet(set);
                 BedrockSessionService.getInstance().getRanking().displayRankingToPlayer(player);
             });
         }

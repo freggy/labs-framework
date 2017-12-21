@@ -6,9 +6,7 @@ import de.bergwerklabs.framework.commons.spigot.location.LocationUtil;
 import org.bukkit.Location;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -37,6 +35,7 @@ public class SessionServiceDeserializer implements JsonDeserializer<SessionServi
         JsonObject ranking = obj.getAsJsonObject("ranking");
         Set<Location> topLocations = JsonUtil.jsonArrayToJsonObjectList(ranking.getAsJsonArray("top-locations"))
                                              .stream().map(LocationUtil::locationFromJson).collect(Collectors.toSet());
+
         Location playerStatsLocation = LocationUtil.locationFromJson(ranking.getAsJsonObject("player-location"));
 
         Map<String, Boolean> options = new HashMap<>();
@@ -59,8 +58,25 @@ public class SessionServiceDeserializer implements JsonDeserializer<SessionServi
         Map<String, Integer> lobbySettings = new HashMap<>();
         lobbySettings.put("max-players", obj.get("max-players").getAsInt());
         lobbySettings.put("min-players", obj.get("min-players").getAsInt());
-        lobbySettings.put("waiting-duration",obj.get("waiting-duration").getAsInt() );
+        lobbySettings.put("waiting-duration",obj.get("waiting-duration").getAsInt());
 
-        return new SessionServiceConfig(options, gameSettings, rankingSettings, lobbySettings);
+        Map<String, List<String>> configuredStats = this.retrieveConfiguredStats(obj.get("configured-statistics").getAsJsonArray());
+
+        return new SessionServiceConfig(options, gameSettings, rankingSettings, lobbySettings, configuredStats);
+    }
+
+    /**
+     *
+     * @param array
+     * @return
+     */
+    private Map<String, List<String>> retrieveConfiguredStats(JsonArray array) {
+        Map<String, List<String>> map = new HashMap<>();
+        JsonUtil.jsonArrayToJsonObjectList(array).stream().forEach(configured -> {
+            List<String> keys = new ArrayList<>();
+            configured.get("data-keys").getAsJsonArray().forEach(key -> keys.add(key.getAsString()));
+            map.put(configured.get("data-group").getAsString(), keys);
+        });
+        return map;
     }
 }
