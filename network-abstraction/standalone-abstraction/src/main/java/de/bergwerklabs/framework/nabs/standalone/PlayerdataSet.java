@@ -1,6 +1,6 @@
-package de.bergwerklabs.framework.nabs;
+package de.bergwerklabs.framework.nabs.standalone;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.UUID;
@@ -57,7 +57,6 @@ public interface PlayerdataSet {
      * locally since the last {@link PlayerdataSet#save()} call.
      * The last status will be overridden by this method.
      *
-     * @param overwrite whether local changes should be overridden.
      * @return the {@link Status} representing whether the request has been {@link Status#SUCCESSFUL} or not.
      */
     @NotNull default Status update() {

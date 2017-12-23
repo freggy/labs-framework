@@ -1,6 +1,6 @@
-package de.bergwerklabs.framework.fukkit;
+package de.bergwerklabs.framework.nabs.bukkit;
 
-import de.bergwerklabs.framework.fukkit.gamestate.GamestateManager;
+import de.bergwerklabs.framework.nabs.bukkit.gamestate.GamestateManager;
 
 /**
  * Created by Yannic Rieger on 21.12.2017.
@@ -10,7 +10,7 @@ import de.bergwerklabs.framework.fukkit.gamestate.GamestateManager;
  *
  * @author Yannic Rieger
  */
-public interface FukkitGameserverClient extends FukkitClient {
+public interface BukkitGameserverClient extends BukkitClient {
 
     /**
      * Gets the {@link GamestateManager}.

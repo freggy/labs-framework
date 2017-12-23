@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.fukkit.gamestate;
+package de.bergwerklabs.framework.nabs.bukkit.gamestate;
 
 import java.io.Serializable;
 

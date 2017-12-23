@@ -1,12 +1,11 @@
 package de.bergwerklabs.framework.bedrock.api;
 
-import de.bergwerklabs.atlantis.client.base.playerdata.PlayerdataSet;
+import de.bergwerklabs.framework.nabs.PlayerdataSet;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Map;
 
 /**
  * Created by Yannic Rieger on 01.05.2017.
@@ -39,23 +38,21 @@ public class LabsPlayer {
     /**
      * Gets the {@link PlayerdataSet} for this player.
      */
-    public Map<String, Statistic> getStatistics() {
-        return dataSet;
-    }
+    public PlayerdataSet getDataSet() { return this.dataSet; }
 
     /**
      * Sets the {@link PlayerdataSet} for this player.
      *
      * @param dataSet data set to be set.
      */
-    public void setDataSet(Map<String, Statistic> dataSet) {
+    public void setDataSet(PlayerdataSet dataSet) {
         this.dataSet = dataSet;
     }
 
     protected Player player;
     protected boolean isSpectator = false;
     protected boolean isFrozen = false;
-    protected Map<String, Statistic> dataSet;
+    protected PlayerdataSet dataSet;
 
     /**
      * @param player {@link Player} to be wrapped.

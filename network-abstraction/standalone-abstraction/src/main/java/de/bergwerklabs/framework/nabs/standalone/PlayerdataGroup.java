@@ -1,6 +1,6 @@
-package de.bergwerklabs.framework.nabs;
+package de.bergwerklabs.framework.nabs.standalone;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package de.bergwerklabs.framework.fukkit;
+package de.bergwerklabs.framework.nabs.bukkit;
 
-import de.bergwerklabs.framework.nabs.PlayerdataFactory;
+import de.bergwerklabs.framework.nabs.standalone.PlayerdataFactory;
 
 /**
  * Created by Yannic Rieger on 20.12.2017.
@@ -12,7 +12,7 @@ import de.bergwerklabs.framework.nabs.PlayerdataFactory;
  *
  * @author Yannic Rieger
  */
-public interface FukkitClient {
+public interface BukkitClient {
 
     /**
      * Gets the {@link PlayerdataFactory}.

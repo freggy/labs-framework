@@ -14,8 +14,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>fukkit</module>
-        <module>nabs</module>
+        <module>bukkit-abstraction</module>
+        <module>standalone-abstraction</module>
     </modules>
 
 </project>
