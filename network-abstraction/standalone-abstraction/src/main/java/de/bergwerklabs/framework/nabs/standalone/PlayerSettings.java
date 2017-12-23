@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.nabs;
+package de.bergwerklabs.framework.nabs.standalone;
 
 import org.jetbrains.annotations.NotNull;
 

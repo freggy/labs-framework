@@ -32,7 +32,7 @@ public class SessionServiceDeserializer implements JsonDeserializer<SessionServi
         String factoryClass = obj.get("player-factory-class").getAsString();
         String dataCompount = obj.get("game-data-compound").getAsString();
 
-        JsonObject ranking = obj.getAsJsonObject("ranking");
+        JsonObject ranking         = obj.getAsJsonObject("ranking");
         Set<Location> topLocations = JsonUtil.jsonArrayToJsonObjectList(ranking.getAsJsonArray("top-locations"))
                                              .stream().map(LocationUtil::locationFromJson).collect(Collectors.toSet());
 
@@ -60,23 +60,6 @@ public class SessionServiceDeserializer implements JsonDeserializer<SessionServi
         lobbySettings.put("min-players", obj.get("min-players").getAsInt());
         lobbySettings.put("waiting-duration",obj.get("waiting-duration").getAsInt());
 
-        Map<String, List<String>> configuredStats = this.retrieveConfiguredStats(obj.get("configured-statistics").getAsJsonArray());
-
-        return new SessionServiceConfig(options, gameSettings, rankingSettings, lobbySettings, configuredStats);
-    }
-
-    /**
-     *
-     * @param array
-     * @return
-     */
-    private Map<String, List<String>> retrieveConfiguredStats(JsonArray array) {
-        Map<String, List<String>> map = new HashMap<>();
-        JsonUtil.jsonArrayToJsonObjectList(array).stream().forEach(configured -> {
-            List<String> keys = new ArrayList<>();
-            configured.get("data-keys").getAsJsonArray().forEach(key -> keys.add(key.getAsString()));
-            map.put(configured.get("data-group").getAsString(), keys);
-        });
-        return map;
+        return new SessionServiceConfig(options, gameSettings, rankingSettings, lobbySettings);
     }
 }

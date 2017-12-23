@@ -1,5 +1,6 @@
-package de.bergwerklabs.framework.nabs;
+package de.bergwerklabs.framework.nabs.standalone;
 
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -19,5 +20,6 @@ import java.util.UUID;
  */
 public interface PlayerdataFactory {
 
-    @NotNull PlayerdataSet createInstance(@NotNull UUID uuid);
+    @Nullable PlayerdataSet createInstance(@NotNull UUID uuid);
+
 }
