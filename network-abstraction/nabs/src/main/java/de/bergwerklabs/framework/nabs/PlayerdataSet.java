@@ -1,8 +1,9 @@
 package de.bergwerklabs.framework.nabs;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -48,20 +49,16 @@ public interface PlayerdataSet {
      * {@code overwrite} is {@code true}. The last status will be overridden by this method.
      *
      * @param overwrite whether local changes should be overridden.
-     * @return the {@link Status} representing whether the request has been {@link Status#SUCCESSFUL} or not.
      */
-    @NotNull Status update(boolean overwrite);
+    void update(boolean overwrite);
 
     /**
      * Pulls all entries for the given player asynchronously and replaces every entry which has been modified
      * locally since the last {@link PlayerdataSet#save()} call.
      * The last status will be overridden by this method.
-     *
-     * @param overwrite whether local changes should be overridden.
-     * @return the {@link Status} representing whether the request has been {@link Status#SUCCESSFUL} or not.
      */
-    @NotNull default Status update() {
-        return update(false);
+    default void update() {
+        update(false);
     }
 
     /**
@@ -113,7 +110,7 @@ public interface PlayerdataSet {
      *
      * @return the defined group keys
      */
-    @NotNull List<String> getDefinedGroups();
+    @NotNull Set<String> getDefinedGroups();
 
     /**
      * Returns whether a group key has a assigned group.

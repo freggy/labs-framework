@@ -1,8 +1,9 @@
 package de.bergwerklabs.framework.nabs;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Contains all key-value pairs for one of many groups in a {@link PlayerdataSet}.
@@ -115,6 +116,25 @@ public interface PlayerdataGroup {
     }
 
     /**
+     * Returns the value as {@link Long} if possible. If the value is {@code null}, the {@code defaultValue} will be returned.
+     *
+     * @param key the key to get the value for
+     * @param defaultValue the value to return if there is no value set for the given key
+     * @return the value or the {@code defaultValue}
+     */
+    Long getLong(String key, Long defaultValue);
+
+    /**
+     * Returns the value as {@link Long} if possible.
+     *
+     * @param key the key to get the value for
+     * @return the value or {@code null} if no value is set
+     */
+    default Long getLong(String key) {
+        return getLong(key, null);
+    }
+
+    /**
      * Returns the value as {@link Short} if possible. If the value is {@code null}, the {@code defaultValue} will be returned.
      *
      * @param key the key to get the value for
@@ -157,7 +177,7 @@ public interface PlayerdataGroup {
      *
      * @return the defined keys
      */
-    @NotNull List<String> getDefinedKeys();
+    @NotNull Set<String> getDefinedKeys();
 
     /**
      * Returns whether the given key has a value set.
@@ -174,5 +194,5 @@ public interface PlayerdataGroup {
      *
      * @return the modified keys
      */
-    @NotNull List<String> getModifiedKeys();
+    @NotNull Set<String> getModifiedKeys();
 }

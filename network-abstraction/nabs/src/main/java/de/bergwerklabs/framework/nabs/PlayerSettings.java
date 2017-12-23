@@ -1,6 +1,6 @@
 package de.bergwerklabs.framework.nabs;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 import java.util.stream.IntStream;
@@ -34,7 +34,7 @@ public interface PlayerSettings {
         // </editor-fold>
 
         // Initialization for bit shifter values
-        static final Integer[] values = new Integer[63];
+        public static final Integer[] values = new Integer[63];
 
         static {
             IntStream.range(0, 63).forEach(i -> values[i] = i);
@@ -46,6 +46,8 @@ public interface PlayerSettings {
     void set(int flag, boolean set);
 
     void save();
+
+    void update();
 
     @NotNull UUID getTarget();
 }
