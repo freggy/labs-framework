@@ -1,6 +1,6 @@
 package de.bergwerklabs.framework.bedrock.api;
 
-import de.bergwerklabs.framework.nabs.PlayerdataSet;
+import de.bergwerklabs.framework.nabs.standalone.PlayerdataSet;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
