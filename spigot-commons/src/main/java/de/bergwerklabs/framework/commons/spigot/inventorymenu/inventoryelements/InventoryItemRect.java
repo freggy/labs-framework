@@ -83,6 +83,10 @@ public class InventoryItemRect extends InventoryMenuElement {
         this.updated = true;
     }
 
+    public boolean isUpdated() {
+        return updated;
+    }
+
     /**
      * Renders the inner and the outer item.
      * @param inventory org.bukkit.inventory.Inventory

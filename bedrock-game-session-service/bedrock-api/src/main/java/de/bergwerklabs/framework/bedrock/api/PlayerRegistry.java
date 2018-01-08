@@ -28,6 +28,26 @@ public class PlayerRegistry<T extends LabsPlayer> {
     private Map<UUID, T> players    = new HashMap<>();
     private Map<UUID, T> spectators = new HashMap<>();
 
+
+    /**
+     * Retrieves a player from the map. Entry can be null if they left the game or is spectating.
+     *
+     * @param uuid {@link UUID} of the player.
+     */
+    public T getPlayer(UUID uuid) {
+        return this.players.get(uuid);
+    }
+
+    /**
+     * Retrieves a spectator from the map. Entry can be null if they left the game or is playing.
+     *
+     * @param uuid {@link UUID} of the player.
+     */
+    public T getSpectator(UUID uuid) {
+        return this.spectators.get(uuid);
+    }
+
+
     /**
      * Registers a spectator.
      *

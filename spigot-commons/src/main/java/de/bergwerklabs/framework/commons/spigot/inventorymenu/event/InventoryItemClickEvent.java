@@ -1,8 +1,9 @@
-package de.bergwerklabs.framework.commons.spigot.inventorymenu;
+package de.bergwerklabs.framework.commons.spigot.inventorymenu.event;
 
+import de.bergwerklabs.framework.commons.spigot.inventorymenu.InventoryItem;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Yannic Rieger on 03.05.2017.
@@ -14,7 +15,7 @@ public class InventoryItemClickEvent {
     /**
      *
      */
-    public List<Object> getParameter() {
+    public Set<String> getParameter() {
         return parameter;
     }
 
@@ -32,7 +33,7 @@ public class InventoryItemClickEvent {
         return event;
     }
 
-    private List<Object> parameter;
+    private Set<String> parameter;
     private InventoryItem item;
     private InventoryClickEvent event;
 
@@ -41,7 +42,7 @@ public class InventoryItemClickEvent {
      * @param item
      * @param event
      */
-    public InventoryItemClickEvent(List<Object> parameter, InventoryItem item, InventoryClickEvent event) {
+    public InventoryItemClickEvent(Set<String> parameter, InventoryItem item, InventoryClickEvent event) {
         this.parameter = parameter;
         this.item = item;
         this.event = event;

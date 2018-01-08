@@ -2,8 +2,9 @@ package de.bergwerklabs.framework.commons.spigot.inventorymenu.version.V1_0;
 
 import com.google.gson.JsonObject;
 import de.bergwerklabs.framework.commons.spigot.general.LabsController;
-import de.bergwerklabs.framework.commons.spigot.general.method.LabsMethod;
-import de.bergwerklabs.framework.commons.spigot.general.method.UpdateMethod;
+import de.bergwerklabs.framework.commons.spigot.inventorymenu.method.OnClickMethod;
+import de.bergwerklabs.framework.commons.spigot.inventorymenu.method.OnPreprocessMethod;
+import de.bergwerklabs.framework.commons.spigot.inventorymenu.method.UpdateMethod;
 import de.bergwerklabs.framework.commons.spigot.inventorymenu.InventoryItem;
 import de.bergwerklabs.framework.commons.spigot.inventorymenu.InventoryMenu;
 import de.bergwerklabs.framework.commons.spigot.inventorymenu.inventoryelements.InventoryItemRect;
@@ -30,12 +31,16 @@ import java.util.ArrayList;
 public class InventoryMenuDeserializerV1_0 implements Deserializer<InventoryMenu> {
 
     private LabsController controller = null;
+    private OnPreprocessMethod onPreprocessMethod;
 
     @Override
     public InventoryMenu deserialize(JsonObject json) {
+        if (!json.has("class")) throw new IllegalStateException("No controller found.");
 
-        if (json.has("class"))
-            controller = VersionedJsonReflectionUtil.controllerFromJson(json);
+        controller = VersionedJsonReflectionUtil.controllerFromJson(json);
+
+        if (json.has("on-preprocess"))
+            this.onPreprocessMethod = OnPreprocessMethod.fromJson(json.get("on-preprocess").getAsJsonObject(), controller);
 
         ArrayList<InventoryItem>           items       = new ArrayList<>();
         ArrayList<InventoryItemRowSpan>    rowSpans    = new ArrayList<>();
@@ -59,7 +64,7 @@ public class InventoryMenuDeserializerV1_0 implements Deserializer<InventoryMenu
         if (json.has("items"))
             JsonUtil.jsonArrayToJsonObjectList(json.get("items").getAsJsonArray()).forEach(item -> items.add(this.createInventoryItemFromJson(item, controller, inventory, false)));
 
-        return new InventoryMenu(inventory, json.get("version").getAsString(), json.get("id").getAsString(), controller, items, rects, rowSpans, columnSpans);
+        return new InventoryMenu(inventory, json.get("version").getAsString(), json.get("id").getAsString(), controller, onPreprocessMethod, items, rects, rowSpans, columnSpans);
     }
 
     /**
@@ -100,12 +105,12 @@ public class InventoryMenuDeserializerV1_0 implements Deserializer<InventoryMenu
      */
     private InventoryItem createInventoryItemFromJson(JsonObject item, LabsController controller, Inventory inventory, boolean isChild) {
 
-        LabsMethod<Void> onClick = null;
+        OnClickMethod onClick = null;
         UpdateMethod update = null;
         ItemStack itemStack = null;
 
         if (item.has("on-click"))
-            onClick = LabsMethod.fromJson(item.get("on-click"), controller);
+            onClick = OnClickMethod.fromJson(item.get("on-click").getAsJsonObject(), controller);
 
         if (item.has("update"))
             update = UpdateMethod.fromJson(item.get("update"), controller);

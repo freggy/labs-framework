@@ -1,7 +1,6 @@
 package de.bergwerklabs.framework.commons.spigot.scoreboard;
 
-import de.bergwerklabs.framework.commons.spigot.general.method.UpdateMethod;
-import de.bergwerklabs.framework.commons.spigot.general.update.TaskManager;
+import de.bergwerklabs.framework.commons.spigot.inventorymenu.method.UpdateMethod;
 import de.bergwerklabs.framework.commons.spigot.general.update.Updatable;
 import org.bukkit.scoreboard.Score;
 
@@ -121,6 +120,7 @@ public class Row implements Comparable<Row>, Updatable {
 
     @Override
     public void update() {
+        /*
         try {
             Row updateRow = updateMethod.invoke();
             this.index = updateRow.getIndex();
@@ -130,6 +130,10 @@ public class Row implements Comparable<Row>, Updatable {
         catch (Exception e) {
             e.printStackTrace();
             this.updated = false;
-        }
+        } */
+    }
+
+    public boolean isUpdated() {
+        return false;
     }
 }

@@ -55,7 +55,12 @@ public abstract class InventoryItemSpanBase extends InventoryMenuElement {
 
     @Override
     public void update() {
-        this.items.forEach(item -> item.update());
+        this.items.forEach(InventoryItem::update);
+        this.updated = true;
+    }
+
+    public boolean isUpdated() {
+        return updated;
     }
 
     protected void placeItem(int slot) {

@@ -2,7 +2,7 @@ package de.bergwerklabs.framework.commons.spigot.scoreboard.version.V1_0;
 
 import com.google.gson.JsonObject;
 import de.bergwerklabs.framework.commons.spigot.general.LabsController;
-import de.bergwerklabs.framework.commons.spigot.general.method.UpdateMethod;
+import de.bergwerklabs.framework.commons.spigot.inventorymenu.method.UpdateMethod;
 import de.bergwerklabs.framework.commons.spigot.json.JsonUtil;
 import de.bergwerklabs.framework.commons.spigot.json.version.Deserializer;
 import de.bergwerklabs.framework.commons.spigot.json.version.VersionedJsonReflectionUtil;

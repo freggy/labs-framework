@@ -1,4 +1,4 @@
-package de.bergwerklabs.framework.commons.spigot.general.method;
+package de.bergwerklabs.framework.commons.spigot.inventorymenu.method;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -13,7 +13,7 @@ import java.util.List;
  * <p> Method that gets called in a specific interval. </p>
  * @author Yannic Rieger
  */
-public class UpdateMethod<T> extends LabsMethod<T> {
+public class UpdateMethod<T>  {
 
     /**
      * Gets the interval in which the methods gets invoked.
@@ -30,7 +30,6 @@ public class UpdateMethod<T> extends LabsMethod<T> {
      * @param interval Interval in which the method gets called.
      */
     public UpdateMethod(String method, LabsController controller, int interval) {
-        super(method, controller);
         this.interval = interval;
     }
 
@@ -41,7 +40,6 @@ public class UpdateMethod<T> extends LabsMethod<T> {
      * @param params Parameters to be passed.
      */
     public UpdateMethod(String method, LabsController controller, int interval, List<Object> params) {
-        super(method, controller, params);
         this.interval = interval;
     }
 

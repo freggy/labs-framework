@@ -64,6 +64,7 @@ public class InventoryMenuFactory {
      * @param listToAdd List to add the InventoryMenu to (optional)
      */
     public static void readMenus(File rootDir, List<InventoryMenu> listToAdd) {
+
         File[] fList = rootDir.listFiles();
 
         for (File file : fList) {

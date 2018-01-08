@@ -1,8 +1,11 @@
 package de.bergwerklabs.framework.bedrock.api.session;
 
+import de.bergwerklabs.framework.bedrock.api.LabsPlayer;
 import de.bergwerklabs.framework.bedrock.api.event.session.SessionInitializedEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.UUID;
 
 /**
  * Created by Yannic Rieger on 11.11.2017.
@@ -23,6 +26,10 @@ public abstract class MinigameSession extends JavaPlugin implements GameSession 
     }
 
     protected static MinigameSession instance;
+
+    public <T extends LabsPlayer> T getPlayer(UUID uuid) {
+        return (T) this.getGame().getPlayerRegistry().getPlayer(uuid);
+    }
 
     @Override
     public void onEnable() {

@@ -1,7 +1,7 @@
 package de.bergwerklabs.framework.commons.spigot.inventorymenu;
 
-import de.bergwerklabs.framework.commons.spigot.general.method.LabsMethod;
-import de.bergwerklabs.framework.commons.spigot.general.method.UpdateMethod;
+import de.bergwerklabs.framework.commons.spigot.inventorymenu.method.OnClickMethod;
+import de.bergwerklabs.framework.commons.spigot.inventorymenu.method.UpdateMethod;
 import de.bergwerklabs.framework.commons.spigot.general.update.Updatable;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -33,7 +33,7 @@ public class InventoryItem implements Updatable {
     /**
      * Method to invoke when the item is clicked.
      */
-    public LabsMethod<Void> getOnClick() {
+    public OnClickMethod getOnClick() {
         return onClick;
     }
 
@@ -72,23 +72,24 @@ public class InventoryItem implements Updatable {
 
     private Integer slot;
     private UpdateMethod<ItemStack> update;
-    private  LabsMethod<Void> onClick;
+    private OnClickMethod onClick;
     private ItemStack itemStack;
     private Inventory associatedInventory;
-    private boolean updatable = false, isChild = false, updated = false;
+    private boolean updatable = false, isChild, updated = false;
 
     /**
      * @param slot      0 based index where the item will be placed in the inventory.
      * @param itemStack ItemStack representing the item.
      * @param onClick   Method that will be invoked when the item gets clicked on.
      */
-    public InventoryItem(Integer slot, ItemStack itemStack, LabsMethod<Void> onClick, UpdateMethod<ItemStack> update, Inventory associatedInventory, boolean isChild) {
+    public InventoryItem(Integer slot, ItemStack itemStack, OnClickMethod onClick, UpdateMethod<ItemStack> update, Inventory associatedInventory, boolean isChild) {
         this.slot                = slot;
         this.onClick             = onClick;
         this.update              = update;
         this.associatedInventory = associatedInventory;
         this.isChild             = isChild;
 
+        /*
         if (update != null) {
             try {
                 this.itemStack = update.invoke();
@@ -101,7 +102,7 @@ public class InventoryItem implements Updatable {
                 e.printStackTrace();
             }
         }
-        else this.itemStack = itemStack;
+        else this.itemStack = itemStack; */
     }
 
     /**
@@ -115,7 +116,7 @@ public class InventoryItem implements Updatable {
 
     @Override
     public void update() {
-
+        /*
         try {
             this.itemStack = this.update.invoke();
         }
@@ -123,7 +124,7 @@ public class InventoryItem implements Updatable {
             e.printStackTrace();
         }
 
-        this.place(this.slot);
+        this.place(this.slot); */
     }
 
     @Override
