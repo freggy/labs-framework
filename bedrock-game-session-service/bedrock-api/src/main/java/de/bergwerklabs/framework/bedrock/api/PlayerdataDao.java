@@ -30,7 +30,7 @@ public class PlayerdataDao {
         return playerdataCache.remove(uuid);
     }
 
-    private void setStatistic(UUID player, String key, Object value, String group) {
+    public void setStatistic(UUID player, String key, Object value, String group) {
         PlayerdataSet set = this.playerdataCache.get(player);
         if (set != null) {
             set.getGroup(group).set(key, value);
@@ -38,7 +38,7 @@ public class PlayerdataDao {
         }
     }
 
-    private Object getStatistic(UUID player, String key, Object defaultValue, String group) {
+    public Object getStatistic(UUID player, String key, Object defaultValue, String group) {
         PlayerdataSet set = this.playerdataCache.get(player);
         if (set != null) {
             return set.getGroup(group).getObject(key, defaultValue);
