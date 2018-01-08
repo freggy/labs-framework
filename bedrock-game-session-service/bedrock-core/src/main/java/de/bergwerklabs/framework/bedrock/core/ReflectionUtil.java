@@ -17,14 +17,14 @@ import java.util.Optional;
 public class ReflectionUtil {
 
     /**
-     * Gets the {@link PlayerFactory} that will be used for the plugin.
+     * Gets the factory that will be used for the plugin.
      *
      * @param clazz fully qualified name of the class. e.g  {@code java.lang.Object}.
-     * @return      {@link Optional} containing the {@link PlayerFactory} instance or just an empty one.
+     * @return      {@link Optional} containing the factory instance or just an empty one.
      */
-    static Optional<PlayerFactory> getFactoryClassInstance(String clazz) {
+    static <T> Optional<T> getFactoryClassInstance(String clazz) {
         try {
-            return Optional.of((PlayerFactory) Class.forName(clazz).newInstance());
+            return Optional.of((T)Class.forName(clazz).newInstance());
         }
         catch (Exception e) {
             e.printStackTrace();

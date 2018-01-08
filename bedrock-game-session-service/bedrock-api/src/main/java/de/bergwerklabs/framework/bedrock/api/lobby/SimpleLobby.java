@@ -1,5 +1,6 @@
 package de.bergwerklabs.framework.bedrock.api.lobby;
 
+import de.bergwerklabs.framework.bedrock.api.event.lobby.LobbyWaitingPhaseStopEvent;
 import de.bergwerklabs.framework.bedrock.api.session.GameSession;
 import de.bergwerklabs.framework.bedrock.api.event.lobby.LobbyWaitingPhaseStartEvent;
 import de.bergwerklabs.framework.commons.spigot.general.timer.LabsTimerStopCause;
@@ -65,6 +66,7 @@ public class SimpleLobby extends AbstractLobby {
     private void onTimerStopped(LabsTimerStopEvent event) {
         Bukkit.getOnlinePlayers().forEach(player -> player.setLevel(0));
         if (event.getCause() == LabsTimerStopCause.TIMES_UP) {
+            Bukkit.getPluginManager().callEvent(new LobbyWaitingPhaseStopEvent(this.session));
             // clear chat.
             for (int i = 0; i < 30; i++) Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(" "));
             TaskManager.stopTask(task);

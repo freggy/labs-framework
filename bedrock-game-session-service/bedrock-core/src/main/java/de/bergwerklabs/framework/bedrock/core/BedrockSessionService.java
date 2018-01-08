@@ -5,6 +5,7 @@ import de.bergwerklabs.atlantis.api.logging.AtlantisLogger;
 import de.bergwerklabs.atlantis.client.base.util.AtlantisPackageService;
 import de.bergwerklabs.atlantis.client.bukkit.GamestateManager;
 import de.bergwerklabs.atlantis.columbia.packages.gameserver.spigot.gamestate.Gamestate;
+import de.bergwerklabs.framework.bedrock.api.PlayerdataDao;
 import de.bergwerklabs.framework.bedrock.api.lobby.AbstractLobby;
 import de.bergwerklabs.framework.bedrock.api.session.GameSession;
 import de.bergwerklabs.framework.bedrock.api.PlayerFactory;
@@ -17,6 +18,7 @@ import de.bergwerklabs.framework.bedrock.core.listener.PlayerDeathListener;
 import de.bergwerklabs.framework.bedrock.core.listener.PlayerJoinListener;
 import de.bergwerklabs.framework.bedrock.core.listener.PlayerQuitListener;
 import de.bergwerklabs.framework.commons.spigot.general.update.TaskManager;
+import de.bergwerklabs.framework.nabs.standalone.PlayerdataFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -77,12 +79,14 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
     private SessionServiceConfig config;
     private AbstractLobby lobby;
     private PlayerFactory factory;
+    private PlayerdataFactory playerdataFactory;
     private Ranking ranking;
     private AtlantisPackageService service = new AtlantisPackageService();
     private boolean finishedPreparing = false;
 
     @Override
     public void onEnable() {
+        GamestateManager.setGamestate(Gamestate.PREPARING);
         TaskManager.startTimers(this);
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
         instance = this;
@@ -96,6 +100,7 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
         catch (FileNotFoundException e) {
             e.printStackTrace();
             this.logger.warn("No config file found. Stopping the server...");
+            GamestateManager.setGamestate(Gamestate.FAILED);
             this.getServer().shutdown();
         }
 
@@ -103,8 +108,10 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
                                    this.config.getPlayerStatsLocation(),
                                    this.config.getGameDataCompund());
 
-        Optional<PlayerFactory> factoryOptional = ReflectionUtil.getFactoryClassInstance(this.config.getPlayerFactoryClass());
-        this.factory = this.checkOptional(factoryOptional);
+        Optional<PlayerFactory> factoryOptional         = ReflectionUtil.getFactoryClassInstance(this.config.getPlayerFactoryClass());
+        Optional<PlayerdataFactory> dataFactoryOptional = ReflectionUtil.getFactoryClassInstance(this.config.getDataFactoryClass());
+        this.factory           = this.checkOptional(factoryOptional);
+        this.playerdataFactory = this.checkOptional(dataFactoryOptional);
 
         if (this.config.spectateOnDeath()) {
             Bukkit.getPluginManager().registerEvents(new Listener() {
@@ -123,6 +130,8 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
         this.logger.info("Game is " + session.getGame().getName());
         this.logger.info("Session ID is " + session.getId());
 
+        session.setPlayerdataDao(new PlayerdataDao(this.playerdataFactory));
+
         Bukkit.getServer().getServicesManager().register(GameSession.class, session, this, ServicePriority.Normal);
 
         Optional<AbstractLobby> lobbyOptional = ReflectionUtil.getLobbyInstance(this.config.getLobbyClass(),
@@ -132,8 +141,7 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
         this.lobby = this.checkOptional(lobbyOptional);
 
         Bukkit.getServer().getPluginManager().registerEvents(this.lobby, this);
-        this.registerEvents(session.getGame().getPlayerRegistry());
-        GamestateManager.setGamestate(Gamestate.PREPARING);
+        this.registerEvents(session.getGame().getPlayerRegistry(), session.getPlayerdataDao());
         session.prepare();
     }
 
@@ -156,22 +164,22 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
     private <T> T checkOptional(Optional<T> optional) {
         if (!optional.isPresent()) {
             this.getLogger().warning("No valid Class could be found. Shutting down server...");
+            GamestateManager.setGamestate(Gamestate.FAILED);
             this.getServer().shutdown();
             return null;
         }
         else return optional.get();
     }
 
-
     /**
      * Registers all events.
      *
      * @param playerRegistry registry where all player are registered.
      */
-    private void registerEvents(PlayerRegistry playerRegistry) {
+    private void registerEvents(PlayerRegistry playerRegistry, PlayerdataDao dao) {
         PluginManager manager = Bukkit.getPluginManager();
-        manager.registerEvents(new PlayerJoinListener(playerRegistry, this.config), this);
-        manager.registerEvents(new PlayerQuitListener(playerRegistry, this.config), this);
-        manager.registerEvents(new PlayerDeathListener(playerRegistry, this.config), this);
+        manager.registerEvents(new PlayerJoinListener(playerRegistry, dao, this.config), this);
+        manager.registerEvents(new PlayerQuitListener(playerRegistry, dao, this.config), this);
+        manager.registerEvents(new PlayerDeathListener(playerRegistry, dao, this.config), this);
     }
 }

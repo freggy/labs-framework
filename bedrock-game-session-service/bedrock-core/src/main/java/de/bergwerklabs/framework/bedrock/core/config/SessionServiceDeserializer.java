@@ -31,6 +31,7 @@ public class SessionServiceDeserializer implements JsonDeserializer<SessionServi
         String lobbyClass   = obj.get("lobby-class").getAsString();
         String factoryClass = obj.get("player-factory-class").getAsString();
         String dataCompount = obj.get("game-data-compound").getAsString();
+        String dataFactory  = obj.get("data-factory-class").getAsString();
 
         JsonObject ranking         = obj.getAsJsonObject("ranking");
         Set<Location> topLocations = JsonUtil.jsonArrayToJsonObjectList(ranking.getAsJsonArray("top-locations"))
@@ -50,6 +51,7 @@ public class SessionServiceDeserializer implements JsonDeserializer<SessionServi
         gameSettings.put("lobby-class", lobbyClass);
         gameSettings.put("player-factory-class", factoryClass);
         gameSettings.put("game-data-compound", dataCompount);
+        gameSettings.put("data-factory-class", dataFactory);
 
         Map<String, Object> rankingSettings = new HashMap<>();
         rankingSettings.put("top-locations", topLocations);

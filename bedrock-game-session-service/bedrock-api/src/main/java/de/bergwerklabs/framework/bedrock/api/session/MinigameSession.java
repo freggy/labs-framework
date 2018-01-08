@@ -1,6 +1,7 @@
 package de.bergwerklabs.framework.bedrock.api.session;
 
 import de.bergwerklabs.framework.bedrock.api.LabsPlayer;
+import de.bergwerklabs.framework.bedrock.api.PlayerdataDao;
 import de.bergwerklabs.framework.bedrock.api.event.session.SessionInitializedEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,15 +23,20 @@ public abstract class MinigameSession<T extends LabsPlayer> extends JavaPlugin i
         return GameId.create();
     }
 
-    public static MinigameSession getInstance() {
-        return instance;
+    @Override
+    public PlayerdataDao getPlayerdataDao() {
+        return this.dao;
     }
 
-    protected static MinigameSession instance;
+    @Override
+    public void setPlayerdataDao(PlayerdataDao dao) {
+        this.dao = dao;
+    }
+
+    private PlayerdataDao dao;
 
     @Override
     public void onEnable() {
-        instance = this;
         Bukkit.getServer().getPluginManager().callEvent(new SessionInitializedEvent(this));
     }
 }

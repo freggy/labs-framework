@@ -39,6 +39,7 @@ public class SessionServiceConfig {
 
         this.gameDataCompund    = gameSettings.get("game-data-compound");
         this.playerFactoryClass = gameSettings.get("player-factory-class");
+        this.dataFactoryClass   = gameSettings.get("data-factory-class");
         this.lobbyClass         = gameSettings.get("lobby-class");
 
         this.topThreeLocation    = (Set<Location>) rankingSettings.get("top-locations");
@@ -60,7 +61,7 @@ public class SessionServiceConfig {
     private Set<Location> topThreeLocation;
     private Location playerStatsLocation;
     private int maxPlayers, minPlayers, waitingDuration;
-    private String gameDataCompund, playerFactoryClass, lobbyClass;
+    private String gameDataCompund, playerFactoryClass, lobbyClass, dataFactoryClass;
 
     /**
      * Gets a value indicating whether or not auto respawn is enabled.
@@ -133,7 +134,7 @@ public class SessionServiceConfig {
     }
 
     /**
-     * Gets the FQCN of {@link de.bergwerklabs.framework.bedrock.api.PlayerFactory} for this session.
+     * Gets the FQCN of {@link de.bergwerklabs.framework.bedrock.api.lobby.AbstractLobby} for this session.
      */
     public String getLobbyClass() {
         return lobbyClass;
@@ -158,5 +159,12 @@ public class SessionServiceConfig {
      */
     public int getMaxPlayers() {
         return maxPlayers;
+    }
+
+    /**
+     * Gets the FQCN of {@link de.bergwerklabs.framework.nabs.standalone.PlayerdataFactory} for this session.
+     */
+    public String getDataFactoryClass() {
+        return dataFactoryClass;
     }
 }
