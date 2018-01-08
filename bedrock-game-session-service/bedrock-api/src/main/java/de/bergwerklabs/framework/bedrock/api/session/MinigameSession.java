@@ -5,6 +5,7 @@ import de.bergwerklabs.framework.bedrock.api.event.session.SessionInitializedEve
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Collection;
 import java.util.UUID;
 
 /**
@@ -14,7 +15,7 @@ import java.util.UUID;
  *
  * @author Yannic Rieger
  */
-public abstract class MinigameSession extends JavaPlugin implements GameSession {
+public abstract class MinigameSession<T extends LabsPlayer> extends JavaPlugin implements GameSession {
 
     @Override
     public String getId() {
@@ -26,10 +27,6 @@ public abstract class MinigameSession extends JavaPlugin implements GameSession 
     }
 
     protected static MinigameSession instance;
-
-    public <T extends LabsPlayer> T getPlayer(UUID uuid) {
-        return (T) this.getGame().getPlayerRegistry().getPlayer(uuid);
-    }
 
     @Override
     public void onEnable() {
