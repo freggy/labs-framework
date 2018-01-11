@@ -20,7 +20,7 @@ public class FancyNameGenerator {
         }
     }
 
-    private static final Database DATABASE = new Database(DatabaseType.MySQL, "sql.bergwerklabs.de", "fancy_name_generator", "fancy-name-generator", "XCVPg5CyiNGKSSh1ZFG1lLW4Br8kg1Ci");
+    private static final Database DATABASE = new Database(DatabaseType.MySQL, "sql.bergwerklabs.de", "fancy_name_generator", "framework", "UkLBdagt7bghgPCGuGhy");
 
     private static final List<String> ADJECTIVES = new ArrayList<>();
     private static final List<Noun> NOUNS = new ArrayList<>();
@@ -54,6 +54,12 @@ public class FancyNameGenerator {
         }
     }
 
+    /**
+     * Generates a unique string based on the given seed. <b>The first call may take some time as it loads data from the database synchronously.</b>
+     *
+     * @param seed the seed to generate the string from
+     * @return the generated fancy name
+     */
     public static String generate(long seed) {
         Random random = new Random(Math.abs(seed));
         Noun noun = NOUNS.get(random.nextInt(NOUNS.size()));
@@ -61,6 +67,12 @@ public class FancyNameGenerator {
         return noun.article.toLowerCase() + "_" + adjective.toLowerCase() + "_" + noun.noun.toLowerCase();
     }
 
+    /**
+     * Generates a unique string based on the given value. <b>The first call may take some time as it loads data from the database synchronously.</b>
+     *
+     * @param value the value to generate the string from
+     * @return the generated fancy name
+     */
     public static String generate(String value) {
         return generate(value.hashCode());
     }
