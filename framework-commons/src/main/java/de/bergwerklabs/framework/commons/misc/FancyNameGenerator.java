@@ -8,8 +8,13 @@ import de.bergwerklabs.framework.commons.database.tablebuilder.statement.Stateme
 
 import java.util.*;
 
+/**
+ * @deprecated Use {@link de.bergwerklabs.framework.commons.misc.instantiable.FancyNameGenerator}
+ */
+@Deprecated
 public class FancyNameGenerator {
 
+    @Deprecated
     private static class Noun {
         public final String noun;
         public final String article;
@@ -59,7 +64,10 @@ public class FancyNameGenerator {
      *
      * @param seed the seed to generate the string from
      * @return the generated fancy name
+     *
+     * @deprecated Use {@link de.bergwerklabs.framework.commons.misc.instantiable.FancyNameGenerator#generate(long)}
      */
+    @Deprecated
     public static String generate(long seed) {
         Random random = new Random(Math.abs(seed));
         Noun noun = NOUNS.get(random.nextInt(NOUNS.size()));
@@ -72,7 +80,10 @@ public class FancyNameGenerator {
      *
      * @param value the value to generate the string from
      * @return the generated fancy name
+     *
+     * @deprecated Use {@link de.bergwerklabs.framework.commons.misc.instantiable.FancyNameGenerator#generate(String)}
      */
+    @Deprecated
     public static String generate(String value) {
         return generate(value.hashCode());
     }
