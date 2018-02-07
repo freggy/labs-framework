@@ -104,7 +104,7 @@ public class WrapperPlayServerSpawnEntityLiving extends AbstractPacket {
     }
 
     /**
-     * Retrieve the type of mob.<
+     * Retrieve the type of mob.
      *
      * @return The current Type
      */

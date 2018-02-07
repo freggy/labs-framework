@@ -12,7 +12,6 @@ import java.util.Objects;
  * Created by Yannic Rieger on 12.04.2017.
  * <p> Class representing an item in a InventoryMenu. </p>
  * @author Yannic Rieger
- * @see <a href=https://hackmd.io/GbAsAYGNVBWBaAHOARgZnqAbIx8CGA7FPAIzCmT6y6wBMAJlkA==> Documentation </a>
  */
 public class InventoryItem implements Updatable {
 

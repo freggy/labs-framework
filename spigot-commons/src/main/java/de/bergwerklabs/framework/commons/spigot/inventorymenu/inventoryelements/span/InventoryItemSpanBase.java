@@ -9,7 +9,6 @@ import org.apache.commons.lang.Validate;
  * Created by Yannic Rieger on 12.04.2017.
  * <p> Base class for the item span gui elements. </p>
  * @author Yannic Rieger
- * @see <a href=https://hackmd.io/GbAsAYGNVBWBaAHOARgZnqAbIx8CGA7FPAIzCmT6y6wBMAJlkA==> Documentation </a>
  */
 public abstract class InventoryItemSpanBase extends InventoryMenuElement {
 

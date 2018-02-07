@@ -14,7 +14,7 @@ import de.bergwerklabs.framework.bedrock.api.LabsPlayer;
 public class AbstractGameEvent<T extends LabsPlayer> extends LabsEvent {
 
     /**
-     * Gets the {@link LabsGame <T>} that has been started.
+     * Gets the {@link LabsGame} that has been started.
      */
     public LabsGame<T> getGame() { return this.game; }
 

@@ -47,7 +47,7 @@ public class MessageUtil {
                 previousCode = false;
                 recentColorCode = "§" + c;
 
-                if(c == 'l' || c == 'L'){
+                if(c == 'l' || c == 'L') {
                     isBold = true;
                     continue;
                 }

@@ -328,6 +328,7 @@ public class WrapperPlayServerSpawnEntity extends AbstractPacket {
      * <p>
      * The content depends on the object type:
      * <table border="1" cellpadding="4">
+     * <caption>Table</caption>
      * <tr>
      * <th>Object Type:</th>
      * <th>Name:</th>
@@ -341,7 +342,7 @@ public class WrapperPlayServerSpawnEntity extends AbstractPacket {
      * <tr>
      * <td>FALLING_BLOCK</td>
      * <td>Block Type</td>
-     * <td>BlockID | (Metadata << 0xC)</td>
+     * <td>BlockID | (Metadata &lt;&lt; 0xC)</td>
      * </tr>
      * <tr>
      * <td>Projectiles</td>

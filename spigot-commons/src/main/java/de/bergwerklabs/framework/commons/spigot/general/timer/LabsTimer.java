@@ -28,9 +28,9 @@ public class LabsTimer {
     }
 
     /**
+     * Sets the time left for this timer.
      *
-     * @param timeLeft
-     * @return
+     * @param timeLeft time in seconds that is left.
      */
     public void setTimeLeft(int timeLeft) {
         this.timeLeft = timeLeft;

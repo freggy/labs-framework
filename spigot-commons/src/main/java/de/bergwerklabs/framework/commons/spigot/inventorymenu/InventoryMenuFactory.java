@@ -16,7 +16,6 @@ import java.util.List;
  * Created by Yannic Rieger on 12.04.2017.
  * <p> Factory used for creating InventoryMenu instances. </p>
  * @author Yannic Rieger
- * @see <a href=https://hackmd.io/GbAsAYGNVBWBaAHOARgZnqAbIx8CGA7FPAIzCmT6y6wBMAJlkA==> Documentation </a>
  */
 public class InventoryMenuFactory {
 

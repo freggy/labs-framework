@@ -31,7 +31,6 @@ public class ShopFactory {
      * Creats an NPC shop from JSON.
      * @param path Path where the file is located.
      * @return NPCShop created from JSON.
-     * @throws FileNotFoundException
      */
     public static NPCShop createSNPCShop(String path) {
         try {

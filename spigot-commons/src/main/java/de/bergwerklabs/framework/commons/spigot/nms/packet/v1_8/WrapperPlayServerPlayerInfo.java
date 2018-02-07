@@ -22,6 +22,7 @@ import java.util.List;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.EnumWrappers.PlayerInfoAction;
 import com.comphenix.protocol.wrappers.PlayerInfoData;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.AbstractPacket;
@@ -47,7 +48,12 @@ public class WrapperPlayServerPlayerInfo extends AbstractPacket {
     }
 
     public List<PlayerInfoData> getData() {
-        return handle.getPlayerInfoDataLists().read(0);
+        try {
+            return handle.getPlayerInfoDataLists().read(0);
+        }
+        catch (Exception ex) {
+            return null;
+        }
     }
 
     public void setData(List<PlayerInfoData> value) {

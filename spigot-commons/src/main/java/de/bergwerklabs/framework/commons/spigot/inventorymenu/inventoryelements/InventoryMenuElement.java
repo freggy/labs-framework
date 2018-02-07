@@ -10,7 +10,6 @@ import java.util.ArrayList;
  * Created by Yannic Rieger on 12.04.2017.
  * <p> Base class for every InventoryMenuElement </p>
  * @author Yannic Rieger
- * @see <a href=https://hackmd.io/GbAsAYGNVBWBaAHOARgZnqAbIx8CGA7FPAIzCmT6y6wBMAJlkA==> Documentation </a>
  */
 public abstract class InventoryMenuElement implements Updatable {
 

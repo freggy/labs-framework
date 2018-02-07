@@ -21,16 +21,16 @@ import java.io.IOException;
 public class SchematicService<T> {
 
     /**
-     * Sets the {@link MetadataDeserializer<T>}.
+     * Sets the {@link MetadataDeserializer}.
      *
-     * @param deserializer Class implementing {@link MetadataDeserializer<T>}.
+     * @param deserializer Class implementing {@link MetadataDeserializer}.
      */
     void setDeserializer(MetadataDeserializer<T> deserializer) { this.deserializer = deserializer; }
 
     /**
      * Sets the {@link MetadataSerializer<T>}.
      *
-     * @param serializer Class implementing {@link MetadataSerializer<T>}.
+     * @param serializer Class implementing {@link MetadataSerializer}.
      */
     void setSerializer(MetadataSerializer<T> serializer) { this.serializer = serializer; }
 
@@ -50,7 +50,7 @@ public class SchematicService<T> {
     }
 
     /**
-     * Creates a {@link LabsSchematic<T>} while deserializing metadata.
+     * Creates a {@link LabsSchematic} while deserializing metadata.
      *
      * @param file File representing a schematic.
      * @return     a {@link LabsSchematic} with metadata.
@@ -93,6 +93,7 @@ public class SchematicService<T> {
      * Writes metadata to the given schematic file.
      *
      * @param file     File write the metadata to.
+     * @param tag      {@link CompoundTag} to write to.
      * @param metadata Metadata to write.
      */
     public void saveSchematic(CompoundTag tag, File file, T metadata) {

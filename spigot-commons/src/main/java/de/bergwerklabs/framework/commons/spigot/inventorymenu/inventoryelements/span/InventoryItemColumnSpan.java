@@ -9,7 +9,6 @@ import org.bukkit.inventory.Inventory;
  * <p> Class which fills an inventory column by column from given start to end slot. </p>
  * <p> For more information see documentation. </p>
  * @author Yannic Rieger
- * @see <a href=https://hackmd.io/GbAsAYGNVBWBaAHOARgZnqAbIx8CGA7FPAIzCmT6y6wBMAJlkA==> Documentation </a>
  */
 public class InventoryItemColumnSpan extends InventoryItemSpanBase {
 

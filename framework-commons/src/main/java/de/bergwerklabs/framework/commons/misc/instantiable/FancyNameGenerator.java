@@ -8,14 +8,12 @@ import de.bergwerklabs.framework.commons.database.tablebuilder.statement.Stateme
 
 import java.io.*;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class FancyNameGenerator {
 
     private static class Noun implements Serializable {
+
         public final String noun;
         public final String article;
 
@@ -25,7 +23,12 @@ public class FancyNameGenerator {
         }
     }
 
-    private static final Database DATABASE = new Database(DatabaseType.MySQL, "sql.bergwerklabs.de", "fancy_name_generator", "framework", "UkLBdagt7bghgPCGuGhy");
+    private static final Database DATABASE = new Database(DatabaseType.MySQL,
+                                                          "sql.bergwerklabs.de",
+                                                          "fancy_name_generator",
+                                                          "framework",
+                                                          "UkLBdagt7bghgPCGuGhy"
+    );
 
     private static final File NOUNS_FILE = Paths.get("./nouns.json").toFile();
     private static final File ADJECTIVES_FILE = Paths.get("./adjectives.json").toFile();
@@ -43,21 +46,23 @@ public class FancyNameGenerator {
                     JsonObject obj = element.getAsJsonObject();
                     NOUNS.add(new Noun(obj.get("noun").getAsString(), obj.get("article").getAsString()));
                 }
-            } catch (FileNotFoundException e) {
+            }
+            catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-        } else {
+        }
+        else {
             Statement nounStatement = DATABASE.prepareStatement("SELECT noun, gender FROM nouns WHERE active = 1");
             StatementResult nounResult = nounStatement.execute();
             nounStatement.close();
 
-            Arrays.stream(nounResult.getRows()).map(row ->
-                    new Noun(row.getString("noun"), getArticle(row.getString("gender")))
-            ).forEach(NOUNS::add);
+            Arrays.stream(nounResult.getRows())
+                  .map(row -> new Noun(row.getString("noun"), getArticle(row.getString("gender")))).forEach(NOUNS::add);
 
             try (Writer writer = new FileWriter(NOUNS_FILE)) {
                 gson.toJson(NOUNS, writer);
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -68,21 +73,23 @@ public class FancyNameGenerator {
                 for (JsonElement element : array) {
                     ADJECTIVES.add(element.getAsString());
                 }
-            } catch (FileNotFoundException e) {
+            }
+            catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-        } else {
-            Statement adjectiveStatement = DATABASE.prepareStatement("SELECT adjective FROM adjectives WHERE active = 1");
+        }
+        else {
+            Statement adjectiveStatement = DATABASE
+                    .prepareStatement("SELECT adjective FROM adjectives WHERE active = 1");
             StatementResult adjectiveResult = adjectiveStatement.execute();
             adjectiveStatement.close();
 
-            Arrays.stream(adjectiveResult.getRows()).map(row ->
-                    row.getString("adjective")
-            ).forEach(ADJECTIVES::add);
+            Arrays.stream(adjectiveResult.getRows()).map(row -> row.getString("adjective")).forEach(ADJECTIVES::add);
 
             try (Writer writer = new FileWriter(ADJECTIVES_FILE)) {
                 gson.toJson(ADJECTIVES, writer);
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -90,9 +97,12 @@ public class FancyNameGenerator {
 
     private static String getArticle(String gender) {
         switch (gender) {
-            case "MASCULINE": return "der";
-            case "FEMININE": return "die";
-            default: return "das";
+            case "MASCULINE":
+                return "der";
+            case "FEMININE":
+                return "die";
+            default:
+                return "das";
         }
     }
 
@@ -100,6 +110,7 @@ public class FancyNameGenerator {
      * Generates a unique string based on the given seed. <b>The first call may take some time as it loads data from the database synchronously.</b>
      *
      * @param seed the seed to generate the string from
+     *
      * @return the generated fancy name
      */
     public String generate(long seed) {
@@ -113,6 +124,7 @@ public class FancyNameGenerator {
      * Generates a unique string based on the given value. <b>The first call may take some time as it loads data from the database synchronously.</b>
      *
      * @param value the value to generate the string from
+     *
      * @return the generated fancy name
      */
     public String generate(String value) {

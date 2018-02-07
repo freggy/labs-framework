@@ -15,9 +15,9 @@ public class SchematicServiceBuilder<T> {
     private SchematicService<T> service = new SchematicService<>();
 
     /**
-     * Sets the {@link MetadataSerializer<T>} used for serializing metadata.
+     * Sets the {@link MetadataSerializer} used for serializing metadata.
      *
-     * @param serializer Class implementing {@link MetadataSerializer<T>}.
+     * @param serializer Class implementing {@link MetadataSerializer}.
      * @return another {@code SchematicServiceBuilder}
      */
     public SchematicServiceBuilder setSerializer(MetadataSerializer<T> serializer) {
@@ -26,9 +26,9 @@ public class SchematicServiceBuilder<T> {
     }
 
     /**
-     * Sets the {@link MetadataDeserializer<T>} used for deserializing metadata.
+     * Sets the {@link MetadataDeserializer} used for deserializing metadata.
      *
-     * @param deserializer Class implementing {@link MetadataDeserializer<T>}.
+     * @param deserializer Class implementing {@link MetadataDeserializer}.
      * @return another {@code SchematicServiceBuilder}
      */
     public SchematicServiceBuilder setDeserializer(MetadataDeserializer<T> deserializer) {
@@ -37,7 +37,7 @@ public class SchematicServiceBuilder<T> {
     }
 
     /**
-     * Creates an instance of {@link SchematicService<T>}.
+     * Creates an instance of {@link SchematicService}.
      */
     public SchematicService<T> build() {
         return service;

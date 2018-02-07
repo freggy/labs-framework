@@ -9,7 +9,6 @@ import org.bukkit.inventory.Inventory;
  * <p> Class which fills an inventory row by row from specified start to end slot. </p>
  * <p> Form more information see documentation. </p>
  * @author Yannic Rieger
- * @see <a href=https://hackmd.io/GbAsAYGNVBWBaAHOARgZnqAbIx8CGA7FPAIzCmT6y6wBMAJlkA==> Documentation </a>
  */
 public class InventoryItemRowSpan extends InventoryItemSpanBase {
 

@@ -10,7 +10,6 @@ import org.bukkit.inventory.Inventory;
  * Created by Yannic Rieger on 12.04.2017.
  * <p> Rectangle class for InventoryMenus </p>
  * @author Yannic Rieger
- * @see <a href=https://hackmd.io/GbAsAYGNVBWBaAHOARgZnqAbIx8CGA7FPAIzCmT6y6wBMAJlkA==> Documentation </a>
  */
 public class InventoryItemRect extends InventoryMenuElement {
 

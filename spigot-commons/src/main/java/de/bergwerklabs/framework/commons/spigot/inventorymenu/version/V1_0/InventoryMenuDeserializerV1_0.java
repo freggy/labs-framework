@@ -26,7 +26,6 @@ import java.util.ArrayList;
  * Created by Yannic Rieger on 12.04.2017.
  * <p> Class for deserializing scheme version 1.0 </p>
  * @author Yannic Rieger
- * @see <a href=https://hackmd.io/GbAsAYGNVBWBaAHOARgZnqAbIx8CGA7FPAIzCmT6y6wBMAJlkA==> Documentation </a>
  */
 public class InventoryMenuDeserializerV1_0 implements Deserializer<InventoryMenu> {
 
