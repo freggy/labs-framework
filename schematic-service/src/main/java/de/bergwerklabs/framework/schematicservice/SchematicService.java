@@ -1,7 +1,9 @@
 package de.bergwerklabs.framework.schematicservice;
 
+import com.boydti.fawe.object.schematic.Schematic;
 import com.flowpowered.nbt.CompoundTag;
 import com.flowpowered.nbt.stream.NBTOutputStream;
+import com.google.common.base.Preconditions;
 import de.bergwerklabs.framework.schematicservice.metadata.MetadataDeserializer;
 import de.bergwerklabs.framework.schematicservice.metadata.MetadataSerializer;
 import org.bukkit.Location;
@@ -56,6 +58,8 @@ public class SchematicService<T> {
      * @return     a {@link LabsSchematic} with metadata.
      */
     public LabsSchematic<T> createSchematic(File file) {
+        Preconditions.checkNotNull(file);
+
         LabsSchematic<T> schematic = new LabsSchematic<>(file);
         CompoundTag tag = NbtUtil.readCompoundTag(file);
 
@@ -85,6 +89,7 @@ public class SchematicService<T> {
             metadataTag = new CompoundTag("Metadata", metadataTag.getValue());
 
         NbtUtil.writeTag(metadataTag, compoundTag);
+
         this.writeToFile(compoundTag, file);
     }
 

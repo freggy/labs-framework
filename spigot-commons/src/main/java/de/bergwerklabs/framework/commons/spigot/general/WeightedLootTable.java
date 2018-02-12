@@ -1,5 +1,6 @@
 package de.bergwerklabs.framework.commons.spigot.general;
 
+import java.security.SecureRandom;
 import java.util.NavigableMap;
 import java.util.Random;
 import java.util.TreeMap;
@@ -17,13 +18,13 @@ public class WeightedLootTable<T> {
     private double total = 0;
 
     public WeightedLootTable() {
-        this(new Random());
+        this(new SecureRandom());
     }
 
     /**
      * @param random Used for choosing randomly.
      */
-    public WeightedLootTable(Random random) {
+    public WeightedLootTable(SecureRandom random) {
         this.random = random;
     }
 
