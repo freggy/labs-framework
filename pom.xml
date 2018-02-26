@@ -17,6 +17,7 @@
         <module>bedrock-game-session-service</module>
         <module>bungee-commons</module>
         <module>network-abstraction</module>
+        <module>permission-bridge</module>
     </modules>
 
     <distributionManagement>

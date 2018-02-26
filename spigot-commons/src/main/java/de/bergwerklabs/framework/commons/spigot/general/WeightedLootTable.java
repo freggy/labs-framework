@@ -7,7 +7,8 @@ import java.util.TreeMap;
 
 /**
  * Created by Yannic Rieger on 22.06.2017.
- * <p> This class is used for picking items randomly based on their weight.
+ * <p>
+ * This class is used for picking items randomly based on their weight.
  *
  * @author Yannic Rieger
  */
@@ -44,6 +45,7 @@ public class WeightedLootTable<T> {
 
     /**
      * Gets randomly weight-based chosen entry.
+     *
      * @return randomly weight-based chosen entry.
      */
     public T next() {
