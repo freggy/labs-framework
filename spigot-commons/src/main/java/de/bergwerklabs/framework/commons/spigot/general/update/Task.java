@@ -96,7 +96,7 @@ public class Task {
      */
     public Task(Updatable updatable, long delay) {
         if (updatable == null) throw new IllegalArgumentException("The updatable cannot be null.");
-        if (delay < 0) throw new IllegalArgumentException("The waitMilliseconds cannot be smaller than zero.");
+        if (delay < 0) throw new IllegalArgumentException("The delay cannot be smaller than zero.");
 
         this.updatable = updatable;
         this.delay = delay;
@@ -111,7 +111,7 @@ public class Task {
      */
     public Task(Updatable updatable, long delay, long interval) {
         if (updatable == null) throw new IllegalArgumentException("The updatable cannot be null.");
-        if (delay < 0) throw new IllegalArgumentException("The waitMilliseconds cannot be smaller than zero.");
+        if (delay < 0) throw new IllegalArgumentException("The delay cannot be smaller than zero.");
         if (interval <= 0) throw new IllegalArgumentException("The interval cannot be smaller or equal to zero for repeating tasks.");
 
         this.updatable = updatable;
