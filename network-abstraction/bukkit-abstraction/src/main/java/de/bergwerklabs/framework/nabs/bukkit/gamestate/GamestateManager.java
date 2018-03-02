@@ -1,5 +1,7 @@
 package de.bergwerklabs.framework.nabs.bukkit.gamestate;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Created by Yannic Rieger on 20.12.2017.
  * <p>
@@ -19,6 +21,6 @@ public interface GamestateManager {
      *
      * @param state current state of the game.
      */
-    void setCurrentGamestate(Gamestate state);
+    void setCurrentGamestate(@NotNull Gamestate state);
 
 }

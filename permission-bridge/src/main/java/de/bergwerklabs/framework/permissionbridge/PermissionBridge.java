@@ -1,7 +1,9 @@
 package de.bergwerklabs.framework.permissionbridge;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -35,9 +37,43 @@ public interface PermissionBridge {
     String getGroupPrefix(@NotNull UUID uuid);
 
     /**
+     * Gets the group prefix.
+     *
+     * @param groupName Name of the group.
+     */
+    String getGroupPrefix(@NotNull String groupName);
+
+    /**
      * Gets the group suffix.
      *
      * @param uuid {@link UUID} of the player.
      */
     String getGroupSuffix(@NotNull UUID uuid);
+
+    /**
+     * Gets the group suffix.
+     *
+     * @param groupName Name of the group.
+     */
+    String getGroupSuffix(@NotNull String groupName);
+
+    /**
+     * Gets the name of primary group of a player.
+     *
+     * @param uuid players {@link UUID}.
+     */
+    String getPrimaryGroup(@NotNull UUID uuid);
+
+    /**
+     * Gets all the available groups.
+     */
+    Set<String> getGroups();
+
+    /**
+     * Retrieves the specified group metadata.
+     *
+     * @param group group where the metadata is contained in.
+     * @param key   Key of the metadata.
+     */
+    @Nullable String getGroupMetadata(@NotNull String group, @NotNull String key);
 }
