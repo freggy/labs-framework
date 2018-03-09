@@ -3,6 +3,7 @@ package de.bergwerklabs.framework.commons.database.tablebuilder.statement;
 import de.bergwerklabs.framework.commons.database.tablebuilder.column.ColumnType;
 import de.bergwerklabs.framework.commons.database.tablebuilder.exception.SQLQueryException;
 
+import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +16,7 @@ import java.util.Map;
 /**
  * Created by Benedikt on 30.07.2017.
  */
-public class Statement {
+public class Statement implements Closeable {
 
     private final Connection connection;
     private final PreparedStatement stmt;
@@ -114,6 +115,7 @@ public class Statement {
     /**
      * Closes the connection to the database as well as the prepared statement.
      */
+    @Override
     public void close() {
         try { stmt.close(); } catch (SQLException ignored) {}
         try { connection.close(); } catch (SQLException ignored) {}
