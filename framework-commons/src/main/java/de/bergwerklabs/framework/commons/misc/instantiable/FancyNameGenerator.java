@@ -128,6 +128,7 @@ public class FancyNameGenerator {
      * @return the generated fancy name
      */
     public String generate(String value) {
+        if (value == null) return "undefined";
         return generate(value.hashCode());
     }
 }

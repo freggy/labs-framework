@@ -85,6 +85,7 @@ public class FancyNameGenerator {
      */
     @Deprecated
     public static String generate(String value) {
+        if (value == null) return "undefined";
         return generate(value.hashCode());
     }
 }
