@@ -20,7 +20,7 @@ import org.bukkit.event.EventHandler;
  *
  * @author Yannic Rieger
  */
-public class SimpleLobby extends AbstractLobby {
+public abstract class SimpleLobby extends AbstractLobby {
 
     private boolean timerShortened = false;
     private Task task;

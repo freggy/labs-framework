@@ -14,6 +14,13 @@
 
     <packaging>jar</packaging>
 
+    <distributionManagement>
+        <repository>
+            <id>labs_nexus</id>
+            <url>http://devs.bergwerklabs.de:8081/repository/maven-snapshots/</url>
+        </repository>
+    </distributionManagement>
+
     <build>
         <extensions>
             <extension>

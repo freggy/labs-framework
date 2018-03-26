@@ -44,6 +44,9 @@ public abstract class AbstractLobby implements Listener {
         });
     }
 
+    public abstract void init();
+
+
     /**
      * Starts the waiting phase.
      */
