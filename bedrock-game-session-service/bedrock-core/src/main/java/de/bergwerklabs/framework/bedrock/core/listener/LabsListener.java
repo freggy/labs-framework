@@ -1,5 +1,6 @@
 package de.bergwerklabs.framework.bedrock.core.listener;
 
+import de.bergwerklabs.framework.bedrock.api.LabsPlayer;
 import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
 import de.bergwerklabs.framework.bedrock.api.PlayerdataDao;
 import de.bergwerklabs.framework.bedrock.core.config.SessionServiceConfig;
@@ -23,7 +24,7 @@ class LabsListener implements Listener {
      * @param playerRegistry registry where all players ares registered.
      * @param config         config of the current session.
      */
-    LabsListener(PlayerRegistry playerRegistry, PlayerdataDao dao, SessionServiceConfig config) {
+    LabsListener(PlayerRegistry<? extends LabsPlayer> playerRegistry, PlayerdataDao dao, SessionServiceConfig config) {
         this.playerRegistry = playerRegistry;
         this.dao = dao;
         this.config = config;

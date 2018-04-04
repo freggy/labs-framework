@@ -12,6 +12,13 @@
     <artifactId>bedrock-parent</artifactId>
     <packaging>pom</packaging>
 
+    <distributionManagement>
+        <repository>
+            <id>labs_nexus</id>
+            <url>http://devs.bergwerklabs.de:8081/repository/maven-snapshots/</url>
+        </repository>
+    </distributionManagement>
+
     <modules>
         <module>bedrock-api</module>
         <module>bedrock-core</module>
@@ -33,12 +40,6 @@
         <dependency>
             <groupId>de.bergwerklabs.framework</groupId>
             <artifactId>spigot-commons</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>de.bergwerklabs.framework</groupId>
-            <artifactId>chat-commons</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>

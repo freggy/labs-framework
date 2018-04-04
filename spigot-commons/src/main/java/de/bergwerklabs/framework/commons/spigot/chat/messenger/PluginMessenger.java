@@ -1,4 +1,4 @@
-package de.bergwerklabs.commons.spigot.chat.messenger;
+package de.bergwerklabs.framework.commons.spigot.chat.messenger;
 
 import java.util.Arrays;
 import java.util.Collection;

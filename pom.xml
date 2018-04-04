@@ -13,7 +13,6 @@
         <module>spigot-commons</module>
         <module>framework-commons</module>
         <module>schematic-service</module>
-        <module>chat-commons</module>
         <module>bedrock-game-session-service</module>
         <module>bungee-commons</module>
         <module>network-abstraction</module>

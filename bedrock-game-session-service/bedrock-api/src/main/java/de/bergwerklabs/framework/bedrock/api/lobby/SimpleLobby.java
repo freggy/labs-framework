@@ -1,5 +1,6 @@
 package de.bergwerklabs.framework.bedrock.api.lobby;
 
+import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
 import de.bergwerklabs.framework.bedrock.api.event.game.GameStartEvent;
 import de.bergwerklabs.framework.bedrock.api.event.lobby.LobbyWaitingPhaseStopEvent;
 import de.bergwerklabs.framework.bedrock.api.session.GameSession;
@@ -20,7 +21,7 @@ import org.bukkit.event.EventHandler;
  *
  * @author Yannic Rieger
  */
-public abstract class SimpleLobby extends AbstractLobby {
+public class SimpleLobby extends AbstractLobby {
 
     private boolean timerShortened = false;
     private Task task;
@@ -31,9 +32,12 @@ public abstract class SimpleLobby extends AbstractLobby {
      * @param minPlayers      minimum amount of players needed to start the game.
      * @param session         {@link GameSession} associated with this lobby.
      */
-    public SimpleLobby(int waitingDuration, int maxPlayers, int minPlayers, GameSession session) {
-        super(waitingDuration, maxPlayers, minPlayers, session);
+    public SimpleLobby(int waitingDuration, int maxPlayers, int minPlayers, GameSession session, PlayerRegistry registry) {
+        super(waitingDuration, maxPlayers, minPlayers, session, registry);
     }
+
+    @Override
+    public void init() { }
 
     @Override
     public void startWaitingPhase() {
@@ -71,7 +75,8 @@ public abstract class SimpleLobby extends AbstractLobby {
             // clear chat.
             for (int i = 0; i < 30; i++) Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(" "));
             TaskManager.stopTask(task);
-            this.session.getGame().start();
+            ActionbarTitle.broadcastTitle("");
+            this.session.getGame().start(this.registry);
             Bukkit.getPluginManager().callEvent(new GameStartEvent<>(this.session.getGame()));
         }
     }

@@ -31,8 +31,6 @@ public class SessionServiceConfig {
                          Map<String, Object> rankingSettings,
                          Map<String, Integer> lobbySettings) {
         this.useAutoRespawn                  = options.get("use-auto-respawn");
-        this.spectateOnDeath                 = options.get("spectate-on-death");
-        this.incrementDeathsOnDeath          = options.get("increment-deaths-on-death");
         this.incrementGamesPlayedOnGameStart = options.get("increment-games-played-on-game-start");
         this.loadStatisticsOnJoin            = options.get("load-stats-on-join");
         this.spectatorsEnabled               = options.get("spectators-enabled");
@@ -57,7 +55,7 @@ public class SessionServiceConfig {
         this.logger.info("====================================================");
     }
 
-    private boolean useAutoRespawn, spectateOnDeath, incrementDeathsOnDeath, incrementGamesPlayedOnGameStart, loadStatisticsOnJoin, spectatorsEnabled;
+    private boolean useAutoRespawn, incrementGamesPlayedOnGameStart, loadStatisticsOnJoin, spectatorsEnabled;
     private Set<Location> topThreeLocation;
     private Location playerStatsLocation;
     private int maxPlayers, minPlayers, waitingDuration;
@@ -68,20 +66,6 @@ public class SessionServiceConfig {
      */
     public boolean useAutoRespawn() {
         return useAutoRespawn;
-    }
-
-    /**
-     * Gets a value indicating whether or not players will be spectators on death.
-     */
-    public boolean spectateOnDeath() {
-        return spectateOnDeath;
-    }
-
-    /**
-     * Gets a value indicating whether or not the deaths statistic will be incremented on player death.
-     */
-    public boolean incrementStatisticOnDeath() {
-        return incrementDeathsOnDeath;
     }
 
     /**
@@ -96,13 +80,6 @@ public class SessionServiceConfig {
      */
     public boolean loadStatisticsOnJoin() {
         return loadStatisticsOnJoin;
-    }
-
-    /**
-     *
-     */
-    public boolean spectatorsEnabled() {
-        return spectatorsEnabled;
     }
 
     /**

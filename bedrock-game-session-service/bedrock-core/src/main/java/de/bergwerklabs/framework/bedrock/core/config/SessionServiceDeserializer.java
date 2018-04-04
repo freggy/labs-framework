@@ -23,9 +23,7 @@ public class SessionServiceDeserializer implements JsonDeserializer<SessionServi
         JsonObject obj = json.getAsJsonObject();
         boolean loadStatsOnJoin       = obj.get("load-stats-on-join").getAsBoolean();
         boolean useAutoRespawn        = obj.get("use-auto-respawn").getAsBoolean();
-        boolean spectateOnDeath       = obj.get("spectate-on-death").getAsBoolean();
-        boolean incDeathStatOnDeath   = obj.get("increment-games-played-on-game-start").getAsBoolean();
-        boolean incGamesPlayedOnStart = obj.get("increment-deaths-on-death").getAsBoolean();
+        boolean incGamesPlayedOnStart   = obj.get("increment-games-played-on-game-start").getAsBoolean();
         boolean spectatorsEnabled     = obj.get("spectators-enabled").getAsBoolean();
 
         String lobbyClass   = obj.get("lobby-class").getAsString();
@@ -33,17 +31,21 @@ public class SessionServiceDeserializer implements JsonDeserializer<SessionServi
         String dataCompount = obj.get("game-data-compound").getAsString();
         String dataFactory  = obj.get("data-factory-class").getAsString();
 
-        JsonObject ranking         = obj.getAsJsonObject("ranking");
-        Set<Location> topLocations = JsonUtil.jsonArrayToJsonObjectList(ranking.getAsJsonArray("top-locations"))
-                                             .stream().map(LocationUtil::locationFromJson).collect(Collectors.toSet());
+        Set<Location> topLocations = new HashSet<>();
+        Location playerStatsLocation = null;
 
-        Location playerStatsLocation = LocationUtil.locationFromJson(ranking.getAsJsonObject("player-location"));
+        if (obj.has("ranking")) {
+            JsonObject ranking  = obj.getAsJsonObject("ranking");
+            playerStatsLocation = LocationUtil.locationFromJson(ranking.getAsJsonObject("player-location"));
+            topLocations        = JsonUtil.jsonArrayToJsonObjectList(ranking.getAsJsonArray("top-locations"))
+                                          .stream()
+                                          .map(LocationUtil::locationFromJson)
+                                          .collect(Collectors.toSet());
+        }
 
         Map<String, Boolean> options = new HashMap<>();
         options.put("load-stats-on-join", loadStatsOnJoin);
         options.put("use-auto-respawn", useAutoRespawn);
-        options.put("spectate-on-death", spectateOnDeath);
-        options.put("increment-deaths-on-death", incDeathStatOnDeath);
         options.put("increment-games-played-on-game-start", incGamesPlayedOnStart);
         options.put("spectators-enabled", spectatorsEnabled);
 

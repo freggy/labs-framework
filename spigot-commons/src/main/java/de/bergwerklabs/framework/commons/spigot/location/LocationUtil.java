@@ -40,7 +40,7 @@ public class LocationUtil {
             builder.setYaw(json.get("yaw").getAsFloat());
 
         if (json.has("pitch"))
-            builder.setYaw(json.get("pitch").getAsFloat());
+            builder.setPitch(json.get("pitch").getAsFloat());
 
         return builder.create();
     }

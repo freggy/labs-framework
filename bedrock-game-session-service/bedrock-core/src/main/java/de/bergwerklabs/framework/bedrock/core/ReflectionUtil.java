@@ -1,6 +1,7 @@
 package de.bergwerklabs.framework.bedrock.core;
 
 import de.bergwerklabs.framework.bedrock.api.PlayerFactory;
+import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
 import de.bergwerklabs.framework.bedrock.api.lobby.AbstractLobby;
 import de.bergwerklabs.framework.bedrock.api.session.GameSession;
 
@@ -42,11 +43,11 @@ public class ReflectionUtil {
      * @param session         corresponding Bedrock Session
      * @return                {@link Optional} containing the {@link AbstractLobby} instance or just an empty one.
      */
-    static Optional<AbstractLobby> getLobbyInstance(String clazz, int waitingDuration, int maxPlayers, int minPlayers, GameSession session) {
+    static Optional<AbstractLobby> getLobbyInstance(String clazz, int waitingDuration, int maxPlayers, int minPlayers, GameSession session, PlayerRegistry registry) {
         try {
             Class<?> c = Class.forName(clazz);
-            Constructor<?> constructor = c.getConstructor(int.class, int.class, int.class, GameSession.class);
-            return Optional.of((AbstractLobby)constructor.newInstance(waitingDuration, maxPlayers, minPlayers, session));
+            Constructor<?> constructor = c.getConstructor(int.class, int.class, int.class, GameSession.class, PlayerRegistry.class);
+            return Optional.of((AbstractLobby)constructor.newInstance(waitingDuration, maxPlayers, minPlayers, session, registry));
         }
         catch (Exception e) {
             e.printStackTrace();

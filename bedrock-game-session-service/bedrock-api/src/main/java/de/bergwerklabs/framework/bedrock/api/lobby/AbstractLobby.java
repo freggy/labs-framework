@@ -1,5 +1,6 @@
 package de.bergwerklabs.framework.bedrock.api.lobby;
 
+import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
 import de.bergwerklabs.framework.bedrock.api.session.GameSession;
 import de.bergwerklabs.framework.commons.spigot.general.timer.LabsTimer;
 import de.bergwerklabs.framework.commons.spigot.title.ActionbarTitle;
@@ -19,6 +20,7 @@ public abstract class AbstractLobby implements Listener {
     protected GameSession session;
     protected LabsTimer timer;
     protected int waitingDuration, maxPlayers, minPlayers;
+    protected PlayerRegistry registry;
 
     /**
      * @param waitingDuration duration the players have to wait.
@@ -26,14 +28,15 @@ public abstract class AbstractLobby implements Listener {
      * @param minPlayers      minimum amount of players needed to start the game.
      * @param session         {@link GameSession} associated with this lobby.
      */
-    public AbstractLobby(int waitingDuration, int maxPlayers, int minPlayers, GameSession session) {
+    public AbstractLobby(int waitingDuration, int maxPlayers, int minPlayers, GameSession session, PlayerRegistry registry) {
         this.session = session;
         this.waitingDuration = waitingDuration;
         this.maxPlayers = maxPlayers;
         this.minPlayers = minPlayers;
+        this.registry = registry;
         this.timer = new LabsTimer(waitingDuration, timeLeft -> {
             int currentPlayers = Bukkit.getOnlinePlayers().size();
-            if (timeLeft <= 6) {
+            if (timeLeft <= 5) {
                 ActionbarTitle.broadcastTitle("§6» §aSpiel startet in §b" + timeLeft + " §6«");
                 Bukkit.getOnlinePlayers().forEach(player -> player.playSound(player.getEyeLocation(), Sound.NOTE_BASS, 1.0F, 1.0F));
             }

@@ -1,7 +1,7 @@
 package de.bergwerklabs.framework.bedrock.api.voting;
 
 import com.google.common.collect.Ordering;
-import de.bergwerklabs.commons.spigot.chat.messenger.PluginMessenger;
+import de.bergwerklabs.framework.commons.spigot.chat.messenger.PluginMessenger;
 import de.bergwerklabs.framework.bedrock.api.event.voting.VotingStoppedEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;

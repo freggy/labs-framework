@@ -1,6 +1,6 @@
 package de.bergwerklabs.framework.bedrock.api;
 
-import de.bergwerklabs.commons.spigot.chat.messenger.PluginMessenger;
+import de.bergwerklabs.framework.commons.spigot.chat.messenger.PluginMessenger;
 
 /**
  * Created by Yannic Rieger on 07.07.2017.
@@ -27,7 +27,7 @@ public abstract class LabsGame<T extends LabsPlayer> {
         return messenger;
     }
 
-    protected PlayerRegistry<T> playerRegistry = new PlayerRegistry<>();
+    protected PlayerRegistry<T> playerRegistry;
     protected PluginMessenger messenger;
     protected String name;
 
@@ -36,12 +36,13 @@ public abstract class LabsGame<T extends LabsPlayer> {
      */
     public LabsGame(String name) {
         this.messenger = new PluginMessenger(name);
+        this.name = name;
     }
 
     /**
      * Starts the game.
      */
-    public abstract void start();
+    public abstract void start(PlayerRegistry<T> registry);
 
     /**
      * Stops the game.

@@ -1,7 +1,7 @@
 package de.bergwerklabs.framework.commons.spigot.command.help;
 
 import com.google.common.collect.Sets;
-import de.bergwerklabs.commons.spigot.chat.messenger.PluginMessenger;
+import de.bergwerklabs.framework.commons.spigot.chat.messenger.PluginMessenger;
 import org.bukkit.entity.Player;
 
 import java.util.*;

@@ -1,4 +1,4 @@
-package de.bergwerklabs.commons.spigot.chat;
+package de.bergwerklabs.framework.commons.spigot.chat;
 
 /**
  * Created by Yannic Rieger on 21.09.2017.

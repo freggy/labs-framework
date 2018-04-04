@@ -47,7 +47,6 @@ public class PlayerRegistry<T extends LabsPlayer> {
         return this.spectators.get(uuid);
     }
 
-
     /**
      * Registers a spectator.
      *
@@ -55,7 +54,7 @@ public class PlayerRegistry<T extends LabsPlayer> {
      * @return          instance of {@link LabsPlayer}
      */
     public T registerSpectator(T spectator) {
-        return this.spectators.putIfAbsent(spectator.getPlayer().getUniqueId(), spectator);
+        return this.spectators.putIfAbsent(spectator.getUuid(), spectator);
     }
 
     /**
@@ -65,7 +64,7 @@ public class PlayerRegistry<T extends LabsPlayer> {
      * @return       instance of {@link LabsPlayer}.
      */
     public T registerPlayer(T player) {
-        return this.players.putIfAbsent(player.getPlayer().getUniqueId(), player);
+        return this.players.putIfAbsent(player.getUuid(), player);
     }
 
     /**

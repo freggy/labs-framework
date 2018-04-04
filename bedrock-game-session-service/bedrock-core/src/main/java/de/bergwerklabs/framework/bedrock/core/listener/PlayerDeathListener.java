@@ -38,19 +38,5 @@ public class PlayerDeathListener extends LabsListener {
             playClientClientCommand.setAction(EnumWrappers.ClientCommand.PERFORM_RESPAWN);
             playClientClientCommand.sendPacket(player);
         }
-
-        if (this.config.incrementStatisticOnDeath()) {
-            // TODO: increase died statistic on death
-        }
-
-        if (this.config.incrementGamesPlayedOnGameStart()) {
-            // TODO: increment games played statistic on death
-        }
-
-        if (this.config.spectateOnDeath()) {
-            LabsPlayer playerObj = (LabsPlayer) this.playerRegistry.getPlayers().get(player.getUniqueId());
-            playerObj.setSpectator();
-            this.playerRegistry.registerSpectator(playerObj);
-        }
     }
 }

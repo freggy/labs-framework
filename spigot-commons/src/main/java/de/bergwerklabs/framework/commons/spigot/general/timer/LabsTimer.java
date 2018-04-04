@@ -3,8 +3,13 @@ package de.bergwerklabs.framework.commons.spigot.general.timer;
 import de.bergwerklabs.framework.commons.spigot.SpigotCommons;
 import de.bergwerklabs.framework.commons.spigot.general.timer.event.LabsTimerStartEvent;
 import de.bergwerklabs.framework.commons.spigot.general.timer.event.LabsTimerStopEvent;
+import javafx.scene.effect.SepiaTone;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * Created by Yannic Rieger on 07.05.2017.
@@ -41,6 +46,8 @@ public class LabsTimer {
     private LabsTimerRunnable runnable;
     private BukkitTask task;
     private boolean isRunning;
+    private final Set<Consumer<LabsTimerStopEvent>> LISTENERS = new HashSet<>();
+
 
     /**
      * @param duration Duration the timer will run.
@@ -82,6 +89,10 @@ public class LabsTimer {
         Bukkit.getServer().getPluginManager().callEvent(new LabsTimerStartEvent(this, LabsTimerStartCause.RESUMED));
     }
 
+    public void addStopListener(Consumer<LabsTimerStopEvent> eventConsumer) {
+        this.LISTENERS.add(eventConsumer);
+    }
+
     /**
      * Starts the timer task.
      */
@@ -89,10 +100,13 @@ public class LabsTimer {
         this.isRunning = true;
         if (this.task == null) {
             task = Bukkit.getScheduler().runTaskTimer(SpigotCommons.getInstance(), () -> {
+                if (timeLeft <= 0) {
+                    this.stopTask(LabsTimerStopCause.TIMES_UP);
+                    return;
+                }
                 runnable.run(timeLeft);
-                if (timeLeft <= 0) this.stopTask(LabsTimerStopCause.TIMES_UP);
                 timeLeft--;
-            }, 0, 20L);
+            }, 20, 20);
         }
     }
 
@@ -106,6 +120,8 @@ public class LabsTimer {
         if (task != null) this.task.cancel();
         this.isRunning = false;
         this.task = null;
-        Bukkit.getServer().getPluginManager().callEvent(new LabsTimerStopEvent(this, cause));
+        LabsTimerStopEvent event = new LabsTimerStopEvent(this, cause);
+        this.LISTENERS.forEach(eventConsumer -> eventConsumer.accept(event));
+        Bukkit.getServer().getPluginManager().callEvent(event);
     }
 }

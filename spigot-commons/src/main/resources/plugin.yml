@@ -3,4 +3,4 @@ main: de.bergwerklabs.framework.commons.spigot.SpigotCommons
 website: http://www.bergwerklabs.de
 author: freggy, bw2801
 version: 1.0
-depend: [ProtocolLib, SpigotChatCommons]
+depend: [ProtocolLib]

@@ -33,7 +33,6 @@ public class PlayerJoinListener extends LabsListener {
         LabsPlayer player = playerRegistry.registerPlayer(BedrockSessionService.getInstance().getPlayerFactory().createPlayer(event.getPlayer()));
         if (this.config.loadStatisticsOnJoin()) {
             Bukkit.getScheduler().runTaskAsynchronously(BedrockSessionService.getInstance(), () -> {
-
                 BedrockSessionService.getInstance().getRanking().displayRankingToPlayer(player);
             });
         }

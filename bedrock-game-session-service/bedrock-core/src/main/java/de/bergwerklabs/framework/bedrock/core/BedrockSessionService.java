@@ -5,6 +5,7 @@ import de.bergwerklabs.atlantis.api.logging.AtlantisLogger;
 import de.bergwerklabs.atlantis.client.base.util.AtlantisPackageService;
 import de.bergwerklabs.atlantis.client.bukkit.GamestateManager;
 import de.bergwerklabs.atlantis.columbia.packages.gameserver.spigot.gamestate.Gamestate;
+import de.bergwerklabs.framework.bedrock.api.LabsPlayer;
 import de.bergwerklabs.framework.bedrock.api.PlayerdataDao;
 import de.bergwerklabs.framework.bedrock.api.lobby.AbstractLobby;
 import de.bergwerklabs.framework.bedrock.api.session.GameSession;
@@ -70,7 +71,7 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
     /**
      * Gets the {@link PlayerFactory} of this session.
      */
-    public PlayerFactory getPlayerFactory() {
+    public PlayerFactory<? extends LabsPlayer> getPlayerFactory() {
         return factory;
     }
 
@@ -83,6 +84,7 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
     private Ranking ranking;
     private AtlantisPackageService service = new AtlantisPackageService();
     private boolean finishedPreparing = false;
+    private final PlayerRegistry<? extends LabsPlayer> REGISTRY = new PlayerRegistry<>();
 
     @Override
     public void onEnable() {
@@ -112,15 +114,6 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
         Optional<PlayerdataFactory> dataFactoryOptional = ReflectionUtil.getFactoryClassInstance(this.config.getDataFactoryClass());
         this.factory           = this.checkOptional(factoryOptional);
         this.playerdataFactory = this.checkOptional(dataFactoryOptional);
-
-        if (this.config.spectateOnDeath()) {
-            Bukkit.getPluginManager().registerEvents(new Listener() {
-                @EventHandler
-                private void onCanBlockBuild(BlockCanBuildEvent event) {
-                    event.setBuildable(true);
-                }
-            }, this);
-        }
     }
 
     @EventHandler
@@ -129,19 +122,22 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
         this.logger.info("Session has been initialized.");
         this.logger.info("Game is " + session.getGame().getName());
         this.logger.info("Session ID is " + session.getId());
-
         session.setPlayerdataDao(new PlayerdataDao(this.playerdataFactory));
 
         Bukkit.getServer().getServicesManager().register(GameSession.class, session, this, ServicePriority.Normal);
 
-        Optional<AbstractLobby> lobbyOptional = ReflectionUtil.getLobbyInstance(this.config.getLobbyClass(),
-                                                                                this.config.getWaitingDuration(),
-                                                                                this.config.getMaxPlayers(),
-                                                                                this.config.getMinPlayers(), session);
-        this.lobby = this.checkOptional(lobbyOptional);
+        Optional<AbstractLobby> lobbyOptional = ReflectionUtil.getLobbyInstance(
+                this.config.getLobbyClass(),
+                this.config.getWaitingDuration(),
+                this.config.getMaxPlayers(),
+                this.config.getMinPlayers(),
+                session,
+                this.REGISTRY
+        );
 
+        this.lobby = this.checkOptional(lobbyOptional);
         Bukkit.getServer().getPluginManager().registerEvents(this.lobby, this);
-        this.registerEvents(session.getGame().getPlayerRegistry(), session.getPlayerdataDao());
+        this.registerEvents(session.getPlayerdataDao());
         session.prepare();
     }
 
@@ -156,6 +152,7 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
     private void onPreparationDone(SessionDonePreparationEvent event) {
         this.logger.info("Preparation done.");
         this.logger.info("Starting lobby waiting phase...");
+        System.out.println(event.getSession().getGame().getName());
         this.finishedPreparing = true;
         GamestateManager.setGamestate(Gamestate.WAITING);
         this.lobby.startWaitingPhase();
@@ -174,12 +171,12 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
     /**
      * Registers all events.
      *
-     * @param playerRegistry registry where all player are registered.
+     * @param dao
      */
-    private void registerEvents(PlayerRegistry playerRegistry, PlayerdataDao dao) {
+    private void registerEvents(PlayerdataDao dao) {
         PluginManager manager = Bukkit.getPluginManager();
-        manager.registerEvents(new PlayerJoinListener(playerRegistry, dao, this.config), this);
-        manager.registerEvents(new PlayerQuitListener(playerRegistry, dao, this.config), this);
-        manager.registerEvents(new PlayerDeathListener(playerRegistry, dao, this.config), this);
+        manager.registerEvents(new PlayerJoinListener(this.REGISTRY, dao, this.config), this);
+        manager.registerEvents(new PlayerQuitListener(this.REGISTRY, dao, this.config), this);
+        manager.registerEvents(new PlayerDeathListener(this.REGISTRY, dao, this.config), this);
     }
 }
