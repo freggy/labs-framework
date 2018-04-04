@@ -42,11 +42,6 @@ public class LabsPlayer {
     }
 
     /**
-     * Gets whether or not the uuid is currently frozen.
-     */
-    public boolean isFrozen() { return this.isFrozen; }
-
-    /**
      * Gets the {@link PlayerdataSet} for this uuid.
      */
     public PlayerdataSet getDataSet() { return this.dataSet; }
@@ -62,7 +57,6 @@ public class LabsPlayer {
 
     private UUID uuid;
     protected boolean isSpectator = false;
-    protected boolean isFrozen = false;
     protected PlayerdataSet dataSet;
 
     /**
@@ -86,9 +80,9 @@ public class LabsPlayer {
      */
     public void freeze() {
         final Player player = this.getPlayer();
-        this.isFrozen = true;
+        player.setFoodLevel(0);
         player.setWalkSpeed(0);
-        PotionEffect effect = new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, -5, false, false);
+        PotionEffect effect = new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 128, false, false);
         effect.apply(player);
     }
 
@@ -97,7 +91,7 @@ public class LabsPlayer {
      */
     public void unfreeze() {
         final Player player = this.getPlayer();
-        this.isFrozen = false;
+        player.setFoodLevel(20);
         if (player.hasPotionEffect(PotionEffectType.JUMP)) {
             player.removePotionEffect(PotionEffectType.JUMP);
         }
