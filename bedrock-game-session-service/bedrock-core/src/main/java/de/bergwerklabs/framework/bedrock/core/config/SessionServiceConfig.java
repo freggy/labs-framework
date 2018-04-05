@@ -1,6 +1,7 @@
 package de.bergwerklabs.framework.bedrock.core.config;
 
 import de.bergwerklabs.atlantis.api.logging.AtlantisLogger;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 import java.util.List;
@@ -15,8 +16,6 @@ import java.util.Set;
  * @author Yannic Rieger
  */
 public class SessionServiceConfig {
-
-    private AtlantisLogger logger = AtlantisLogger.getLogger(getClass());
 
     /**
      * For further documentation head to the corresponding Confluence page.
@@ -47,12 +46,12 @@ public class SessionServiceConfig {
         this.minPlayers      = lobbySettings.get("min-players");
         this.waitingDuration = lobbySettings.get("waiting-duration");
 
-        this.logger.info("============= [Bedrock Session Config] =============");
-        options.forEach((key, value) -> this.logger.info(key + ": " + value));
-        gameSettings.forEach((key, value) -> this.logger.info(key + ": " + value));
-        lobbySettings.forEach((key, value) -> this.logger.info(key + ": " + value));
-        rankingSettings.forEach((key, value) -> this.logger.info(key + ": " + value));
-        this.logger.info("====================================================");
+        Bukkit.getLogger().info("============= [Bedrock Session Config] =============");
+        options.forEach((key, value) -> Bukkit.getLogger().info(key + ": " + value));
+        gameSettings.forEach((key, value) -> Bukkit.getLogger().info(key + ": " + value));
+        lobbySettings.forEach((key, value) -> Bukkit.getLogger().info(key + ": " + value));
+        rankingSettings.forEach((key, value) -> Bukkit.getLogger().info(key + ": " + value));
+        Bukkit.getLogger().info("====================================================");
     }
 
     private boolean useAutoRespawn, incrementGamesPlayedOnGameStart, loadStatisticsOnJoin, spectatorsEnabled;

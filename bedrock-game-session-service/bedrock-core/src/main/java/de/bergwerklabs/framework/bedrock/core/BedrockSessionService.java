@@ -33,6 +33,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
  * Created by Yannic Rieger on 18.09.2017.
@@ -75,7 +76,7 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
         return factory;
     }
 
-    private AtlantisLogger logger = AtlantisLogger.getLogger(getClass());
+    private Logger logger = Bukkit.getLogger();
     private static BedrockSessionService instance;
     private SessionServiceConfig config;
     private AbstractLobby lobby;
@@ -101,7 +102,7 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
-            this.logger.warn("No config file found. Stopping the server...");
+            this.logger.warning("No config file found. Stopping the server...");
             GamestateManager.setGamestate(Gamestate.FAILED);
             this.getServer().shutdown();
         }
@@ -137,6 +138,7 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
 
         this.lobby = this.checkOptional(lobbyOptional);
         Bukkit.getServer().getPluginManager().registerEvents(this.lobby, this);
+        this.lobby.init();
         this.registerEvents(session.getPlayerdataDao());
         session.prepare();
     }

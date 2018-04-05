@@ -34,10 +34,24 @@ public class SimpleLobby extends AbstractLobby {
      */
     public SimpleLobby(int waitingDuration, int maxPlayers, int minPlayers, GameSession session, PlayerRegistry registry) {
         super(waitingDuration, maxPlayers, minPlayers, session, registry);
+        this.timer.addStopListener(event -> {
+            Bukkit.getOnlinePlayers().forEach(player -> player.setLevel(0));
+            if (event.getCause() == LabsTimerStopCause.TIMES_UP && event.getTimer() == this.timer) {
+                Bukkit.getPluginManager().callEvent(new LobbyWaitingPhaseStopEvent(this.session));
+                // clear chat.
+                for (int i = 0; i < 30; i++) Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(" "));
+                TaskManager.stopTask(task);
+                ActionbarTitle.broadcastTitle("");
+                this.session.getGame().start(this.registry);
+                Bukkit.getPluginManager().callEvent(new GameStartEvent<>(this.session.getGame()));
+            }
+        });
     }
 
     @Override
-    public void init() { }
+    public void init() {
+
+    }
 
     @Override
     public void startWaitingPhase() {
@@ -65,19 +79,5 @@ public class SimpleLobby extends AbstractLobby {
                 }
             }
         }, 20, 10);
-    }
-
-    @EventHandler
-    private void onTimerStopped(LabsTimerStopEvent event) {
-        Bukkit.getOnlinePlayers().forEach(player -> player.setLevel(0));
-        if (event.getCause() == LabsTimerStopCause.TIMES_UP && event.getTimer() == this.timer) {
-            Bukkit.getPluginManager().callEvent(new LobbyWaitingPhaseStopEvent(this.session));
-            // clear chat.
-            for (int i = 0; i < 30; i++) Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(" "));
-            TaskManager.stopTask(task);
-            ActionbarTitle.broadcastTitle("");
-            this.session.getGame().start(this.registry);
-            Bukkit.getPluginManager().callEvent(new GameStartEvent<>(this.session.getGame()));
-        }
     }
 }
