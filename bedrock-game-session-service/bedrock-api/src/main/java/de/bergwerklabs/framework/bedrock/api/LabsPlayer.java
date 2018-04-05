@@ -29,8 +29,6 @@ public class LabsPlayer {
      * Gets the {@link Player} object.
      */
     public Player getPlayer() {
-        System.out.println(uuid);
-        System.out.println(Bukkit.getPlayer(this.uuid));
         return Bukkit.getPlayer(this.uuid);
     }
 
@@ -82,8 +80,9 @@ public class LabsPlayer {
         final Player player = this.getPlayer();
         player.setFoodLevel(0);
         player.setWalkSpeed(0);
-        PotionEffect effect = new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 128, false, false);
-        effect.apply(player);
+        player.getLocation().getWorld().setGameRuleValue("naturalRegeneration", "false");
+        PotionEffect jump = new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 128, false, false);
+        jump.apply(player);
     }
 
     /**
@@ -95,6 +94,7 @@ public class LabsPlayer {
         if (player.hasPotionEffect(PotionEffectType.JUMP)) {
             player.removePotionEffect(PotionEffectType.JUMP);
         }
+        player.getLocation().getWorld().setGameRuleValue("naturalRegeneration", "true");
         player.setWalkSpeed(0.2F);
     }
 }
