@@ -1,6 +1,8 @@
 package de.bergwerklabs.framework.commons.spigot.item;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
@@ -158,6 +160,42 @@ public class ItemStackUtil {
 
         return builder.create();
     }
+
+    /**
+     * Converts an {@link ItemStack} into a {@link JsonObject}.
+     *
+     * @param itemStack stack to convert.
+     * @return a {@link JsonObject}.
+     */
+    public static JsonObject itemStackToJson(ItemStack itemStack) {
+        JsonObject object = new JsonObject();
+        ItemMeta meta = itemStack.getItemMeta();
+        object.addProperty("material", itemStack.getType().toString());
+        object.addProperty("name", meta.getDisplayName());
+        object.addProperty("amount", itemStack.getAmount());
+        object.addProperty("damage", itemStack.getDurability());
+
+        JsonArray lore = new JsonArray();
+        meta.getLore().forEach(line -> lore.add(new JsonPrimitive(line)));
+        object.add("lore", lore);
+
+        object.addProperty("data", itemStack.getData().getData());
+
+        JsonArray enchantments = new JsonArray();
+
+        itemStack.getEnchantments().forEach((enchantment, level) ->  {
+            JsonObject jsonObject = new JsonObject();
+            object.addProperty("level", level);
+            // set it to false because I dont know how to get the level restriction value
+            object.addProperty("ignore-level-restriction", false);
+            object.addProperty("type", enchantment.getName());
+            enchantments.add(jsonObject);
+        });
+
+        object.add("enchantments", enchantments);
+        return object;
+    }
+
 
     // put the below stuff in a PotionWrapper class?
 

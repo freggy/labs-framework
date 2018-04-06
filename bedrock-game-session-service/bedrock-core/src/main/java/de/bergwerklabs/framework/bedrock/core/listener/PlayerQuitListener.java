@@ -8,6 +8,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.UUID;
+
 /**
  * Created by Yannic Rieger on 01.08.2017.
  *
@@ -26,7 +28,9 @@ public class PlayerQuitListener extends LabsListener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
+        final Player player = event.getPlayer();
+        final UUID uuid = player.getUniqueId();
+        this.playerRegistry.unregisterPlayer(this.playerRegistry.getPlayer(uuid));
         // TODO: save stats
         this.dao.remove(player.getUniqueId());
     }

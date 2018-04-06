@@ -58,6 +58,14 @@ public class EnchantmentWrapper {
         this.ignoreRestriction = ignoreRestriction;
     }
 
+    public JsonObject toJson() {
+        JsonObject object = new JsonObject();
+        object.addProperty("level", this.level);
+        object.addProperty("ignore-level-restriction", this.ignoreRestriction);
+        object.addProperty("type", this.enchantment.getName());
+        return object;
+    }
+
 
     /**
      *
@@ -90,7 +98,7 @@ public class EnchantmentWrapper {
      * @return
      */
     public static List<EnchantmentWrapper> enchantmentsFromJson(JsonArray jsonElements) {
-        return JsonUtil.jsonArrayToJsonObjectList(jsonElements).stream().map(jsonEnchantment -> fromJson(jsonEnchantment)).collect(Collectors.toList());
+        return JsonUtil.jsonArrayToJsonObjectList(jsonElements).stream().map(EnchantmentWrapper::fromJson).collect(Collectors.toList());
     }
 
     @Override
