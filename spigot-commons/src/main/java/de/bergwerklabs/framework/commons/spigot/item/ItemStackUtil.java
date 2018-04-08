@@ -174,10 +174,12 @@ public class ItemStackUtil {
         object.addProperty("name", meta.getDisplayName());
         object.addProperty("amount", itemStack.getAmount());
         object.addProperty("damage", itemStack.getDurability());
-
-        JsonArray lore = new JsonArray();
-        meta.getLore().forEach(line -> lore.add(new JsonPrimitive(line)));
-        object.add("lore", lore);
+        
+        if (itemStack.hasItemMeta() && meta.getLore() != null) {
+            JsonArray lore = new JsonArray();
+            meta.getLore().forEach(line -> lore.add(new JsonPrimitive(line)));
+            object.add("lore", lore);
+        }
 
         object.addProperty("data", itemStack.getData().getData());
 

@@ -113,6 +113,10 @@ public class LabsScoreboard implements Versionable, Identifiable, Cloneable {
         this.updateOrder();
     }
 
+    public void setTitle(String title) {
+        this.scoreboard.getObjective(this.id).setDisplayName(title);
+    }
+
     /**
      * Clones the current scoreboard.
      * @return a new Scoreboard, null if not cloneable.
