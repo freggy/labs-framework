@@ -1,20 +1,17 @@
-package de.bergwerklabs.framework.commons.spigot.entity.npc;
+package de.bergwerklabs.framework.commons.spigot.entity;
 
 import com.comphenix.protocol.wrappers.WrappedGameProfile;
 import com.comphenix.protocol.wrappers.WrappedSignedProperty;
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
 import de.bergwerklabs.framework.commons.spigot.general.reflection.LabsReflection;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Optional;
 
 /**
  * Created by Yannic Rieger on 20.07.2017.
- * <p>  </p>
+ * <p>
+ * Wrapper for texture data needed to change the skin of NPCs or other players.
  *
  * @author Yannic Rieger
  */
@@ -23,25 +20,46 @@ public class PlayerSkin {
     private String value;
     private String signature;
 
+    /**
+     * @param value     Base64 string
+     * @param signature Base64 string; signed data using Yggdrasil's private key
+     */
     public PlayerSkin(String value, String signature) {
         this.value = value;
         this.signature = signature;
     }
 
+    /**
+     * Base64 string
+     */
     public String getValue() {
         return value;
     }
 
+    /**
+     * Base64 string; signed data using Yggdrasil's private key
+     */
     public String getSignature() {
         return signature;
     }
 
+    /**
+     * Injects the texture data into the {@link WrappedGameProfile}.
+     *
+     * @param gameProfile profile to inject the texture data.
+     */
     public void inject(WrappedGameProfile gameProfile) {
         gameProfile.getProperties().removeAll("textures");
         gameProfile.getProperties().put("textures", new WrappedSignedProperty("textures", this.getValue(), this.getSignature()));
     }
 
-    public static PlayerSkin fromPlayer(Player player) {
+    /**
+     * Gets the a texture data of a {@link Player}.
+     *
+     * @param player player to get the texture data from.
+     * @return an {@link Optional} of {@link PlayerSkin} containing texture data.
+     */
+    public static Optional<PlayerSkin> fromPlayer(Player player) {
         try {
             Object handle = LabsReflection.getHandle(player);
             Method getProfile = LabsReflection.getMethod(handle.getClass(), "getProfile");
@@ -56,11 +74,11 @@ public class PlayerSkin {
             Object signature = LabsReflection.getMethod(property.getClass(), "getSignature").invoke(property);
             Object value = LabsReflection.getMethod(property.getClass(), "getValue").invoke(property);
 
-            return new PlayerSkin((String)value, (String)signature);
+            return Optional.of(new PlayerSkin((String)value, (String)signature));
         }
         catch (Exception ex) {
             ex.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 }

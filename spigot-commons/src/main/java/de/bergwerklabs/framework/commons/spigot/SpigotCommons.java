@@ -4,23 +4,11 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.*;
-import com.comphenix.protocol.wrappers.EnumWrappers;
-import de.bergwerklabs.framework.commons.spigot.entity.Entity;
-import de.bergwerklabs.framework.commons.spigot.entity.EntityManager;
 import de.bergwerklabs.framework.commons.spigot.file.FileUtil;
 import de.bergwerklabs.framework.commons.spigot.general.LabsController;
-import de.bergwerklabs.framework.commons.spigot.nms.packet.clientside.v1_8.useentity.WrapperPlayClientUseEntity;
-import de.bergwerklabs.framework.commons.spigot.entity.npc.Npc;
-import de.bergwerklabs.framework.commons.spigot.npc.NpcManager;
-import de.bergwerklabs.framework.commons.spigot.entity.npc.event.Action;
-import de.bergwerklabs.framework.commons.spigot.entity.npc.event.NpcInteractAtEvent;
-import de.bergwerklabs.framework.commons.spigot.entity.npc.event.NpcInteractEvent;
-import de.bergwerklabs.framework.commons.spigot.pluginmessage.PluginMessages;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
@@ -70,66 +58,11 @@ public class SpigotCommons extends JavaPlugin implements Listener, LabsControlle
         this.protocolManager = ProtocolLibrary.getProtocolManager();
 
         this.getServer().getPluginManager().registerEvents(this, this);
-        this.getServer().getPluginManager().registerEvents(new NpcManager(), this);
-        this.getServer().getPluginManager().registerEvents(new EntityManager(), this);
-
-        this.protocolManager.addPacketListener(new PacketAdapter(this, PacketType.Play.Client.USE_ENTITY) {
-            private Action previous = null;
-
-            @Override
-            public void onPacketReceiving(PacketEvent event) {
-                WrapperPlayClientUseEntity useEntityPacket = new WrapperPlayClientUseEntity(event.getPacket());
-                int id = useEntityPacket.getTargetID();
-                if (EntityManager.getEntities().keySet().contains(id)) {
-                    Entity entity = EntityManager.getEntities().get(id);
-
-//                    if (entity instanceof Npc) {
-//                        Npc npc = (Npc)entity;
-//                        Action action = this.determineAction(useEntityPacket.getType());
-//
-//                        // Nasty hack to stop it from executing the event twice
-//                        if (previous != action || previous == Action.HIT) {
-//                            this.previous = action;
-//                            if (action != Action.INTERACT_AT) {
-//                                Bukkit.getScheduler().callSyncMethod(SpigotCommons.getInstance(), () -> {
-//                                    Bukkit.getServer().getPluginManager().callEvent(new NpcInteractEvent(npc, event.getPlayer(), action));
-//                                    return null;
-//                                });
-//                            }
-//                            else {
-//                                Bukkit.getScheduler().callSyncMethod(SpigotCommons.getInstance(), () -> {
-//                                    Bukkit.getServer().getPluginManager().callEvent(new NpcInteractAtEvent(npc, event.getPlayer(), action, useEntityPacket.getTargetVector()));
-//                                    return null;
-//                                });
-//                            }
-//                        }
-//                    }
-                }
-            }
-
-            private Action determineAction(EnumWrappers.EntityUseAction action) {
-                switch (action) {
-                    case INTERACT: return Action.RIGHT_CLICK;
-                    case ATTACK: return Action.HIT;
-                    case INTERACT_AT: return Action.INTERACT_AT;
-                    default: return null;
-                }
-            }
-        });
     }
 
     @Override
     public void onDisable() {
         this.getServer().getScheduler().cancelTasks(this);
-    }
-
-
-    @EventHandler
-    private void onPlayerJoin(PlayerMoveEvent event) {
-
-
-
-
     }
 
     @Override
