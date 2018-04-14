@@ -29,7 +29,9 @@ public class LabsScoreboard implements Versionable, Identifiable, Cloneable {
     /**
      * HashMap mapping from content to the row object itself.
      */
-    public HashMap<String, Row> getRowsByContent() { return this.rowsByContent; }
+    public Map<String, Row> getRowsByContent() { return this.rowsByContent; }
+
+    public Map<UUID, Row> getPlayerSpecificRows() { return playerSpecificRows; }
 
     /**
      * Gets the org.bukkit.scoreboard.Scoreboard instance.
@@ -51,7 +53,8 @@ public class LabsScoreboard implements Versionable, Identifiable, Cloneable {
     public String getDisplayName() { return this.displayName; }
 
     private List<Row> rows;
-    private HashMap<String, Row> rowsByContent = new HashMap<>();
+    private Map<String, Row> rowsByContent = new HashMap<>();
+    private Map<UUID, Row> playerSpecificRows = new HashMap<>();
     private Scoreboard scoreboard;
     private Objective sidebar;
     private String version = "undefined";
@@ -90,6 +93,15 @@ public class LabsScoreboard implements Versionable, Identifiable, Cloneable {
     public LabsScoreboard addRow(int index, Row row) {
         row.setIndex(index);
         rowsByContent.put(row.getText(), row);
+        rows.add(row);
+        this.updateOrder();
+        return this;
+    }
+
+    public LabsScoreboard addPlayerSpecificRow(int index, Player player, Row row) {
+        row.setIndex(index);
+        rowsByContent.put(row.getText(), row);
+        playerSpecificRows.putIfAbsent(player.getUniqueId(), row);
         rows.add(row);
         this.updateOrder();
         return this;

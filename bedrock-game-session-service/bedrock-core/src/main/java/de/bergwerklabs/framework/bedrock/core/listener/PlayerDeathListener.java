@@ -31,7 +31,7 @@ public class PlayerDeathListener extends LabsListener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDeath(PlayerDeathEvent e) {
         Player player = e.getEntity();
-        this.playerRegistry.getPlayers().remove(player.getUniqueId());
+        // unregister player this.playerRegistry.unregisterPlayer(player.getUniqueId());
 
         if (this.config.useAutoRespawn()) {
             WrapperPlayClientClientCommand playClientClientCommand = new WrapperPlayClientClientCommand();

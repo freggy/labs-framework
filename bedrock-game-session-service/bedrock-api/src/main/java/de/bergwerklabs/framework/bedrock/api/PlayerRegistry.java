@@ -1,9 +1,6 @@
 package de.bergwerklabs.framework.bedrock.api;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by Yannic Rieger on 01.05.2017.
@@ -25,8 +22,11 @@ public class PlayerRegistry<T extends LabsPlayer> {
      */
     public Map<UUID, T> getSpectators() { return Collections.unmodifiableMap(spectators); }
 
+    public Collection<T> getPlayerCollection() { return Collections.unmodifiableCollection(playerCollection); }
+
     private Map<UUID, T> players    = new HashMap<>();
     private Map<UUID, T> spectators = new HashMap<>();
+    private Collection<T> playerCollection = players.values();
 
 
     /**
