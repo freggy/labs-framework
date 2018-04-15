@@ -148,6 +148,11 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
         if (!finishedPreparing) {
             event.disallow(PlayerLoginEvent.Result.KICK_OTHER, "§6>> §eBedrock Session Service §6| §bGame session has not been initialized yet.");
         }
+        else if (Bukkit.getOnlinePlayers().size() == this.config.getMaxPlayers()) {
+            // TODO: put spectator
+            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, "§6>> §eBedrock Session Service §6| §bGame is in " +
+                    "progress");
+        }
     }
 
     @EventHandler
