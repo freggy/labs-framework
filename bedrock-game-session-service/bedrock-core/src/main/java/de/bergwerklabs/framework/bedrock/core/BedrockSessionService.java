@@ -15,9 +15,7 @@ import de.bergwerklabs.framework.bedrock.api.event.session.SessionDonePreparatio
 import de.bergwerklabs.framework.bedrock.api.event.session.SessionInitializedEvent;
 import de.bergwerklabs.framework.bedrock.core.config.SessionServiceConfig;
 import de.bergwerklabs.framework.bedrock.core.config.SessionServiceDeserializer;
-import de.bergwerklabs.framework.bedrock.core.listener.PlayerDeathListener;
-import de.bergwerklabs.framework.bedrock.core.listener.PlayerJoinListener;
-import de.bergwerklabs.framework.bedrock.core.listener.PlayerQuitListener;
+import de.bergwerklabs.framework.bedrock.core.listener.*;
 import de.bergwerklabs.framework.commons.spigot.general.update.TaskManager;
 import de.bergwerklabs.framework.nabs.standalone.PlayerdataFactory;
 import org.bukkit.Bukkit;
@@ -74,6 +72,13 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
      */
     public PlayerFactory<? extends LabsPlayer> getPlayerFactory() {
         return factory;
+    }
+
+    /**
+     * Whether the game finished preparing.
+     */
+    public boolean hasFinishedPreparing() {
+        return finishedPreparing;
     }
 
     private Logger logger = Bukkit.getLogger();
@@ -143,18 +148,6 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
         session.prepare();
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    private void onPlayerJoin(PlayerLoginEvent event) {
-        if (!finishedPreparing) {
-            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, "§6>> §eBedrock Session Service §6| §bGame session has not been initialized yet.");
-        }
-        else if (Bukkit.getOnlinePlayers().size() == this.config.getMaxPlayers()) {
-            // TODO: put spectator
-            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, "§6>> §eBedrock Session Service §6| §bGame is in " +
-                    "progress");
-        }
-    }
-
     @EventHandler
     private void onPreparationDone(SessionDonePreparationEvent event) {
         this.logger.info("Preparation done.");
@@ -181,9 +174,12 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
      * @param dao
      */
     private void registerEvents(PlayerdataDao dao) {
-        PluginManager manager = Bukkit.getPluginManager();
+        final PluginManager manager = Bukkit.getPluginManager();
         manager.registerEvents(new PlayerJoinListener(this.REGISTRY, dao, this.config), this);
         manager.registerEvents(new PlayerQuitListener(this.REGISTRY, dao, this.config), this);
         manager.registerEvents(new PlayerDeathListener(this.REGISTRY, dao, this.config), this);
+        manager.registerEvents(new PlayerLoginListener(this.REGISTRY, dao, this.config), this);
+        manager.registerEvents(new BlockCanBuildListener(this.REGISTRY, dao, this.config), this);
+        manager.registerEvents(new GameStartListener(), this);
     }
 }

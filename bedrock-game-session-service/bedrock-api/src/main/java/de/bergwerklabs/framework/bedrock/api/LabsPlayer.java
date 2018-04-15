@@ -1,5 +1,6 @@
 package de.bergwerklabs.framework.bedrock.api;
 
+import de.bergwerklabs.framework.commons.spigot.nms.packet.serverside.entitydestroy.WrapperPlayServerEntityDestroy;
 import de.bergwerklabs.framework.nabs.standalone.PlayerdataSet;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -71,6 +72,7 @@ public class LabsPlayer {
         final Player player = this.getPlayer();
         Bukkit.getOnlinePlayers().forEach(p -> p.hidePlayer(player));
         this.isSpectator = true;
+        // TODO: add item to teleport to players.
     }
 
     /**

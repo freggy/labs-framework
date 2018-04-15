@@ -14,7 +14,7 @@ import org.bukkit.event.Listener;
  *
  * @author Yannic Rieger
  */
-class LabsListener implements Listener {
+abstract class LabsListener implements Listener {
 
     protected PlayerRegistry playerRegistry;
     protected SessionServiceConfig config;

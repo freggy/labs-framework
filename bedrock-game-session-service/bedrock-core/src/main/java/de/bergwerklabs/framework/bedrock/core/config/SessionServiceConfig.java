@@ -1,10 +1,9 @@
 package de.bergwerklabs.framework.bedrock.core.config;
 
-import de.bergwerklabs.atlantis.api.logging.AtlantisLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.event.block.BlockCanBuildEvent;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -142,5 +141,13 @@ public class SessionServiceConfig {
      */
     public String getDataFactoryClass() {
         return dataFactoryClass;
+    }
+
+    /**
+     * Whether the spectator mode is enabled. If {@code true}, {@link BlockCanBuildEvent#isBuildable()} will
+     * be set to {@code true}
+     */
+    public boolean isSpectatorsEnabled() {
+        return spectatorsEnabled;
     }
 }

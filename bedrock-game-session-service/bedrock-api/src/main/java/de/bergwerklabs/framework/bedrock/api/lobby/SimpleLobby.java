@@ -1,5 +1,7 @@
 package de.bergwerklabs.framework.bedrock.api.lobby;
 
+import de.bergwerklabs.atlantis.client.bukkit.GamestateManager;
+import de.bergwerklabs.atlantis.columbia.packages.gameserver.spigot.gamestate.Gamestate;
 import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
 import de.bergwerklabs.framework.bedrock.api.event.game.GameStartEvent;
 import de.bergwerklabs.framework.bedrock.api.event.lobby.LobbyWaitingPhaseStartEvent;
@@ -10,6 +12,10 @@ import de.bergwerklabs.framework.commons.spigot.general.update.Task;
 import de.bergwerklabs.framework.commons.spigot.general.update.TaskManager;
 import de.bergwerklabs.framework.commons.spigot.title.ActionbarTitle;
 import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 /**
  * Created by Yannic Rieger on 18.09.2017.
@@ -72,9 +78,20 @@ public class SimpleLobby extends AbstractLobby {
             // clear chat
             for (int i = 0; i < 30; i++) Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(" "));
             TaskManager.stopTask(task);
+            HandlerList.unregisterAll(this);
             ActionbarTitle.broadcastTitle("");
             this.session.getGame().start(this.registry);
             Bukkit.getPluginManager().callEvent(new GameStartEvent<>(this.session.getGame()));
         });
+    }
+
+    @EventHandler
+    private void onPlayerDamage(EntityDamageEvent event) {
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    private void onPlayerDamage(FoodLevelChangeEvent event) {
+        event.setCancelled(true);
     }
 }

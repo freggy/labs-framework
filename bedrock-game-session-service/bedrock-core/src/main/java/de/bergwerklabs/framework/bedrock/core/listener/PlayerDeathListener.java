@@ -41,8 +41,6 @@ public class PlayerDeathListener extends LabsListener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerDeath(PlayerDeathEvent e) {
         Player player = e.getEntity();
-        // unregister player this.playerRegistry.unregisterPlayer(player.getUniqueId());
-
         if (this.config.useAutoRespawn()) {
             Bukkit.getScheduler().runTaskLater(BedrockSessionService.getInstance(), () -> {
                 try {
