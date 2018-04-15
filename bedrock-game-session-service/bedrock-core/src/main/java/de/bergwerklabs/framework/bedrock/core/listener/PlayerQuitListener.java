@@ -1,5 +1,6 @@
 package de.bergwerklabs.framework.bedrock.core.listener;
 
+import de.bergwerklabs.framework.bedrock.api.LabsPlayer;
 import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
 import de.bergwerklabs.framework.bedrock.api.PlayerdataDao;
 import de.bergwerklabs.framework.bedrock.core.config.SessionServiceConfig;
@@ -30,7 +31,13 @@ public class PlayerQuitListener extends LabsListener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         final Player player = event.getPlayer();
         final UUID uuid = player.getUniqueId();
-        this.playerRegistry.unregisterPlayer(this.playerRegistry.getPlayer(uuid));
+        final LabsPlayer labsPlayer = this.playerRegistry.getPlayer(uuid);
+
+        if (labsPlayer.isSpectator()) {
+            this.playerRegistry.unregisterSpectator(labsPlayer);
+        }
+        else this.playerRegistry.unregisterPlayer(labsPlayer);
+
         // TODO: save stats
         this.dao.remove(player.getUniqueId());
     }

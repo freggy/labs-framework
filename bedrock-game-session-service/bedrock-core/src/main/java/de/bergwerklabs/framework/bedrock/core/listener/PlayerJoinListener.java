@@ -54,8 +54,9 @@ public class PlayerJoinListener extends LabsListener {
     }
 
     private void handleRunning(LabsPlayer player) {
-        player.getPlayer().sendMessage("§6>> §eBedrock Session Service §6| §bDu bist nun ein Spectator.");
-        player.setSpectator();
-        this.playerRegistry.registerSpectator(player);
+        // TODO: set spectator
+        player.getPlayer().kickPlayer("§6>> §eBedrock Session Service §6| §bGame is in progress.");
+        //player.setSpectator();
+        //this.playerRegistry.registerSpectator(player);
     }
 }

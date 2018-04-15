@@ -30,12 +30,16 @@ public class PlayerRegistry<T extends LabsPlayer> {
 
 
     /**
-     * Retrieves a player from the map. Entry can be null if they left the game or is spectating.
+     * Retrieves a player from the map. Can be null if player left.
      *
      * @param uuid {@link UUID} of the player.
      */
     public T getPlayer(UUID uuid) {
-        return this.players.get(uuid);
+        T p1 = this.players.get(uuid);
+        T p2 = this.spectators.get(uuid);
+        if (p2 != null) return p2;
+        else if (p1 != null) return p1;
+        else return null;
     }
 
     /**
@@ -74,6 +78,7 @@ public class PlayerRegistry<T extends LabsPlayer> {
      * @return          instance of {@link LabsPlayer}
      */
     public T unregisterSpectator(T spectator) {
+        this.playerCollection.remove(spectator);
         return this.spectators.remove(spectator);
     }
 
@@ -84,7 +89,7 @@ public class PlayerRegistry<T extends LabsPlayer> {
      * @return       instance of {@link LabsPlayer}
      */
     public T unregisterPlayer(T player) {
+        this.playerCollection.remove(player);
         return this.players.remove(player);
     }
-
 }

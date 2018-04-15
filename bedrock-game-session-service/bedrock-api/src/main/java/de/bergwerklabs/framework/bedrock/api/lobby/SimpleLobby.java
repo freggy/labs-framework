@@ -16,6 +16,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 /**
  * Created by Yannic Rieger on 18.09.2017.
@@ -73,15 +74,17 @@ public class SimpleLobby extends AbstractLobby {
         }, 20, 10);
 
         this.timer.addStopListener(event -> {
-            Bukkit.getOnlinePlayers().forEach(player -> player.setLevel(0));
-            Bukkit.getPluginManager().callEvent(new LobbyWaitingPhaseStopEvent(this.session));
-            // clear chat
-            for (int i = 0; i < 30; i++) Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(" "));
-            TaskManager.stopTask(task);
-            HandlerList.unregisterAll(this);
-            ActionbarTitle.broadcastTitle("");
-            this.session.getGame().start(this.registry);
-            Bukkit.getPluginManager().callEvent(new GameStartEvent<>(this.session.getGame()));
+            if (event.getCause() == LabsTimerStopCause.TIMES_UP) {
+                Bukkit.getOnlinePlayers().forEach(player -> player.setLevel(0));
+                Bukkit.getPluginManager().callEvent(new LobbyWaitingPhaseStopEvent(this.session));
+                // clear chat
+                for (int i = 0; i < 30; i++) Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(" "));
+                TaskManager.stopTask(task);
+                HandlerList.unregisterAll(this);
+                ActionbarTitle.broadcastTitle("");
+                this.session.getGame().start(this.registry);
+                Bukkit.getPluginManager().callEvent(new GameStartEvent<>(this.session.getGame()));
+            }
         });
     }
 
@@ -91,7 +94,12 @@ public class SimpleLobby extends AbstractLobby {
     }
 
     @EventHandler
-    private void onPlayerDamage(FoodLevelChangeEvent event) {
+    private void onFoodLevelChange(FoodLevelChangeEvent event) {
         event.setCancelled(true);
+    }
+
+    @EventHandler
+    private void onPlayerJoin(PlayerJoinEvent event) {
+        event.getPlayer().setLevel(0);
     }
 }
