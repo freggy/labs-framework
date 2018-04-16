@@ -65,11 +65,11 @@ public class LabsSchematic<T> implements Cloneable {
         try {
             this.schematic = ClipboardFormat.SCHEMATIC.load(schematicFile);
 
-            // Preprocess the schematic to make removal easier. This needs to be done since
-            // Undoing the schematic by using a EditSession is bugged.
-            // I tried almost everything and this is the best solution I came up with.
-            // Maybe we could find a way by not using deprecated classes but at this point in time
-            // I do not give a fuck.
+            // Preprocess schematic to make removal easier. This needs to be done since
+            // undoing the schematic by using an EditSession does not work as intended.
+            // I tried everything and this is the best solution I came up with.
+            // Maybe we could find a way by not using deprecated classes, but at this point in time
+            // I do not give a single fuck.
             CuboidClipboard clip = CuboidClipboard.loadSchematic(this.schematicFile);
             this.offset = new Vector(clip.getOffset().getX(), clip.getOffset().getY(), clip.getOffset().getZ());
 

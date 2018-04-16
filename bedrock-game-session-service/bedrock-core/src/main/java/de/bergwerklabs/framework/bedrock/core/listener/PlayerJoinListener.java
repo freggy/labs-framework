@@ -55,7 +55,7 @@ public class PlayerJoinListener extends LabsListener {
 
     private void handleRunning(LabsPlayer player) {
         // TODO: set spectator
-        player.getPlayer().kickPlayer("§6>> §eBedrock Session Service §6| §bGame is in progress.");
+        player.getPlayer().kickPlayer("§6>> §eBedrock Session Service §6❘ §bGame is in progress.");
         //player.setSpectator();
         //this.playerRegistry.registerSpectator(player);
     }
