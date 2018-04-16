@@ -21,13 +21,8 @@ public class GameId {
      */
     public static String create() {
         if (cachedId != null) return cachedId;
-        String id;
-        do {
-            id = generateId();
-        }
-        while (id.equalsIgnoreCase("bla")); // check if id already exists
-        cachedId = id;
-        return id;
+        cachedId = generateId();
+        return cachedId;
     }
 
     /**
