@@ -6,29 +6,25 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 /**
  * Created by Yannic Rieger on 29.11.2017.
- * <p>
- * Same as the PluginMessenger in SpigotCommons but this time re-implemented for BungeeCord.
+ *
+ * <p>Same as the PluginMessenger in SpigotCommons but this time re-implemented for BungeeCord.
  *
  * @author Yannic Rieger
  */
 public class PluginMessenger {
 
-    private String prefix;
+  private String prefix;
 
-    /**
-     *
-     * @param name
-     */
-    public PluginMessenger(String name) {
-        this.prefix = "§6>> §e" + name + " §6❘§7 ";
-    }
+  /** @param name */
+  public PluginMessenger(String name) {
+    this.prefix = "§6>> §e" + name + " §6❘§7 ";
+  }
 
-    /**
-     *
-     * @param message
-     * @param player
-     */
-    public void message(String message, ProxiedPlayer player) {
-        player.sendMessage(ChatMessageType.CHAT, TextComponent.fromLegacyText(prefix + message));
-    }
+  /**
+   * @param message
+   * @param player
+   */
+  public void message(String message, ProxiedPlayer player) {
+    player.sendMessage(ChatMessageType.CHAT, TextComponent.fromLegacyText(prefix + message));
+  }
 }

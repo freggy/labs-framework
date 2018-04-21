@@ -9,15 +9,15 @@ import org.bukkit.event.Listener;
 
 /**
  * Created by Yannic Rieger on 15.04.2018.
+ *
  * <p>
  *
  * @author Yannic Rieger
  */
 public class GameStartListener implements Listener {
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    private void onGameStart(GameStartEvent event) {
-        GamestateManager.setGamestate(Gamestate.RUNNING);
-    }
-
+  @EventHandler(priority = EventPriority.LOWEST)
+  private void onGameStart(GameStartEvent event) {
+    GamestateManager.setGamestate(Gamestate.RUNNING);
+  }
 }

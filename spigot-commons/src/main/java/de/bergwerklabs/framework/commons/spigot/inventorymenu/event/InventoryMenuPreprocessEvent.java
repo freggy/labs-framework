@@ -1,31 +1,31 @@
 package de.bergwerklabs.framework.commons.spigot.inventorymenu.event;
 
 import de.bergwerklabs.framework.commons.spigot.inventorymenu.InventoryItem;
-import org.bukkit.entity.Player;
-
 import java.util.Set;
+import org.bukkit.entity.Player;
 
 /**
  * Created by Yannic Rieger on 08.01.2018.
+ *
  * <p>
  *
  * @author Yannic Rieger
  */
 public class InventoryMenuPreprocessEvent {
 
-    public Set<InventoryItem> getInventoryItems() {
-        return inventoryItems;
-    }
+  private Set<InventoryItem> inventoryItems;
+  private Player player;
 
-    public Player getPlayer() {
-        return player;
-    }
+  public InventoryMenuPreprocessEvent(Set<InventoryItem> items, Player player) {
+    this.inventoryItems = items;
+    this.player = player;
+  }
 
-    private Set<InventoryItem> inventoryItems;
-    private Player player;
+  public Set<InventoryItem> getInventoryItems() {
+    return inventoryItems;
+  }
 
-    public InventoryMenuPreprocessEvent(Set<InventoryItem> items, Player player) {
-        this.inventoryItems = items;
-        this.player = player;
-    }
+  public Player getPlayer() {
+    return player;
+  }
 }

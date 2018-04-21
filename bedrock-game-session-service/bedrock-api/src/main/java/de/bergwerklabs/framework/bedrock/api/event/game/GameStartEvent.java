@@ -5,17 +5,16 @@ import de.bergwerklabs.framework.bedrock.api.LabsPlayer;
 
 /**
  * Created by Yannic Rieger on 07.07.2017.
- * <p>
- * Event that will be fired when an instance of {@link LabsGame} invokes {@link LabsGame#start()}.
+ *
+ * <p>Event that will be fired when an instance of {@link LabsGame} invokes {@link
+ * LabsGame#start()}.
  *
  * @author Yannic Rieger
  */
 public class GameStartEvent<T extends LabsPlayer> extends AbstractGameEvent<T> {
 
-    /**
-     * @param game Instance of a {@link LabsGame}.
-     */
-    public GameStartEvent(LabsGame<T> game) {
-        super(game);
-    }
+  /** @param game Instance of a {@link LabsGame}. */
+  public GameStartEvent(LabsGame<T> game) {
+    super(game);
+  }
 }

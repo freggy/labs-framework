@@ -9,25 +9,25 @@ import org.bukkit.entity.Player;
  */
 public class ConsumerInfo {
 
-    /**
-     * Gets the prefix.
-     */
-    public String getPrefix() { return this.prefix; }
+  private String prefix;
+  private Player player;
 
-    /**
-     * Gets the {@link Player}.
-     */
-    public Player getPlayer() { return this.player; }
+  /**
+   * @param prefix Prefix that should be used.
+   * @param player {@link Player} to send a message to.
+   */
+  public ConsumerInfo(String prefix, Player player) {
+    this.prefix = prefix;
+    this.player = player;
+  }
 
-    private String prefix;
-    private Player player;
+  /** Gets the prefix. */
+  public String getPrefix() {
+    return this.prefix;
+  }
 
-    /**
-     * @param prefix Prefix that should be used.
-     * @param player {@link Player} to send a message to.
-     */
-    public ConsumerInfo(String prefix, Player player) {
-        this.prefix = prefix;
-        this.player = player;
-    }
+  /** Gets the {@link Player}. */
+  public Player getPlayer() {
+    return this.player;
+  }
 }

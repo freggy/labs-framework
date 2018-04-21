@@ -1,24 +1,19 @@
 /**
- * PacketWrapper - ProtocolLib wrappers for Minecraft packets
- * Copyright (C) dmulloy2 <http://dmulloy2.net>
- * Copyright (C) Kristian S. Strangeland
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * PacketWrapper - ProtocolLib wrappers for Minecraft packets Copyright (C) dmulloy2
+ * <http://dmulloy2.net> Copyright (C) Kristian S. Strangeland
+ *
+ * <p>This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * <p>You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/>.
  */
 package de.bergwerklabs.framework.commons.spigot.nms.packet.v1_8;
-
-import java.util.Set;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
@@ -27,136 +22,145 @@ import com.comphenix.protocol.utility.MinecraftReflection;
 import com.comphenix.protocol.wrappers.BukkitConverters;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.AbstractPacket;
+import java.util.Set;
 
 public class WrapperPlayServerPosition extends AbstractPacket {
-    public static final PacketType TYPE = PacketType.Play.Server.POSITION;
+  public static final PacketType TYPE = PacketType.Play.Server.POSITION;
+  private static final Class<?> FLAGS_CLASS =
+      MinecraftReflection.getMinecraftClass(
+          "EnumPlayerTeleportFlags", "PacketPlayOutPosition$EnumPlayerTeleportFlags");
 
-    public WrapperPlayServerPosition() {
-        super(new PacketContainer(TYPE), TYPE);
-        handle.getModifier().writeDefaults();
-    }
+  public WrapperPlayServerPosition() {
+    super(new PacketContainer(TYPE), TYPE);
+    handle.getModifier().writeDefaults();
+  }
 
-    public WrapperPlayServerPosition(PacketContainer packet) {
-        super(packet, TYPE);
-    }
+  public WrapperPlayServerPosition(PacketContainer packet) {
+    super(packet, TYPE);
+  }
 
-    /**
-     * Retrieve X.
-     * <p>
-     * Notes: absolute/Relative position
-     *
-     * @return The current X
-     */
-    public double getX() {
-        return handle.getDoubles().read(0);
-    }
+  /**
+   * Retrieve X.
+   *
+   * <p>Notes: absolute/Relative position
+   *
+   * @return The current X
+   */
+  public double getX() {
+    return handle.getDoubles().read(0);
+  }
 
-    /**
-     * Set X.
-     *
-     * @param value - new value.
-     */
-    public void setX(double value) {
-        handle.getDoubles().write(0, value);
-    }
+  /**
+   * Set X.
+   *
+   * @param value - new value.
+   */
+  public void setX(double value) {
+    handle.getDoubles().write(0, value);
+  }
 
-    /**
-     * Retrieve Y.
-     * <p>
-     * Notes: absolute/Relative position
-     *
-     * @return The current Y
-     */
-    public double getY() {
-        return handle.getDoubles().read(1);
-    }
+  /**
+   * Retrieve Y.
+   *
+   * <p>Notes: absolute/Relative position
+   *
+   * @return The current Y
+   */
+  public double getY() {
+    return handle.getDoubles().read(1);
+  }
 
-    /**
-     * Set Y.
-     *
-     * @param value - new value.
-     */
-    public void setY(double value) {
-        handle.getDoubles().write(1, value);
-    }
+  /**
+   * Set Y.
+   *
+   * @param value - new value.
+   */
+  public void setY(double value) {
+    handle.getDoubles().write(1, value);
+  }
 
-    /**
-     * Retrieve Z.
-     * <p>
-     * Notes: absolute/Relative position
-     *
-     * @return The current Z
-     */
-    public double getZ() {
-        return handle.getDoubles().read(2);
-    }
+  /**
+   * Retrieve Z.
+   *
+   * <p>Notes: absolute/Relative position
+   *
+   * @return The current Z
+   */
+  public double getZ() {
+    return handle.getDoubles().read(2);
+  }
 
-    /**
-     * Set Z.
-     *
-     * @param value - new value.
-     */
-    public void setZ(double value) {
-        handle.getDoubles().write(2, value);
-    }
+  /**
+   * Set Z.
+   *
+   * @param value - new value.
+   */
+  public void setZ(double value) {
+    handle.getDoubles().write(2, value);
+  }
 
-    /**
-     * Retrieve Yaw.
-     * <p>
-     * Notes: absolute/Relative rotation on the X Axis, in degrees
-     *
-     * @return The current Yaw
-     */
-    public float getYaw() {
-        return handle.getFloat().read(0);
-    }
+  /**
+   * Retrieve Yaw.
+   *
+   * <p>Notes: absolute/Relative rotation on the X Axis, in degrees
+   *
+   * @return The current Yaw
+   */
+  public float getYaw() {
+    return handle.getFloat().read(0);
+  }
 
-    /**
-     * Set Yaw.
-     *
-     * @param value - new value.
-     */
-    public void setYaw(float value) {
-        handle.getFloat().write(0, value);
-    }
+  /**
+   * Set Yaw.
+   *
+   * @param value - new value.
+   */
+  public void setYaw(float value) {
+    handle.getFloat().write(0, value);
+  }
 
-    /**
-     * Retrieve Pitch.
-     * <p>
-     * Notes: absolute/Relative rotation on the Y Axis, in degrees
-     *
-     * @return The current Pitch
-     */
-    public float getPitch() {
-        return handle.getFloat().read(1);
-    }
+  /**
+   * Retrieve Pitch.
+   *
+   * <p>Notes: absolute/Relative rotation on the Y Axis, in degrees
+   *
+   * @return The current Pitch
+   */
+  public float getPitch() {
+    return handle.getFloat().read(1);
+  }
 
-    /**
-     * Set Pitch.
-     *
-     * @param value - new value.
-     */
-    public void setPitch(float value) {
-        handle.getFloat().write(1, value);
-    }
+  /**
+   * Set Pitch.
+   *
+   * @param value - new value.
+   */
+  public void setPitch(float value) {
+    handle.getFloat().write(1, value);
+  }
 
-    private static final Class<?> FLAGS_CLASS = MinecraftReflection
-            .getMinecraftClass("EnumPlayerTeleportFlags", "PacketPlayOutPosition$EnumPlayerTeleportFlags");
+  private StructureModifier<Set<PlayerTeleportFlag>> getFlagsModifier() {
+    return handle
+        .getModifier()
+        .withType(
+            Set.class,
+            BukkitConverters.getSetConverter(
+                FLAGS_CLASS, EnumWrappers.getGenericConverter(PlayerTeleportFlag.class)));
+  }
 
-    public static enum PlayerTeleportFlag {
-        X, Y, Z, Y_ROT, X_ROT;
-    }
+  public Set<PlayerTeleportFlag> getFlags() {
+    return getFlagsModifier().read(0);
+  }
 
-    private StructureModifier<Set<PlayerTeleportFlag>> getFlagsModifier() {
-        return handle.getModifier().withType(Set.class, BukkitConverters
-                .getSetConverter(FLAGS_CLASS, EnumWrappers.getGenericConverter(PlayerTeleportFlag.class)));
-    }
+  public void setFlags(Set<PlayerTeleportFlag> value) {
+    getFlagsModifier().write(0, value);
+  }
 
-    public Set<PlayerTeleportFlag> getFlags() {
-        return getFlagsModifier().read(0);
-    }
-
-    public void setFlags(Set<PlayerTeleportFlag> value) {
-        getFlagsModifier().write(0, value);
-    }
+  public static enum PlayerTeleportFlag {
+    X,
+    Y,
+    Z,
+    Y_ROT,
+    X_ROT;
+  }
 }

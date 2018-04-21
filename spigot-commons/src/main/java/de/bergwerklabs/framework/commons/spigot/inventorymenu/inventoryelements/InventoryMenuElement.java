@@ -1,28 +1,26 @@
 package de.bergwerklabs.framework.commons.spigot.inventorymenu.inventoryelements;
 
-import de.bergwerklabs.framework.commons.spigot.inventorymenu.InventoryItem;
 import de.bergwerklabs.framework.commons.spigot.general.update.Updatable;
-import org.bukkit.inventory.Inventory;
-
+import de.bergwerklabs.framework.commons.spigot.inventorymenu.InventoryItem;
 import java.util.ArrayList;
+import org.bukkit.inventory.Inventory;
 
 /**
  * Created by Yannic Rieger on 12.04.2017.
- * <p> Base class for every InventoryMenuElement </p>
+ *
+ * <p>Base class for every InventoryMenuElement
+ *
  * @author Yannic Rieger
  */
 public abstract class InventoryMenuElement implements Updatable {
 
-    /**
-     * Gets a list containing all child items.
-     */
-    public ArrayList<InventoryItem> getItems() { return this.items; }
+  protected ArrayList<InventoryItem> items = new ArrayList<>();
 
-    protected ArrayList<InventoryItem> items = new ArrayList<>();
+  /** Gets a list containing all child items. */
+  public ArrayList<InventoryItem> getItems() {
+    return this.items;
+  }
 
-    /**
-     * Places the items in the inventory.
-     */
-    public abstract void render(Inventory inventory);
+  /** Places the items in the inventory. */
+  public abstract void render(Inventory inventory);
 }
-

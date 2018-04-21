@@ -1,94 +1,90 @@
 /**
- * PacketWrapper - ProtocolLib wrappers for Minecraft packets
- * Copyright (C) dmulloy2 <http://dmulloy2.net>
- * Copyright (C) Kristian S. Strangeland
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * PacketWrapper - ProtocolLib wrappers for Minecraft packets Copyright (C) dmulloy2
+ * <http://dmulloy2.net> Copyright (C) Kristian S. Strangeland
+ *
+ * <p>This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * <p>You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/>.
  */
 package de.bergwerklabs.framework.commons.spigot.nms.packet.v1_8;
-
-import java.security.PublicKey;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import de.bergwerklabs.framework.commons.spigot.nms.packet.AbstractPacket;
+import java.security.PublicKey;
 
 public class WrapperLoginServerEncryptionBegin extends AbstractPacket {
-    public static final PacketType TYPE = PacketType.Login.Server.ENCRYPTION_BEGIN;
+  public static final PacketType TYPE = PacketType.Login.Server.ENCRYPTION_BEGIN;
 
-    public WrapperLoginServerEncryptionBegin() {
-        super(new PacketContainer(TYPE), TYPE);
-        handle.getModifier().writeDefaults();
-    }
+  public WrapperLoginServerEncryptionBegin() {
+    super(new PacketContainer(TYPE), TYPE);
+    handle.getModifier().writeDefaults();
+  }
 
-    public WrapperLoginServerEncryptionBegin(PacketContainer packet) {
-        super(packet, TYPE);
-    }
+  public WrapperLoginServerEncryptionBegin(PacketContainer packet) {
+    super(packet, TYPE);
+  }
 
-    /**
-     * Retrieve Server ID.
-     * <p>
-     * Notes: appears to be empty as of 1.7.x
-     *
-     * @return The current Server ID
-     */
-    public String getServerId() {
-        return handle.getStrings().read(0);
-    }
+  /**
+   * Retrieve Server ID.
+   *
+   * <p>Notes: appears to be empty as of 1.7.x
+   *
+   * @return The current Server ID
+   */
+  public String getServerId() {
+    return handle.getStrings().read(0);
+  }
 
-    /**
-     * Set Server ID.
-     *
-     * @param value - new value.
-     */
-    public void setServerId(String value) {
-        handle.getStrings().write(0, value);
-    }
+  /**
+   * Set Server ID.
+   *
+   * @param value - new value.
+   */
+  public void setServerId(String value) {
+    handle.getStrings().write(0, value);
+  }
 
-    /**
-     * Retrieve Public Key.
-     *
-     * @return The current Public Key
-     */
-    public PublicKey getPublicKey() {
-        return handle.getSpecificModifier(PublicKey.class).read(0);
-    }
+  /**
+   * Retrieve Public Key.
+   *
+   * @return The current Public Key
+   */
+  public PublicKey getPublicKey() {
+    return handle.getSpecificModifier(PublicKey.class).read(0);
+  }
 
-    /**
-     * Set Public Key.
-     *
-     * @param value - new value.
-     */
-    public void setPublicKey(PublicKey value) {
-        handle.getSpecificModifier(PublicKey.class).write(0, value);
-    }
+  /**
+   * Set Public Key.
+   *
+   * @param value - new value.
+   */
+  public void setPublicKey(PublicKey value) {
+    handle.getSpecificModifier(PublicKey.class).write(0, value);
+  }
 
-    /**
-     * Retrieve Verify Token.
-     *
-     * @return The current Verify Token
-     */
-    public byte[] getVerifyToken() {
-        return handle.getByteArrays().read(0);
-    }
+  /**
+   * Retrieve Verify Token.
+   *
+   * @return The current Verify Token
+   */
+  public byte[] getVerifyToken() {
+    return handle.getByteArrays().read(0);
+  }
 
-    /**
-     * Set Verify Token.
-     *
-     * @param value - new value.
-     */
-    public void setVerifyToken(byte[] value) {
-        handle.getByteArrays().write(0, value);
-    }
+  /**
+   * Set Verify Token.
+   *
+   * @param value - new value.
+   */
+  public void setVerifyToken(byte[] value) {
+    handle.getByteArrays().write(0, value);
+  }
 }

@@ -1,187 +1,176 @@
 package de.bergwerklabs.framework.commons.spigot.chat;
 
+import java.util.Arrays;
+import java.util.Collection;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 /**
  * Created by Yannic Rieger on 21.09.2017.
- * <p>
- * Provides methods for text message handling in Minecraft using the Spigot API.
+ *
+ * <p>Provides methods for text message handling in Minecraft using the Spigot API.
  *
  * @author Yannic Rieger
  */
 public class MessageUtil {
 
-    private final static int CENTER_PX = 154;
-    private final static int MAX_PX    = 250;
+  private static final int CENTER_PX = 154;
+  private static final int MAX_PX = 250;
 
-    /**
-     * Centers text and send it to the given player.
-     * <b>NOTE:</b> This may work with custom texture packs
-     *
-     * @param player  Player to send the message to.
-     * @param message Message to be sent.
-     */
-    public static void sendCenteredMessage(Player player, String message) {
-        message = ChatColor.translateAlternateColorCodes('&', message);
-        boolean previousCode = false;
-        boolean isBold = false;
+  /**
+   * Centers text and send it to the given player. <b>NOTE:</b> This may work with custom texture
+   * packs
+   *
+   * @param player Player to send the message to.
+   * @param message Message to be sent.
+   */
+  public static void sendCenteredMessage(Player player, String message) {
+    message = ChatColor.translateAlternateColorCodes('&', message);
+    boolean previousCode = false;
+    boolean isBold = false;
 
-        double messagePxSize = 0;
-        int charIndex = 0;
-        int lastSpaceIndex = 0;
+    double messagePxSize = 0;
+    int charIndex = 0;
+    int lastSpaceIndex = 0;
 
-        String toSendAfter = null;
-        String recentColorCode = "";
+    String toSendAfter = null;
+    String recentColorCode = "";
 
-        for(char c : message.toCharArray()) {
-            if(c == '§'){
-                previousCode = true;
-                continue;
-            }
-            else if(previousCode) {
+    for (char c : message.toCharArray()) {
+      if (c == '§') {
+        previousCode = true;
+        continue;
+      } else if (previousCode) {
 
-                previousCode = false;
-                recentColorCode = "§" + c;
+        previousCode = false;
+        recentColorCode = "§" + c;
 
-                if(c == 'l' || c == 'L') {
-                    isBold = true;
-                    continue;
-                }
-                else isBold = false;
-            }
-            else if(c == ' ') {
-                lastSpaceIndex = charIndex;
-            }
-            else {
-                DefaultFontInfo dFI = DefaultFontInfo.getDefaultFontInfo(c);
-                if (c == '-') {
-                    messagePxSize += isBold ? dFI.getBoldLength() : dFI.getLength() - 1;
-                    messagePxSize++;
-                }
-                else {
-                    messagePxSize += isBold ? dFI.getBoldLength() : dFI.getLength();
-                    messagePxSize++;
-                }
-            }
-
-            if(messagePxSize >= MAX_PX){
-                toSendAfter = recentColorCode + message.substring(lastSpaceIndex + 1, message.length());
-                message = message.substring(0, lastSpaceIndex + 1);
-                break;
-            }
-            charIndex++;
+        if (c == 'l' || c == 'L') {
+          isBold = true;
+          continue;
+        } else isBold = false;
+      } else if (c == ' ') {
+        lastSpaceIndex = charIndex;
+      } else {
+        DefaultFontInfo dFI = DefaultFontInfo.getDefaultFontInfo(c);
+        if (c == '-') {
+          messagePxSize += isBold ? dFI.getBoldLength() : dFI.getLength() - 1;
+          messagePxSize++;
+        } else {
+          messagePxSize += isBold ? dFI.getBoldLength() : dFI.getLength();
+          messagePxSize++;
         }
+      }
 
-        double halvedMessageSize = messagePxSize / 2;
-        double toCompensate = CENTER_PX - halvedMessageSize;
-        int spaceLength = DefaultFontInfo.SPACE.getLength() + 1;
-        int compensated = 0;
-
-        StringBuilder sb = new StringBuilder();
-
-        while(compensated <= toCompensate){
-            sb.append(" ");
-            compensated += spaceLength;
-        }
-
-        player.sendMessage(sb.toString() + message);
-        if(toSendAfter != null) sendCenteredMessage(player, toSendAfter);
+      if (messagePxSize >= MAX_PX) {
+        toSendAfter = recentColorCode + message.substring(lastSpaceIndex + 1, message.length());
+        message = message.substring(0, lastSpaceIndex + 1);
+        break;
+      }
+      charIndex++;
     }
 
-    /**
-     * Returns the spaces needed to center a message.
-     *
-     * @param message message that should be centred.
-     * @return        the spaces needed to center a message.
-     */
-    public static int getSpacesToCenter(String message) {
-        message = ChatColor.translateAlternateColorCodes('&', message);
-        boolean previousCode = false;
-        boolean isBold = false;
+    double halvedMessageSize = messagePxSize / 2;
+    double toCompensate = CENTER_PX - halvedMessageSize;
+    int spaceLength = DefaultFontInfo.SPACE.getLength() + 1;
+    int compensated = 0;
 
-        double messagePxSize = 0;
-        int charIndex = 0;
-        int lastSpaceIndex = 0;
+    StringBuilder sb = new StringBuilder();
 
-        String toSendAfter = null;
-        String recentColorCode = "";
+    while (compensated <= toCompensate) {
+      sb.append(" ");
+      compensated += spaceLength;
+    }
 
-        for(char c : message.toCharArray()) {
-            if(c == '§'){
-                previousCode = true;
-                continue;
-            }
-            else if(previousCode) {
+    player.sendMessage(sb.toString() + message);
+    if (toSendAfter != null) sendCenteredMessage(player, toSendAfter);
+  }
 
-                previousCode = false;
-                recentColorCode = "§" + c;
+  /**
+   * Returns the spaces needed to center a message.
+   *
+   * @param message message that should be centred.
+   * @return the spaces needed to center a message.
+   */
+  public static int getSpacesToCenter(String message) {
+    message = ChatColor.translateAlternateColorCodes('&', message);
+    boolean previousCode = false;
+    boolean isBold = false;
 
-                if(c == 'l' || c == 'L'){
-                    isBold = true;
-                    continue;
-                }
-                else isBold = false;
-            }
-            else if(c == ' ') {
-                lastSpaceIndex = charIndex;
-            }
-            else {
-                DefaultFontInfo dFI = DefaultFontInfo.getDefaultFontInfo(c);
-                if (c == '-') {
-                    messagePxSize += isBold ? dFI.getBoldLength() : dFI.getLength() - 1;
-                    messagePxSize++;
-                }
-                else {
-                    messagePxSize += isBold ? dFI.getBoldLength() : dFI.getLength();
-                    messagePxSize++;
-                }
-            }
+    double messagePxSize = 0;
+    int charIndex = 0;
+    int lastSpaceIndex = 0;
 
-            if(messagePxSize >= MAX_PX){
-                toSendAfter = recentColorCode + message.substring(lastSpaceIndex + 1, message.length());
-                message = message.substring(0, lastSpaceIndex + 1);
-                break;
-            }
-            charIndex++;
+    String toSendAfter = null;
+    String recentColorCode = "";
+
+    for (char c : message.toCharArray()) {
+      if (c == '§') {
+        previousCode = true;
+        continue;
+      } else if (previousCode) {
+
+        previousCode = false;
+        recentColorCode = "§" + c;
+
+        if (c == 'l' || c == 'L') {
+          isBold = true;
+          continue;
+        } else isBold = false;
+      } else if (c == ' ') {
+        lastSpaceIndex = charIndex;
+      } else {
+        DefaultFontInfo dFI = DefaultFontInfo.getDefaultFontInfo(c);
+        if (c == '-') {
+          messagePxSize += isBold ? dFI.getBoldLength() : dFI.getLength() - 1;
+          messagePxSize++;
+        } else {
+          messagePxSize += isBold ? dFI.getBoldLength() : dFI.getLength();
+          messagePxSize++;
         }
+      }
 
-        double halvedMessageSize = messagePxSize / 2;
-        double toCompensate = CENTER_PX - halvedMessageSize;
-        int spaceLength = DefaultFontInfo.SPACE.getLength() + 1;
-        int compensated = 0;
-        int spaces = 0;
-
-        while(compensated <= toCompensate){
-            spaces++;
-            compensated += spaceLength;
-        }
-
-        return spaces;
+      if (messagePxSize >= MAX_PX) {
+        toSendAfter = recentColorCode + message.substring(lastSpaceIndex + 1, message.length());
+        message = message.substring(0, lastSpaceIndex + 1);
+        break;
+      }
+      charIndex++;
     }
 
-    /**
-     * Centers text and send it to the given player.
-     * <b>NOTE:</b> This may work with custom texture packs
-     *
-     * @param player   Player to send the messages to.
-     * @param messages Messages to be sent.
-     */
-    public static void sendCenteredMessages(Player player, String... messages) {
-        Arrays.stream(messages).forEach(message -> sendCenteredMessage(player, message));
+    double halvedMessageSize = messagePxSize / 2;
+    double toCompensate = CENTER_PX - halvedMessageSize;
+    int spaceLength = DefaultFontInfo.SPACE.getLength() + 1;
+    int compensated = 0;
+    int spaces = 0;
+
+    while (compensated <= toCompensate) {
+      spaces++;
+      compensated += spaceLength;
     }
 
-    /**
-     * Centers text and send it to the given player.
-     * <b>NOTE:</b> This may work with custom texture packs
-     *
-     * @param player   Player to send the messages to.
-     * @param messages Messages to be sent.
-     */
-    public static void sendCenteredMessages(Player player, Collection<String> messages) {
-        messages.forEach(message -> sendCenteredMessage(player, message));
-    }
+    return spaces;
+  }
+
+  /**
+   * Centers text and send it to the given player. <b>NOTE:</b> This may work with custom texture
+   * packs
+   *
+   * @param player Player to send the messages to.
+   * @param messages Messages to be sent.
+   */
+  public static void sendCenteredMessages(Player player, String... messages) {
+    Arrays.stream(messages).forEach(message -> sendCenteredMessage(player, message));
+  }
+
+  /**
+   * Centers text and send it to the given player. <b>NOTE:</b> This may work with custom texture
+   * packs
+   *
+   * @param player Player to send the messages to.
+   * @param messages Messages to be sent.
+   */
+  public static void sendCenteredMessages(Player player, Collection<String> messages) {
+    messages.forEach(message -> sendCenteredMessage(player, message));
+  }
 }

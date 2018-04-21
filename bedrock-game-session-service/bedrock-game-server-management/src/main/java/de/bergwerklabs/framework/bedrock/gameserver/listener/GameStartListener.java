@@ -6,14 +6,13 @@ import org.bukkit.event.Listener;
 
 /**
  * Created by Yannic Rieger on 08.02.2018.
+ *
  * <p>
  *
  * @author Yannic Rieger
  */
 public class GameStartListener implements Listener {
 
-    @EventHandler
-    private void onGameStart(GameStartEvent event) {
-
-    }
+  @EventHandler
+  private void onGameStart(GameStartEvent event) {}
 }

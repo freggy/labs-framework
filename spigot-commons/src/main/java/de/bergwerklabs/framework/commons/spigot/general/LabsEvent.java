@@ -5,21 +5,22 @@ import org.bukkit.event.HandlerList;
 
 /**
  * Created by Yannic Rieger on 15.07.2017.
- * <p>  </p>
+ *
+ * <p>
  *
  * @author Yannic Rieger
  */
 public class LabsEvent extends Event {
 
-    /**
-     * Gets the list of all handlers.
-     */
-    public static HandlerList getHandlerList() { return handlerList; }
+  protected static HandlerList handlerList = new HandlerList();
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlerList;
-    }
+  /** Gets the list of all handlers. */
+  public static HandlerList getHandlerList() {
+    return handlerList;
+  }
 
-    protected static HandlerList handlerList = new HandlerList();
+  @Override
+  public HandlerList getHandlers() {
+    return handlerList;
+  }
 }

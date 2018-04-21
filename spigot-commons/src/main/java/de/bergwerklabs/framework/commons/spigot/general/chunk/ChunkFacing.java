@@ -2,39 +2,35 @@ package de.bergwerklabs.framework.commons.spigot.general.chunk;
 
 /**
  * Created by Yannic Rieger on 11.07.2017.
- * <p>  </p>
+ *
+ * <p>
  *
  * @author Yannic Rieger
  */
 public enum ChunkFacing {
+  SOUTH(0, 1),
+  NORTH(0, -1),
+  EAST(1, 0),
+  WEST(-1, 0);
 
-    SOUTH(0, 1),
-    NORTH(0, -1),
-    EAST(1, 0),
-    WEST(-1, 0);
+  private int xShift, zShift;
 
-    /**
-     *
-     */
-    public int getZShift() {
-        return zShift;
-    }
+  /**
+   * @param xShift
+   * @param zShift
+   */
+  ChunkFacing(int xShift, int zShift) {
+    this.xShift = xShift;
+    this.zShift = zShift;
+  }
 
-    /**
-     *
-     */
-    public int getXShift() {
-        return xShift;
-    }
+  /** */
+  public int getZShift() {
+    return zShift;
+  }
 
-    private int xShift, zShift;
-
-    /**
-     * @param xShift
-     * @param zShift
-     */
-    ChunkFacing(int xShift, int zShift) {
-        this.xShift = xShift;
-        this.zShift = zShift;
-    }
+  /** */
+  public int getXShift() {
+    return xShift;
+  }
 }

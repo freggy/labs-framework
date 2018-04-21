@@ -10,14 +10,22 @@ import org.bukkit.event.Listener;
 
 /**
  * Created by Yannic Rieger on 24.11.2017.
+ *
  * <p>
  *
  * @author Yannic Rieger
  */
 public class ChatListener implements Listener {
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    private void onChat(LabsAsyncChatEvent event) {
-        GameserverManagement.getInstance().getHistoryLogger().log(new ChatAction(ActionType.CHAT, System.currentTimeMillis(), event.getSender(), event.getMessage()));
-    }
+  @EventHandler(priority = EventPriority.MONITOR)
+  private void onChat(LabsAsyncChatEvent event) {
+    GameserverManagement.getInstance()
+        .getHistoryLogger()
+        .log(
+            new ChatAction(
+                ActionType.CHAT,
+                System.currentTimeMillis(),
+                event.getSender(),
+                event.getMessage()));
+  }
 }

@@ -6,13 +6,15 @@ import de.bergwerklabs.framework.commons.spigot.json.version.Serializer;
 
 /**
  * Created by Yannic Rieger on 12.04.2017.
- * <p> Class used for serializing scheme version 1.0 </p>
+ *
+ * <p>Class used for serializing scheme version 1.0
+ *
  * @author Yannic Rieger
  */
 public class InventoryMenuSerializerV1_0 implements Serializer<InventoryMenu> {
 
-    @Override
-    public JsonElement serialize(InventoryMenu menu) {
-        return null;
-    }
+  @Override
+  public JsonElement serialize(InventoryMenu menu) {
+    return null;
+  }
 }

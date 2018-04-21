@@ -5,15 +5,16 @@ import org.bukkit.entity.Player;
 
 /**
  * Created by Yannic Rieger on 15.07.2017.
- * <p>  </p>
+ *
+ * <p>
  *
  * @author Yannic Rieger
  */
 public interface Packet {
 
-    void recievePacket(Player player);
+  void recievePacket(Player player);
 
-    void sendPacket(Player player);
+  void sendPacket(Player player);
 
-    PacketContainer getHandle();
+  PacketContainer getHandle();
 }

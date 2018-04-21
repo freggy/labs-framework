@@ -4,48 +4,41 @@ import de.bergwerklabs.framework.commons.spigot.chat.messenger.PluginMessenger;
 
 /**
  * Created by Yannic Rieger on 07.07.2017.
- * <p>
- * This class represents a mini game. For more information head to the Confluence page.
+ *
+ * <p>This class represents a mini game. For more information head to the Confluence page.
  *
  * @author Yannic Rieger
  */
 public abstract class LabsGame<T extends LabsPlayer> {
 
-    /**
-     * Gets the {@link PlayerRegistry} for this game.
-     */
-    public PlayerRegistry<T> getPlayerRegistry() { return this.playerRegistry; }
+  // Do this to prevent NPEs
+  protected PlayerRegistry<T> playerRegistry = new PlayerRegistry<>();
+  protected PluginMessenger messenger;
+  protected String name;
 
-    public String getName() {
-        return name;
-    }
+  /** @param name name of the game. */
+  public LabsGame(String name) {
+    this.messenger = new PluginMessenger(name);
+    this.name = name;
+  }
 
-    /**
-     * Gets the {@link PluginMessenger} associated with this game.
-     */
-    public PluginMessenger getMessenger() {
-        return messenger;
-    }
+  /** Gets the {@link PlayerRegistry} for this game. */
+  public PlayerRegistry<T> getPlayerRegistry() {
+    return this.playerRegistry;
+  }
 
-    protected PlayerRegistry<T> playerRegistry;
-    protected PluginMessenger messenger;
-    protected String name;
+  public String getName() {
+    return name;
+  }
 
-    /**
-     * @param name name of the game.
-     */
-    public LabsGame(String name) {
-        this.messenger = new PluginMessenger(name);
-        this.name = name;
-    }
+  /** Gets the {@link PluginMessenger} associated with this game. */
+  public PluginMessenger getMessenger() {
+    return messenger;
+  }
 
-    /**
-     * Starts the game.
-     */
-    public abstract void start(PlayerRegistry<T> registry);
+  /** Starts the game. */
+  public abstract void start(PlayerRegistry<T> registry);
 
-    /**
-     * Stops the game.
-     */
-    public abstract void stop();
+  /** Stops the game. */
+  public abstract void stop();
 }

@@ -2,22 +2,20 @@ package de.bergwerklabs.framework.commons.bungee.command;
 
 import net.md_5.bungee.api.CommandSender;
 
-import java.util.Set;
-
 /**
  * Created by Yannic Rieger on 28.11.2017.
+ *
  * <p>
  *
  * @author Yannic Rieger
  */
 public interface BungeeCommand {
 
-    String getDescription();
+  String getDescription();
 
-    String getUsage();
+  String getUsage();
 
-    String getName();
+  String getName();
 
-    void execute(CommandSender sender, String[] args);
-
+  void execute(CommandSender sender, String[] args);
 }

@@ -8,29 +8,29 @@ import org.bukkit.entity.Player;
 
 /**
  * Created by Yannic Rieger on 24.11.2017.
+ *
  * <p>
  *
  * @author Yannic Rieger
  */
 public class ChatAction extends Action {
 
-    private String message;
-    private Player player;
+  private String message;
+  private Player player;
 
+  public ChatAction(ActionType type, long time, Player player, String message) {
+    super(type, time);
+    this.message = message;
+    this.player = player;
+  }
 
-    public ChatAction(ActionType type, long time, Player player, String message) {
-        super(type, time);
-        this.message = message;
-        this.player = player;
-    }
-
-    @Override
-    public JsonObject toJson() {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.add("type", new JsonPrimitive(this.type.name()));
-        jsonObject.add("timestamp", new JsonPrimitive(this.timestamp));
-        jsonObject.add("message", new JsonPrimitive(message));
-        jsonObject.add("player", JsonUtil.playerToJson(this.player));
-        return jsonObject;
-    }
+  @Override
+  public JsonObject toJson() {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.add("type", new JsonPrimitive(this.type.name()));
+    jsonObject.add("timestamp", new JsonPrimitive(this.timestamp));
+    jsonObject.add("message", new JsonPrimitive(message));
+    jsonObject.add("player", JsonUtil.playerToJson(this.player));
+    return jsonObject;
+  }
 }

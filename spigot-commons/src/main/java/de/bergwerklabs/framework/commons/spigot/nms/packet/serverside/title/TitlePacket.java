@@ -6,29 +6,30 @@ import de.bergwerklabs.framework.commons.spigot.nms.packet.Packet;
 
 /**
  * Created by Yannic Rieger on 18.07.2017.
- * <p>  </p>
+ *
+ * <p>
  *
  * @author Yannic Rieger
  */
 public interface TitlePacket extends Packet {
 
-    EnumWrappers.TitleAction getAction();
+  EnumWrappers.TitleAction getAction();
 
-    WrappedChatComponent getTitle();
+  void setAction(EnumWrappers.TitleAction action);
 
-    int getFadeIn();
+  WrappedChatComponent getTitle();
 
-    int getFadeOut();
+  void setTitle(WrappedChatComponent value);
 
-    int getStay();
+  int getFadeIn();
 
-    void setAction(EnumWrappers.TitleAction action);
+  void setFadeIn(int fadeIn);
 
-    void setTitle(WrappedChatComponent value);
+  int getFadeOut();
 
-    void setFadeIn(int fadeIn);
+  void setFadeOut(int fadeOut);
 
-    void setFadeOut(int fadeOut);
+  int getStay();
 
-    void setStay(int stay);
+  void setStay(int stay);
 }

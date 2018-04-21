@@ -1,14 +1,13 @@
 package de.bergwerklabs.framework.nabs.standalone;
 
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by Yannic Rieger on 20.12.2017.
- * <p>
- * Creates an {@link PlayerdataSet}. Usage:
+ *
+ * <p>Creates an {@link PlayerdataSet}. Usage:
  *
  * <pre>
  *     PlayerdataFactory factory = new FactoryImp();
@@ -20,6 +19,6 @@ import java.util.UUID;
  */
 public interface PlayerdataFactory {
 
-    @Nullable PlayerdataSet createInstance(@NotNull UUID uuid);
-
+  @Nullable
+  PlayerdataSet createInstance(@NotNull UUID uuid);
 }
