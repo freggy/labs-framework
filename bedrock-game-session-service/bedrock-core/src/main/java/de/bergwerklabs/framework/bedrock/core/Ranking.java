@@ -1,13 +1,7 @@
 package de.bergwerklabs.framework.bedrock.core;
 
-import de.bergwerklabs.api.cache.pojo.PlayerdataEntry;
-import de.bergwerklabs.api.cache.pojo.RankingCacheEntry;
-import de.bergwerklabs.atlantis.api.corepackages.AtlantisCache;
-import de.bergwerklabs.atlantis.api.corepackages.cache.CacheLoadAndGetPacket;
-import de.bergwerklabs.atlantis.api.corepackages.cache.CachePacket;
 import de.bergwerklabs.framework.bedrock.api.LabsPlayer;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import org.bukkit.Location;
 
 /**
@@ -22,7 +16,7 @@ public class Ranking {
   private Set<Location> topThree;
   private Location playerStats;
   private String game;
-  private PlayerdataEntry[] topPlayers;
+  //private PlayerdataEntry[] topPlayers;
 
   /**
    * @param topThree {@link Set} containing the {@link Location} of the top three players.
@@ -49,6 +43,7 @@ public class Ranking {
 
   /** Retrieves the top players if they have not been retrieved already. */
   private void retrieveTopPlayers() {
+    /*
     if (this.topPlayers == null) {
       try {
         RankingCacheEntry entry =
@@ -64,6 +59,6 @@ public class Ranking {
       } catch (Exception e) {
         e.printStackTrace();
       }
-    }
+    }*/
   }
 }

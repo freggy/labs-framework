@@ -1,7 +1,5 @@
 package de.bergwerklabs.framework.bedrock.core.listener;
 
-import de.bergwerklabs.atlantis.client.bukkit.GamestateManager;
-import de.bergwerklabs.atlantis.columbia.packages.gameserver.spigot.gamestate.Gamestate;
 import de.bergwerklabs.framework.bedrock.api.LabsPlayer;
 import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
 import de.bergwerklabs.framework.bedrock.api.PlayerdataDao;
@@ -40,8 +38,8 @@ public class PlayerLoginListener extends LabsListener {
       event.disallow(
           PlayerLoginEvent.Result.KICK_OTHER,
           "§6>> §eBedrock Session Service §6❘ §bGame session has not been initialized yet.");
-    } else if (GamestateManager.getCurrentState() == Gamestate.WAITING
-        && this.config.getMaxPlayers() == Bukkit.getOnlinePlayers().size()) {
+    } else if (/*GamestateManager.getCurrentState() == Gamestate.WAITING
+        &&*/ this.config.getMaxPlayers() == Bukkit.getOnlinePlayers().size()) {
       event.disallow(
           PlayerLoginEvent.Result.KICK_OTHER,
           "§6>> §eBedrock Session Service §6❘ §cDas Spiel ist " + "voll");

@@ -1,7 +1,5 @@
 package de.bergwerklabs.framework.bedrock.core.listener;
 
-import de.bergwerklabs.atlantis.client.bukkit.GamestateManager;
-import de.bergwerklabs.atlantis.columbia.packages.gameserver.spigot.gamestate.Gamestate;
 import de.bergwerklabs.framework.bedrock.api.LabsPlayer;
 import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
 import de.bergwerklabs.framework.bedrock.api.PlayerdataDao;
@@ -34,7 +32,7 @@ public class PlayerQuitListener extends LabsListener {
   public void onPlayerQuit(PlayerQuitEvent event) {
 
     if (Bukkit.getOnlinePlayers().size() == 1
-        && GamestateManager.getCurrentState() == Gamestate.RUNNING) {
+        /*&& GamestateManager.getCurrentState() == Gamestate.RUNNING*/) {
       Bukkit.getServer().spigot().restart(); // TODO: change to shutdown
       return;
     }

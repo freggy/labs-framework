@@ -1,6 +1,5 @@
 package de.bergwerklabs.framework.bedrock.core.listener;
 
-import de.bergwerklabs.atlantis.client.bukkit.GamestateManager;
 import de.bergwerklabs.framework.bedrock.api.LabsPlayer;
 import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
 import de.bergwerklabs.framework.bedrock.api.PlayerdataDao;
@@ -33,6 +32,7 @@ public class PlayerJoinListener extends LabsListener {
   public void onPlayerJoin(PlayerJoinEvent event) {
     final LabsPlayer player =
         BedrockSessionService.getInstance().getPlayerFactory().createPlayer(event.getPlayer());
+    /*
     switch (GamestateManager.getCurrentState()) {
       case WAITING:
         handleWaiting(player);
@@ -40,7 +40,7 @@ public class PlayerJoinListener extends LabsListener {
       case RUNNING:
         handleRunning(player);
         break;
-    }
+    }*/
   }
 
   private void handleWaiting(LabsPlayer player) {

@@ -1,9 +1,6 @@
 package de.bergwerklabs.framework.bedrock.core;
 
 import com.google.gson.GsonBuilder;
-import de.bergwerklabs.atlantis.client.base.util.AtlantisPackageService;
-import de.bergwerklabs.atlantis.client.bukkit.GamestateManager;
-import de.bergwerklabs.atlantis.columbia.packages.gameserver.spigot.gamestate.Gamestate;
 import de.bergwerklabs.framework.bedrock.api.LabsPlayer;
 import de.bergwerklabs.framework.bedrock.api.PlayerFactory;
 import de.bergwerklabs.framework.bedrock.api.PlayerRegistry;
@@ -50,7 +47,7 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
   private PlayerFactory factory;
   private PlayerdataFactory playerdataFactory;
   private Ranking ranking;
-  private AtlantisPackageService service = new AtlantisPackageService();
+  //private AtlantisPackageService service = new AtlantisPackageService();
   private boolean finishedPreparing = false;
 
   /** Gets an instance of the service. */
@@ -68,11 +65,6 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
     return this.ranking;
   }
 
-  /** Gets the {@link AtlantisPackageService} for this plugin. */
-  public AtlantisPackageService getPacketService() {
-    return service;
-  }
-
   /** Gets the {@link PlayerFactory} of this session. */
   public PlayerFactory<? extends LabsPlayer> getPlayerFactory() {
     return factory;
@@ -85,7 +77,7 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
 
   @Override
   public void onEnable() {
-    GamestateManager.setGamestate(Gamestate.PREPARING);
+    //GamestateManager.setGamestate(Gamestate.PREPARING);
     TaskManager.startTimers(this);
     Bukkit.getServer().getPluginManager().registerEvents(this, this);
     instance = this;
@@ -103,7 +95,7 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
     } catch (FileNotFoundException e) {
       e.printStackTrace();
       this.logger.warning("No config file found. Stopping the server...");
-      GamestateManager.setGamestate(Gamestate.FAILED);
+      //GamestateManager.setGamestate(Gamestate.FAILED);
       this.getServer().shutdown();
     }
 
@@ -155,14 +147,14 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
     this.logger.info("Starting lobby waiting phase...");
     System.out.println(event.getSession().getGame().getName());
     this.finishedPreparing = true;
-    GamestateManager.setGamestate(Gamestate.WAITING);
+    //GamestateManager.setGamestate(Gamestate.WAITING);
     this.lobby.startWaitingPhase();
   }
 
   private <T> T checkOptional(Optional<T> optional) {
     if (!optional.isPresent()) {
       this.getLogger().warning("No valid Class could be found. Shutting down server...");
-      GamestateManager.setGamestate(Gamestate.FAILED);
+      //GamestateManager.setGamestate(Gamestate.FAILED);
       this.getServer().shutdown();
       return null;
     } else return optional.get();
