@@ -20,8 +20,11 @@ public class SpectatorEvent<T extends LabsPlayer> extends AbstractGameEvent<T> {
 
   private T spectator;
 
-  /** @param game Instance of a {@link LabsGame}. */
-  SpectatorEvent(LabsGame<T> game, T spectator) {
+  /**
+   * @param game {@link LabsGame} instance.
+   * @param spectator player that has been set to spectator mode.
+   */
+  public SpectatorEvent(LabsGame<T> game, T spectator) {
     super(game);
     this.spectator = spectator;
   }

@@ -1,5 +1,6 @@
 package de.bergwerklabs.framework.bedrock.api;
 
+import de.bergwerklabs.framework.bedrock.api.event.game.SpectatorEvent;
 import de.bergwerklabs.framework.nabs.standalone.PlayerdataSet;
 import java.util.UUID;
 import org.bukkit.Bukkit;
@@ -54,14 +55,6 @@ public class LabsPlayer {
    */
   public void setDataSet(PlayerdataSet dataSet) {
     this.dataSet = dataSet;
-  }
-
-  /** Sets the spectator mode of a uuid. */
-  public void setSpectator() {
-    final Player player = this.getPlayer();
-    Bukkit.getOnlinePlayers().forEach(p -> p.hidePlayer(player));
-    this.isSpectator = true;
-    // TODO: add item to teleport to players.
   }
 
   /** Freezes the uuid completely. */
