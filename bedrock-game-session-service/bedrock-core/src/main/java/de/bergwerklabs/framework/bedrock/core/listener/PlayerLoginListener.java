@@ -33,7 +33,6 @@ public class PlayerLoginListener extends LabsListener {
 
   @EventHandler(priority = EventPriority.LOWEST)
   private void onPlayerLogin(PlayerLoginEvent event) {
-
     if (!BedrockSessionService.getInstance().hasFinishedPreparing()) {
       event.disallow(
           PlayerLoginEvent.Result.KICK_OTHER,

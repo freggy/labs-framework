@@ -32,6 +32,7 @@ public class PlayerJoinListener extends LabsListener {
   public void onPlayerJoin(PlayerJoinEvent event) {
     final LabsPlayer player =
         BedrockSessionService.getInstance().getPlayerFactory().createPlayer(event.getPlayer());
+    this.playerRegistry.registerPlayer(player);
     /*
     switch (GamestateManager.getCurrentState()) {
       case WAITING:
@@ -44,7 +45,6 @@ public class PlayerJoinListener extends LabsListener {
   }
 
   private void handleWaiting(LabsPlayer player) {
-    this.playerRegistry.registerPlayer(player);
     if (this.config.loadStatisticsOnJoin()) {
       Bukkit.getScheduler()
           .runTaskAsynchronously(

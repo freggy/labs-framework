@@ -107,10 +107,12 @@ public class BedrockSessionService extends JavaPlugin implements Listener {
 
     Optional<PlayerFactory> factoryOptional =
         ReflectionUtil.getFactoryClassInstance(this.config.getPlayerFactoryClass());
+    /*
     Optional<PlayerdataFactory> dataFactoryOptional =
         ReflectionUtil.getFactoryClassInstance(this.config.getDataFactoryClass());
+    this.playerdataFactory = this.checkOptional(dataFactoryOptional); */
+
     this.factory = this.checkOptional(factoryOptional);
-    this.playerdataFactory = this.checkOptional(dataFactoryOptional);
   }
 
   @EventHandler
