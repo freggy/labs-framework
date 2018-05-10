@@ -1,6 +1,7 @@
 package de.bergwerklabs.framework.commons.spigot.inventorymenu.event;
 
 import de.bergwerklabs.framework.commons.spigot.inventorymenu.InventoryItem;
+import java.util.List;
 import java.util.Set;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -13,7 +14,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  */
 public class InventoryItemClickEvent {
 
-  private Set<String> parameter;
+  private List<String> parameter;
   private InventoryItem item;
   private InventoryClickEvent event;
 
@@ -23,14 +24,14 @@ public class InventoryItemClickEvent {
    * @param event
    */
   public InventoryItemClickEvent(
-      Set<String> parameter, InventoryItem item, InventoryClickEvent event) {
+      List<String> parameter, InventoryItem item, InventoryClickEvent event) {
     this.parameter = parameter;
     this.item = item;
     this.event = event;
   }
 
   /** */
-  public Set<String> getParameter() {
+  public List<String> getParameter() {
     return parameter;
   }
 

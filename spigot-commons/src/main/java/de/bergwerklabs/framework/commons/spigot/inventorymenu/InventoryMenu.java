@@ -140,7 +140,7 @@ public class InventoryMenu implements Listener, Versionable, Identifiable {
       if (item != null && item.getOnClick() != null) {
         try {
           item.getOnClick()
-              .invoke(new InventoryItemClickEvent(item.getOnClick().getParams(), item, e));
+              .invoke(new InventoryItemClickEvent(new ArrayList<>(item.getOnClick().getParams()), item, e));
           e.setCancelled(true);
         } catch (Exception ex) {
           ex.printStackTrace();

@@ -20,9 +20,18 @@ public class PluginMessages {
    * @param option
    * @param args
    */
-  public static void sendPluginMessage(Plugin plugin, PluginMessageOption option, String... args) {
-    plugin.getServer().sendPluginMessage(plugin, PLUGIN_CHANNEL, writeData(option, args));
+  public static void sendPluginMessage(Plugin plugin, String channel, PluginMessageOption option, String... args) {
+    plugin.getServer().sendPluginMessage(plugin, channel, writeData(option, args));
   }
+
+  /**
+   * @param plugin
+   * @param data
+   */
+  public static void sendPluginMessage(Plugin plugin, String channel, byte[] data) {
+    plugin.getServer().sendPluginMessage(plugin, channel, data);
+  }
+
 
   /**
    * @param option

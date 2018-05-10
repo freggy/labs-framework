@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Yannic Rieger on 12.04.2017.
@@ -70,18 +71,18 @@ public class InventoryMenuFactory {
    * Searches all folders and their subfolders for json files and tries to serialize them.
    *
    * @param rootDir Start directory.
-   * @param listToAdd List to add the InventoryMenu to (optional)
+   * @param map map to add the InventoryMenu to (optional)
    */
-  public static void readMenus(File rootDir, List<InventoryMenu> listToAdd) {
+  public static void readMenus(File rootDir, Map<String, InventoryMenu> map) {
 
     File[] fList = rootDir.listFiles();
 
     for (File file : fList) {
       if (file.isFile()) {
         InventoryMenu menu = InventoryMenuFactory.createInstance(file.getPath());
-        if (listToAdd != null) listToAdd.add(menu);
+        if (map != null) map.put(menu.getId(), menu);
       } else if (file.isDirectory() && file.listFiles().length != 0) {
-        readMenus(file, listToAdd);
+        readMenus(file, map);
       }
     }
   }
